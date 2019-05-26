@@ -41,7 +41,7 @@ class Solution {
     }
 }
 ``` 
-if the code is HTML then use "\{\% highlight html \%\}" and "\{\% endhighlight \%\}".
+if the code is HTML then use "\{% highlight html %\}" and "\{% endhighlight %\}".
 {% highlight html %}
 <script type="text/javascript">
 function isNumber(evt) {
@@ -60,7 +60,7 @@ use "iframe" tag to insert a web page into markdown file, such as markdown doc p
 
 ---
 
-<iframe width="100%" height="400" allowfullscreen="allowfullscreen" src="http://www.markdown.cn/"></iframe>
+<iframe width="100%" height="400" allowfullscreen="allowfullscreen" src="https://www.markdown.cn/"></iframe>
 
 ---
 
