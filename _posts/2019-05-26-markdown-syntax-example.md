@@ -25,6 +25,10 @@ put more than 3 " - " to make a horizontal line, such as "\-\-\-".
 use "\*" and space to make lists, such as
 * item 1
 * item 2
+list inside another list could be achieved by three space.
+* list 1
+   * list 2
+      * list 3
 
 ### 6. Code blocks, support language highlight
 use " \`\`\`language " as beginning line and "\`\`\`" as end line to make coding blocks, such as following java code block.
@@ -37,4 +41,50 @@ class Solution {
     }
 }
 ``` 
-### 7.
+if the code is HTML then use "{% highlight html %}" and "{% endhighlight %}".
+{% highlight html %}
+<script type="text/javascript">
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
+{% endhighlight %}
+### 7. insert web page
+
+use "iframe" tag to insert a web page into markdown file, such as github page.
+
+---
+
+<iframe width="100%" height="400" allowfullscreen="allowfullscreen" src="https://github.com/"></iframe>
+
+---
+
+### 8. insert a quote
+use "\>" to quote, such as
+> some quote
+
+### 9. insert an image
+use "\!\[alt\](image src "title") to inset an image, such as
+
+![scene](http://pic37.nipic.com/20140110/17563091_221827492154_2.jpg)
+
+### 10. inset a table
+use
+```
+header | header | header
+:-:|:-:|:-:|
+content | content | content
+
+```
+such as
+
+header 1 | header 2 | header 3
+:-:|:-:|:-: 
+1 | 2 | 3 |
+
+
