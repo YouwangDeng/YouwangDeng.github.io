@@ -41,7 +41,7 @@ class Solution {
     }
 }
 ``` 
-if the code is HTML then use "\{% highlight html %\}" and "\{% endhighlight %\}".
+if the code is HTML then use jekyll highlight syntax.
 {% highlight html %}
 <script type="text/javascript">
 function isNumber(evt) {
