@@ -1,0 +1,51 @@
+title: Youwang Blog
+description: My Personal Blog
+author: Youwang Deng
+github: https://github.com/YouwangDeng
+about: I'm Programmer for Python & Django. I've made quite a few web apps, especially on Django.
+disqus_shortname: stackproblems
+google_analytics: UA-XXXXXXXX-Y
+avatar_url: /static/img/avatar.jpg
+
+enableTags: true
+tagarray: []
+
+collections:
+  project:
+    output: true
+    permalink: /project/:path/
+
+social:
+    - icon: fa-linkedin
+      link: "https://www.linkedin.com/in/youwangdeng/"
+    - icon: fa-github
+      link: "https://github.com/YouwangDeng"
+
+share:
+  twitter_username: github.io
+  fb_appid: 1749788565247320
+
+urls:
+    - text: About Me
+      url: /about/
+    - text: My Projects
+      url: /projects/
+    - text: XML Feed
+      url: /feed.xml
+
+url: "https://youwangdeng.github.io"
+baseurl: ""
+paginate: 20
+per_page: 20
+paginate_path: "/page/:num/"
+markdown: kramdown
+gems:
+  - jekyll-paginate
+  - jekyll-gist
+
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+  endings: all
+  ignore:
+    envs: ['development']
