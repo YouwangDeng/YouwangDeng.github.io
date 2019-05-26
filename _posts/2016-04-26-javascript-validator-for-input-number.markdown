@@ -8,7 +8,7 @@ categories: [others]
 This javascript will validate/allow the number only when event key is pressed.
 For example result of it:
 
-<iframe width="100%" height="350" src="//jsfiddle.net/agaust/3qz105nn/embedded/html,result/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="350" src="https://www.baidu.com" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
 tutorial above, when you can not directly add the attribute inside html tag.
 but if you can add it, you can following this tutorial bellow:
