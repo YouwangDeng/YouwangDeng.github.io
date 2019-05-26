@@ -30,8 +30,6 @@ urls:
       url: /about/
     - text: My Projects
       url: /projects/
-    - text: XML Feed
-      url: /feed.xml
 
 url: "https://youwangdeng.github.io"
 baseurl: ""
