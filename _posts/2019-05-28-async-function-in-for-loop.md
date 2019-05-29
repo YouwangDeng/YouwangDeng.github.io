@@ -2,7 +2,7 @@
 layout: post
 title:  "Async Function in For Loop in JS"
 date:   2019-05-28 16:28:10 +0800
-categories: [javascript, async]
+categories: [JavaScript, Async]
 ---
 In JavaScript, if a sequence of async methods has to been executed one by one, and the result should be returned after the last async method, then should use "for ... of" syntax instead of "forEach". [Stackoverflow](https://stackoverflow.com/questions/37576685/using-async-await-with-a-foreach-loop)
 

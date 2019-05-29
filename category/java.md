@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: java
+categories: Java
 title: Java
-permalink: /category/java
+permalink: /category/Java
 ---

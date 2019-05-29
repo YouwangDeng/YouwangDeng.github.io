@@ -2,7 +2,7 @@
 layout: post
 title:  "Use react-native-storage to cache data in app"
 date:   2019-05-28 17:28:10 +0800
-categories: [javascript, react-native]
+categories: [JavaScript, React-Native]
 ---
 [react-native-storage](https://github.com/sunnylqm/react-native-storage) could be used to  cache data in react native.
 

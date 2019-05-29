@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: markdown
+categories: Markdown
 title: Markdown
-permalink: /category/markdown
+permalink: /category/Markdown
 ---

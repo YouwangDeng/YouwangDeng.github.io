@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: react-native
+categories: React-Native
 title: React Native
-permalink: /category/react-native
+permalink: /category/React-Native
 ---

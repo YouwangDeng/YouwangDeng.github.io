@@ -2,7 +2,7 @@
 layout: post
 title:  "Markdown syntax example"
 date:   2019-05-26 19:22:10 +0800
-categories: [markdown]
+categories: [Markdown]
 ---
 
 Following are some examples of markdown syntax.

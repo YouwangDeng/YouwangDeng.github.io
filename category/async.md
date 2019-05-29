@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: async
+categories: Async
 title: Async
-permalink: /category/async
+permalink: /category/Async
 ---
