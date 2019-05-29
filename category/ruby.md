@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: ruby
+categories: Ruby
 title: Ruby
-permalink: /category/ruby
+permalink: /category/Ruby
 ---

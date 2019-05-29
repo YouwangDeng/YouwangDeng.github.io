@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: security
+categories: Security
 title: Security
-permalink: /category/security
+permalink: /category/Security
 ---

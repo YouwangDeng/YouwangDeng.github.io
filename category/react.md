@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: react
+categories: React
 title: React
-permalink: /category/react
+permalink: /category/React
 ---

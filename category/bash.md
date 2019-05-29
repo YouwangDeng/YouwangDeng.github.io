@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: bash
+categories: Bash
 title: Bash
-permalink: /category/bash
+permalink: /category/Bash
 ---
