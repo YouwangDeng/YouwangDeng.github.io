@@ -80,6 +80,26 @@ public class ListNode {
     * list.clone() (shallow copy)
     * list.clear()
 
+### Stack
+* LIFO
+* implementation 
+    * ListNode
+    * Array
+* **import java.util.Stack;**
+* **Stack\<Integer> stack = new Stack\<Integer>();**
+* Java API for [java.util.Stack](https://docs.oracle.com/javase/8/docs/api/java/util/Stack.html)
+    * stack.peek()
+    * stack.push(value)
+    * stack.pop()
+    * stack.addAll(Collection<T>);
+    * stack.search(value), will return a 1 based distance from the top
+    * stack.size()
+    * stack.empty() or stack.isEmpty()
+
+
+
+
+
 
 
 
