@@ -96,7 +96,20 @@ public class ListNode {
     * stack.size()
     * stack.empty() or stack.isEmpty()
 
-
+### Queue
+* FILO
+* implementation
+    * Array
+    * ListNode
+* **import java.util.LinkedList;**
+* **Queue<Integer> queue = new LinkedList<>();** or **Queue<Integer> queue = new LinkedList<>(Collection<T>);**
+* is an `interface` not a `class`
+* Java API for [java.util.Queue](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html)
+    * LinkedList is an implementation of Queue
+    * queue.offer(value)
+    * queue.poll()
+    * queue.peek()
+    
 
 
 
