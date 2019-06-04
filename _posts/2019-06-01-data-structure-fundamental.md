@@ -109,7 +109,27 @@ public class ListNode {
     * queue.offer(value)
     * queue.poll()
     * queue.peek()
-    
+
+###Deque(pronounced as 'deck')
+* double end queue
+* an `interface` not a `class`
+* `ArrayDeque` is an implementation of `Deque`
+* **import java.util.Deque;**
+* **import java.util.ArrayDeque;**
+* **Deque<Integer> deque = new ArrayDeque<Integer>();**
+* Java API for [java.util.ArrayDeque](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayDeque.html)
+    * deque.add(value), deque.addFirst(value) or deque.addLast(value), `add` would return void
+    * deque.offer(value) or deque.offerFirst(value) or deque.offerLast(value), `offer` method return a `boolean`
+    * deque.addAll(Collection<T>)
+    * deque.getFirst() or deque.getLast(), retrieve **not** remove
+    * deque.peek() or deque.peekFirst() or deque.peekLast(), retrieve **not** remove
+    * deque.push(value), like a stack
+    * deque.pop(), like a stack
+    * deque.poll() or deque.pollFirst() or deque.pollLast(), retrieve **and** remove
+    * deque.remove() or deque.removeFirst() or deque.removeLast() 
+    * deque.size()
+    * deque.clone() (shallow copy)
+    * deque.clear()
 
 
 
