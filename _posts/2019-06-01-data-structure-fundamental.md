@@ -54,6 +54,32 @@ categories: [Data-Structure, Time-Complexity, Java]
     * listExample.subList(from,to)
 
 ### LinkedList
+* memory usage(pro)
+* element access time complexity(con)
+* pointers manipulation
+* Node Structure
+```java
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x;}
+}
+```
+* Java API for [java.util.LinkedList](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html)
+    * list.add(value) or list.add(index, value)
+    * list.addAll(Collection<T>)
+    * list.addFirst(value) or list.addLast(value)
+    * list.get(index) or list.getFirst() or list.getLast()
+    * list.push(value)
+    * list.pop()
+    * list.offer(value) or list.offerFirst(value) or list.offerLast(value)
+    * list.poll() or list.pollFirst() or list.pollLast()
+    * list.peek() or list.peekFirst() or list.peekLast()
+    * list.remove() or list.removeFirst() or list.removeLast() 
+    * list.size()
+    * list.clone() (shallow copy)
+    * list.clear()
+
 
 
 
