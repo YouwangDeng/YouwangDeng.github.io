@@ -220,6 +220,30 @@ public class ListNode {
                 * -->
                 * <--
 
+### Graph
+* representation
+    * GraphNode
+    ```java
+    class GraphNode{
+        int val;
+        List<GraphNode> neighbors;
+        public GraphNode(int _val, List<GraphNode> _neighbors) {
+            this.val = _val;
+            this.neighbors = _neighbors;
+        }
+    }
+    ```
+    * Adjacent List or HashMap
+    ```java
+    Map<String, List<String>> graph = new HashMap<>();
+    ```
+    * Adjacent Matrix
+* Traversal
+    * Mark nodes as not visited, visiting and visited  
+    * DFS
+    * BFS
+
+
 
 
 
