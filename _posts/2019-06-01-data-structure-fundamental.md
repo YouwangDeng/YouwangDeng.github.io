@@ -119,13 +119,13 @@ public class ListNode {
 * **Deque<Integer> deque = new ArrayDeque<Integer>();**
 * Java API for [java.util.ArrayDeque](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayDeque.html)
     * deque.add(value), deque.addFirst(value) or deque.addLast(value), `add` would return void
-    * deque.offer(value) or deque.offerFirst(value) or deque.offerLast(value), `offer` method return a `boolean`
+    * deque.offer(value) or deque.offerFirst(value) or deque.offerLast(value), `offer` method return a `boolean`, offer will add value at the tail
     * deque.addAll(Collection<T>)
     * deque.getFirst() or deque.getLast(), retrieve **not** remove
     * deque.peek() or deque.peekFirst() or deque.peekLast(), retrieve **not** remove
-    * deque.push(value), like a stack
-    * deque.pop(), like a stack
-    * deque.poll() or deque.pollFirst() or deque.pollLast(), retrieve **and** remove
+    * deque.push(value), push at the head,like a stack
+    * deque.pop(), pop from the head, like a stack
+    * deque.poll() or deque.pollFirst() or deque.pollLast(), retrieve **and** remove, poll would remove value at the head
     * deque.remove() or deque.removeFirst() or deque.removeLast() 
     * deque.size()
     * deque.clone() (shallow copy)
