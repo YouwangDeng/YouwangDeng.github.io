@@ -131,6 +131,97 @@ public class ListNode {
     * deque.clone() (shallow copy)
     * deque.clear()
 
+### Tree
+* Recursived defined
+* Usage
+    * File System
+    * HTML DOM Tree
+* Type
+    * Trie Tree
+    * B Tree
+    * Binary Tree
+        * Binary Search Tree
+            * RB Tree
+            * AVL
+    * N-aryTree
+* Implementation
+    * TreeNode
+    * Binary TreeNode
+        ```java
+        public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+        }
+        ```
+    * N-ary TreeNode
+        ```java
+        class Node {
+            public int val;
+            public List<Node> children;
+            public Node() {}
+
+            public Node(int _val,List<Node> _children) {
+                val = _val;
+                children = _children;
+            }
+        };
+        ```
+    * TrieNode
+        ```java
+        class TrieNode {
+            public boolean isWord; 
+            public TrieNode[] children;
+            public TrieNode() {
+                isWord = false;
+                children = new TrieNode[26]
+            }
+        }
+        ```
+* Terminologies
+    * Node
+        * root
+        * leaf
+    * Relation
+        * parent node
+        * child node
+        * sibling node
+        * ancestor node
+        * subtree
+    * Edge
+    * Path
+    * Height 
+    * Depth
+    * Level
+* Traversal
+    * BFS
+        * By Level
+    * DFS
+        * Pre-Order
+            * iterative
+                * -->
+                * <--
+            * recursive
+                * -->
+                * <--
+        * In-Order
+            * iterative
+                * -->
+                * <--
+            * recursive
+                * -->
+                * <--
+        * Post-Order
+            * iterative
+                * -->
+                * <--
+            * recursive
+                * -->
+                * <--
+
+
+
 
 
 
