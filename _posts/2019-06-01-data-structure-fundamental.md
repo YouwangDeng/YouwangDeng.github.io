@@ -296,6 +296,47 @@ public class ListNode {
     * This class and its views and iterators implement all of the optional methods of the Map and Iterator interfaces.
     * Like Hashtable but unlike HashMap, this class does not allow null to be used as a key or value.
     * ConcurrentHashMaps support a set of **sequential and parallel** bulk operations that, unlike most Stream methods, are designed to be **safely**, and often **sensibly**, applied even with maps that are being **concurrently updated** by other threads
+    
+### LinkedHashMap
+* `public class LinkedHashMap<K,V> extends HashMap<K,V>
+implements Map<K,V>`
+* **Hash table** and **linked list** implementation of the Map interface, with **predictable iteration order**
+* >This implementation differs from HashMap in that it **maintains** a **doubly-linked list** running through all of its entries. This linked list defines the iteration ordering, which is normally the order in which keys were inserted into the map (insertion-order). Note that insertion order is not affected if a key is re-inserted into the map.
+* This technique is particularly useful if a module takes a map on input, copies it, and later returns results whose order is determined by that of the copy. 
+`Map<K,V> copy = new LinkedHashMap<K,V>(mapExample);` 
+* Order Guarranted
+    * Default Insertion Order
+    * Access Order
+        * >A special constructor is provided to create a linked hash map whose order of iteration is the order in which its entries were **last accessed**, from least-recently accessed to most-recently (access-order). This kind of map is well-suited to building **LRU** caches. Invoking the **put, putIfAbsent, get, getOrDefault, compute, computeIfAbsent, computeIfPresent, or merge** methods results in an access to the corresponding entry (assuming it exists after the invocation completes). The **replace** methods **only** result in an access of the entry **if the value is replaced**. 
+        * >`public LinkedHashMap(int initialCapacity,float loadFactor,boolean accessOrder)`
+        * >accessOrder - the ordering mode, true for access-order, false for insertion-order
+* The **removeEldestEntry(Map.Entry)** method may be overridden to impose a policy for removing stale mappings automatically when new mappings are added to the map.
+    ```java
+    private static final int MAX_ENTRIES = 100;
+    protected boolean removeEldestEntry(Map.Entry eldest) {
+        return size() > MAX_ENTRIES;
+        }
+    ```
+    * This method typically **does not modify the map in any way**, instead allowing the map to **modify itself** as directed by its **return value**. It is permitted for this method to modify the map directly, but if it does so, it must return **false**(indicating that the map should not attempt any further modification).
+    * This implementation merely returns false (so that this map acts like a normal map - the eldest element is never removed).
+    * **eldest** - The **least recently** inserted entry in the map, or if this is an access-ordered map, the least recently accessed entry. This is the entry that will be removed it this method returns true. If the map was empty prior to the put or putAll invocation resulting in this invocation, this will be the entry that was just inserted; in other words, if the map contains a single entry, the eldest entry is also the newest.
+* Performance
+    * This class provides all of the optional Map operations, and permits null elements.
+    * Like HashMap, it provides **constant-time performance** for the basic operations (add, contains and remove), assuming the hash function disperses elements properly among the buckets.
+    * Performance is likely to be just **slightly below** that of HashMap, due to the added expense of maintaining the linked list
+    * Iteration over the collection-views of a LinkedHashMap requires time proportional to **the size of the map**, regardless of its capacity. Iteration over a **HashMap** is likely to be **more expensive**, requiring time proportional to its capacity.
+    * initial capacity and load factor influence the performance, however, that the penalty for choosing an excessively high value for initial capacity is less severe for this class than for HashMap, as iteration times for this class are unaffected by capacity.
+* implementation is not synchronized.
+* In **insertion-ordered** linked hash maps, **merely changing the value** associated with a key that is already contained in the map **is not** a structural modification. In **access-ordered** linked hash maps, **merely querying** the map with get **is** a structural modification
+* Java API for [java.util.LinkedHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html)
+    * constructor for accesss order, `LinkedHashMap(int initialCapacity, float loadFactor, boolean accessOrder)`
+    * Methods inherited from Map
+    * protected boolean	removeEldestEntry(Map.Entry<K,V> eldest)
+
+
+
+
+                     
 
 
 
