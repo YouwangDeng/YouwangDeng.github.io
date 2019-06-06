@@ -315,7 +315,7 @@ implements Map<K,V>`
     private static final int MAX_ENTRIES = 100;
     protected boolean removeEldestEntry(Map.Entry eldest) {
         return size() > MAX_ENTRIES;
-        }
+    }
     ```
     * This method typically **does not modify the map in any way**, instead allowing the map to **modify itself** as directed by its **return value**. It is permitted for this method to modify the map directly, but if it does so, it must return **false**(indicating that the map should not attempt any further modification).
     * This implementation merely returns false (so that this map acts like a normal map - the eldest element is never removed).
