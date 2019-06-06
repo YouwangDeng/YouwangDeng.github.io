@@ -287,6 +287,18 @@ public class ListNode {
 * Java API for [java.util.HashTable](https://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html)
     * methods inherited from Map
 
+### ConcurrentHashMap
+* A hash table supporting full concurrency of retrievals and high expected concurrency for updates
+* **However**, even though all operations are **thread-safe**, retrieval operations **do not entail locking**, and there is not any support for locking the entire table in a way that prevents all access
+* Retrievals reflect the results of the **most recently completed** update operations holding upon their onset
+* Iterators are designed to be used by only one thread at a time
+* Java API for [java.util.concurrent.ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html)
+    * This class and its views and iterators implement all of the optional methods of the Map and Iterator interfaces.
+    * Like Hashtable but unlike HashMap, this class does not allow null to be used as a key or value.
+    * ConcurrentHashMaps support a set of **sequential and parallel** bulk operations that, unlike most Stream methods, are designed to be **safely**, and often **sensibly**, applied even with maps that are being **concurrently updated** by other threads
+
+
+
 
 
 
