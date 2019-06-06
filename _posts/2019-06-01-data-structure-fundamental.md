@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Fundamental Data Structure"
-date:   2019-06-01 13:11:10 +0800
+date:   2019-06-06 13:11:10 +0800
 categories: [Data-Structure, Time-Complexity, Java]
 ---
 ### Time Complexity
@@ -243,7 +243,40 @@ public class ListNode {
     * DFS
     * BFS
 
+### Map
+* key-value pair data storage
+* Implementation
+    * Array of LinkedList
+* offer **Amortized Constant time** access to elements
+* an `interface` not a `class`
+* Java API for [java.util.Map](https://docs.oracle.com/javase/8/docs/api/java/util/Map.html)
+    * Map.Entry<K,V> entry
+    * map.put(key,value) or map.putIfAbsent(key,value) or map.putAll(Map<K,V> map2)
+    * map.get(key) or map.getOrDefault(key, defaultValue)
+    * map.containsKey()
+    * map.containsValue()
+    * map.remove(key)
+    * map.keySet()
+    * map.values()
+    * map.entrySet()
+    * map.isEmpty()
+    * map.size()
+    * map.clear()
 
+### HashMap
+* Hash table based implementation of the Map interface
+* This class makes **no guarantees** as to the **order** of the map; in particular, it does **not guarantee** that the order will remain **constant** over time.
+* The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.
+* >This implementation provides **constant-time** performance for the basic operations (get and put), assuming the hash function **disperses the elements properly** among the buckets. Iteration over collection views requires time proportional to the "capacity" of the HashMap instance (**the number of buckets**) **plus** its size (**the number of key-value mappings**). Thus, it's very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.
+* Initial capacity and Load factor affect its performance
+* >When the number of entries in the hash table exceeds the product of the load factor and the current capacity, the hash table is **rehashed** (that is, internal data structures are **rebuilt**) so that the hash table has approximately **twice** the number of buckets.
+* the default load factor (.75) offers a good tradeoff between time and space costs.
+    * >**Higher values** decrease the **space overhead** but increase the **lookup cost** (reflected in most of the operations of the HashMap class, including get and put). 
+    * >The **expected number of entries** in the map and its **load factor** should be taken into account when **setting its initial capacity**, so as to minimize the number of rehash operations. If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.
+* Note that using many keys with the same hashCode() is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are Comparable, this class may use comparison order among keys to help break ties.
+* Java API for [java.util.HashMap](https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)
+    * not synchronized, it must be synchronized externally
+    * methods inherited from Map
 
 
 
