@@ -279,11 +279,11 @@ public class ListNode {
     * methods inherited from Map
 
 ### HashTable
-* This class implements a hash table, which maps keys to values. Any non-null object can be used as a key or as a value.
-* the objects used as keys must implement the hashCode method and the equals method.
+* This class implements a hash table, which maps keys to values. Any **non-null** object can be used as a key or as a value.
+* the objects used as keys must implement the **hashCode** method and the **equals** method.
 * Hashtable is synchronized
-    * > If a thread-safe implementation is not needed, it is recommended to use HashMap in place of Hashtable.
-    * > If a thread-safe highly-concurrent implementation is desired, then it is recommended to use ConcurrentHashMap in place of Hashtable.
+    * > If a thread-safe implementation is **not needed**, it is recommended to use **[HashMap](https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)** in place of Hashtable.
+    * > If a thread-safe **highly-concurrent** implementation is desired, then it is recommended to use **[ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html)** in place of Hashtable.
 * Java API for [java.util.HashTable](https://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html)
     * methods inherited from Map
 
