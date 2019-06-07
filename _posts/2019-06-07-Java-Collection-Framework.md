@@ -16,4 +16,4 @@ categories: [Data-Structure, Time-Complexity, Java]
         >These are the methods that perform useful computations, such as **searching and sorting**, on objects that implement collection interfaces
 * Interface Hierachy
 
-![interface](https://github.com/YouwangDeng/YouwangDeng.github.io/blob/master/static/img/_posts/java_collection_interface.png)
+![interface](https://raw.githubusercontent.com/YouwangDeng/YouwangDeng.github.io/blob/master/static/img/_posts/java_collection_interface.png)
