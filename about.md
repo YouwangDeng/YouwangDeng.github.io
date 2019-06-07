@@ -4,6 +4,6 @@ title: About
 permalink: /about/
 ---
 
-I'm Programmer for Python & Django. I've made quite a few web apps, especially on Django. Now, I am doing more on backend.
+I'm Youwang Deng, a Master Student at University of Southern California, majoring in Computer Science. I'm a software developer, familiar with Java, JavaScript, ReactJS and React Native. Actively looking for full-time Software Development Engineer position.
 
 email: dengyouwang@gmail.com
