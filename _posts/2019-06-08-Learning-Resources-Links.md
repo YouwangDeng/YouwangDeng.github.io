@@ -7,35 +7,35 @@ categories: [Java, Algorithm, Interview]
 
 ### **Java**
 
-* https://docs.oracle.com/javase/tutorial/collections/index.html
-* https://www.leveluplunch.com/java/examples/
-* http://how2j.cn/
-* https://zhuanlan.zhihu.com/c_1078346214935752704
+* [Java Collection Tutorial](https://docs.oracle.com/javase/tutorial/collections/index.html)
+* [Java Code Examples](https://www.leveluplunch.com/java/examples/)
+* [Learning Path for Java](http://how2j.cn/)
+* [Blogs about Java](https://zhuanlan.zhihu.com/c_1078346214935752704)
 
 ### **Open Source Project**
-* https://www.firsttimersonly.com/
-* https://up-for-grabs.net/#/
+* [Explore Open Source Community](https://www.firsttimersonly.com/)
+* [Find Open Source Project](https://up-for-grabs.net/#/)
 
 ### **Algorithm** 
-* https://algorithm-visualizer.org/
-* https://zhuanlan.zhihu.com/p/25697275
-* https://legacy.gitbook.com/book/soulmachine/algorithm-essentials/details
-* https://github.com/manrajgrover/algorithms-js
+* [Algorithm Visualizer](https://algorithm-visualizer.org/)
+* [LeetCode Notes](https://zhuanlan.zhihu.com/p/25697275)
+* [Algorithm Notes](https://legacy.gitbook.com/book/soulmachine/algorithm-essentials/details)
+* [Algorithm in JS](https://github.com/manrajgrover/algorithms-js)
 
 ### **System Design**
-* https://legacy.gitbook.com/book/soulmachine/system-design/details
+* [System Design Notes](https://legacy.gitbook.com/book/soulmachine/system-design/details)
 
 ### **Project**
-* https://www.shiyanlou.com/bootcamp/
-* https://www.imooc.com/
+* [Shiyanlou](https://www.shiyanlou.com/bootcamp/)
+* [Imooc](https://www.imooc.com/)
 
 ### **Resume**
-* http://www.cfdtlee.com/2018/04/01/job-hunting-how-to-write-resume/
+* [Tips on Good Resume](http://www.cfdtlee.com/2018/04/01/job-hunting-how-to-write-resume/)
 
 ### **Interview** 
-* https://www.1point3acres.com/bbs/
-* https://1o24bbs.com/
-* https://www.careercup.com/
-* https://medium.com/search?q=interviews
-* https://blog.pramp.com/
-* https://www.byte-by-byte.com/
+* [1point3Arce - Referral, Interview Questions](https://www.1point3acres.com/bbs/)
+* [1o24 - Referral, Interview Questions](https://1o24bbs.com/)
+* [CareerCup - Interview Questions](https://www.careercup.com/)
+* [Medium - Interview Questions](https://medium.com/search?q=interviews)
+* [Pramp - Mock Interview](https://blog.pramp.com/)
+* [ByteByByte - Mock Interview](https://www.byte-by-byte.com/)
