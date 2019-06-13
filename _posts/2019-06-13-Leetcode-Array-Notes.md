@@ -49,4 +49,7 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 - `move pointer strategy`
 - `check bound`
 
-
+### 31. Next Permutation
+- `find patter of permutation`
+- `back traverse find peak, then find change location, swap change location and reverse the back part`
+- `consider special case`
