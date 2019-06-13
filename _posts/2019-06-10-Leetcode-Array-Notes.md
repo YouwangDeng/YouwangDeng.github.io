@@ -11,4 +11,11 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 - `two pointer to solve sorted array problems`
 - `consider no result condition`
 
+### **4.Median of Two Sorted Arrays**
+- `abstract the problem to getKthMin problem`
+- `consider even and odd length of array`
+- `consider k VS length in getKthMin function`
+- `compare k/2 - 1 position in both array to abort half of k elements in either array`
+- `log(m+n) time complexity`
+
 
