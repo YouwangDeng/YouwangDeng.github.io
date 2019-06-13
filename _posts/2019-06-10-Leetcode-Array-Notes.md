@@ -6,6 +6,9 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 ---
 
 ### **1.Two Sum**
-```java
+- `array null, length and bound check`
+- `use hashmap to decrease time complexity`
+- `two pointer to solve sorted array problems`
+- `consider no result condition`
 
-```
+
