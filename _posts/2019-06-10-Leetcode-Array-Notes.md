@@ -24,4 +24,11 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 - `move pointer strategy`
 - `container store min bound water`
 
+### 15. 3Sum
+- `List<List<Integer>> res`
+- `skip duplicate answers outside for loop and inside for loop`
+- `reduce three sum to two sum`
+- `Arrays.asList(a,b,c) return List<Integer>`
+- `O(n^2) time complexity`
+
 
