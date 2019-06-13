@@ -31,4 +31,8 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 - `Arrays.asList(a,b,c) return List<Integer>`
 - `O(n^2) time complexity`
 
+### 16. 3Sum Closest
+- `use two pointer strategy`
+- `update minDiff in each loop`
+
 
