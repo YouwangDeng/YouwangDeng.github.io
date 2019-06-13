@@ -35,4 +35,9 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 - `use two pointer strategy`
 - `update minDiff in each loop`
 
+### 18. 4Sum
+- `use function to make code more readable`
+- `skip duplicate`
+- `check bound to skip or end loop`
+
 
