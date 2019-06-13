@@ -45,4 +45,8 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 - `in place modification of array`
 - `move pointer strategy`
 
+### 27. Remove Element
+- `move pointer strategy`
+- `check bound`
+
 
