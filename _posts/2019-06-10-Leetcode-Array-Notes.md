@@ -40,4 +40,9 @@ categories: [Java, Leetcode, Leetcode-Array, ]
 - `skip duplicate`
 - `check bound to skip or end loop`
 
+### 26. Remove Duplicates from Sorted Array
+- `confirm the return type`
+- `in place modification of array`
+- `move pointer strategy`
+
 
