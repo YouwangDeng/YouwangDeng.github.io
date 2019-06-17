@@ -71,3 +71,20 @@ double average = roster
 - Aggregate operations process elements from a stream, it process elements from a stream, not directly from a collection.
 - Aggregate operations support **behavior as parameters**, you can specify `lambda expressions` as parameters for most aggregate operations.
 
+### Stream.reduce Method
+
+```java
+Integer totalAgeReduce = roster
+   .stream()
+   .map(Person::getAge)
+   .reduce(
+       0,
+       (a, b) -> a + b);
+```
+
+The reduce operation in this example takes two arguments:
+
+- `identity`: The identity element is both the **initial value of the reduction** and the **default result** if there are no elements in the stream. 
+- `accumulator`: The accumulator function takes two parameters: a partial result of the reduction and the next element of the stream, such as `(a, b) -> a + b`
+
+
