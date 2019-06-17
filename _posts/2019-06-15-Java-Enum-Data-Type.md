@@ -5,16 +5,20 @@ date:   2019-06-15 20:30:00 +0800
 categories: [Java, Data-Structure]
 ---
 ### Constructor
+
 >put constructor inside a class instead of a function
+
 ```java
 public enum Color {
     RED,BLUE,GREEN,BLACK;
 }
 ```
+
 > the above constructor acutally call four times `Enum(String name, int ordinal)`
 
 ### [API](https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html)
 * access
+
 ```java
 Enum[] colors = Color.values();
 System.println(colors[0]);//RED
@@ -24,7 +28,9 @@ System.out.println(Color.valueOf("RED"));//RED
 System.out.println(Color.RED.ordinal());//0
 System.out.println(Color.valueOf("RED").ordinal());//0
 ```
+
 ### Build a Enum Data Type with methods
+
 ```java
 enum WeekDay {
     // constructor of a Enum, must be declared before constructor, end with";"
