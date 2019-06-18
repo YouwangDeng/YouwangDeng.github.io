@@ -15,9 +15,10 @@ class Example extends React.Component {
     }
     render() {
         let list = [];
-        this.dataExample.forEach(e=>{
+        this.dataExample.forEach((e,i)=>{
+            // need to add a key to each item in the list
             list.push(
-                <View>
+                <View key={e + i}>
                     <Text>{e.title}</Text>
                 </View>
             );
