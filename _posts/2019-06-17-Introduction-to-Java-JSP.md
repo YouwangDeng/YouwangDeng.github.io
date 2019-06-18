@@ -18,5 +18,7 @@ categories: [Java, JSP]
 - JSP
     >A JSP is a `text document` which contains `two types` of text: `static data` and `dynamic data`. The static data can be expressed in any `text-based format` (like HTML, XML, SVG and WML), and the dynamic content can be expressed by `JSP elements`.
 
+    ![JSP and Servlet](https://github.com/YouwangDeng/YouwangDeng.github.io/raw/master/static/img/_posts/jsp_servlet.jpg)
+
 
 
