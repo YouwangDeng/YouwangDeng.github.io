@@ -9,7 +9,8 @@ categories: [Java, JSP]
 - A `server side` technology
 - Used to create **dynamic web content**
 - `Tags` are used to insert `JAVA` code into `HTML` pages
--  An advanced version of Servlet Technology
-- JSP is first converted into servlet by JSP container before processing the client’s request
+-  An advanced version of Servlet Technology, `Extension to Servlet`, it has all features of servlets, implicit objects and custom tags
+- JSP is first **converted into servlet** by JSP container before processing the client’s request
+
 
 
