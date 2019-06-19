@@ -33,4 +33,4 @@ categories: [Java, Servlet]
 
     ![cgi](https://github.com/YouwangDeng/YouwangDeng.github.io/raw/master/static/img/_posts/cgi.jpg)
 
-![difference](https://github.com/YouwangDeng/YouwangDeng.github.io/raw/master/static/img/_posts/servlet_cgi.png)
+    ![difference](https://github.com/YouwangDeng/YouwangDeng.github.io/raw/master/static/img/_posts/servlet_cgi.png)
