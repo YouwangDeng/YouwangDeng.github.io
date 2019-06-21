@@ -39,6 +39,6 @@ class JDBC_Demo {
         } catch(Exception e) {
             System.out.println(e);
         }
-	}
+    }
 }
 ```
