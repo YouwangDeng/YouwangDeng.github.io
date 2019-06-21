@@ -33,7 +33,18 @@ Benefits
 #### AMQP
 >The `Advanced Message Queuing Protocol` (AMQP) is an `open standard ` **`wire-level protocol`** `for message-oriented middleware. The defining features of AMQP are `message orientation`, `queuing`, `routing` (including `point-to-point` and `publish-and-subscribe`), reliability and security.
 
->JMS is API and AMQP is a protocol. JMS is only a API spec. It doesn't use any protocol. A JMS provider (like ActiveMQ) could be using any underlying protocol to realize the JMS API.
+>JMS is `API` and AMQP is a `protocol`. JMS is only a API spec. It doesn't use any protocol. A `JMS provider` (like ActiveMQ) could be using any underlying protocol to realize the JMS API.
 
+### ActiveMQ vs RabbitMQ vs Kafka
+- Throughput
+    > Kafka > RabbitMQ > ActiveMQ
+- Latency
+    > RabbitMQ(Erlang) < Kafka(Scala&Java) < ActiveMQ(Java)
+- Infrastructure
+    > RabbitMQ(AMQP, Distributed Platform)
+
+    > Kafka(Distributed streaming platform)
+
+    > ActiveMQ(JMS)
 
 
