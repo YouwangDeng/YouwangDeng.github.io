@@ -28,3 +28,12 @@ Benefits
 >There are a number of open source choices of messaging middleware systems, including Apache `ActiveMQ`, Apache `Kafka`,  Apache `RocketMQ`,  `RabbitMQ`, etc.
 
 ### JMS VS AMQP
+#### JMS
+>The `Java Message Service` (JMS) API is a `Java` Message Oriented Middleware (`MOM`) API for sending messages between `two or more clients`. JMS is a part of the `Java Platform`. It is a `messaging standard` that allows application components based on the Java Enterprise Edition (`Java EE`) to create, send, receive, and read messages. It allows the communication between different components of a distributed application to be `loosely coupled`, `reliable`, and `asynchronous`.
+#### AMQP
+>The `Advanced Message Queuing Protocol` (AMQP) is an `open standard ` **`wire-level protocol`** `for message-oriented middleware. The defining features of AMQP are `message orientation`, `queuing`, `routing` (including `point-to-point` and `publish-and-subscribe`), reliability and security.
+
+>JMS is API and AMQP is a protocol. JMS is only a API spec. It doesn't use any protocol. A JMS provider (like ActiveMQ) could be using any underlying protocol to realize the JMS API.
+
+
+
