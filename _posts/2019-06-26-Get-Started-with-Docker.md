@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Get Started with Docker"
-date:   2019-06-26 18:30:00 +0800
+date:   2019-06-28 18:30:00 +0800
 categories: [Docker]
 ---
 ### Define a container with `Dockerfile`
@@ -142,4 +142,38 @@ networks:
 > docker stack rm getstartedlab
 
 > docker swarm leave --force
+
+### `Swarm Cluster`
+> A `swarm` is a group of machines that are running `Docker` and joined into a cluster. 
+
+> `Swarm managers` can use several `strategies` to run containers
+
+> Swarm managers are the only machines in a swarm that can `execute your commands`, or authorize other machines to join the swarm as `workers`
+
+### Set up a Swarm
+> A swarm is made up of multiple `nodes`, which can be either `physical` or `virtual machines`.
+
+#### create two vm on mac as nodes
+>docker-machine create --driver virtualbox myvm1
+
+>docker-machine create --driver virtualbox myvm2
+
+#### get vm ip address
+> docker-machine ls
+
+#### init the swarm and add nodes
+> docker-machine ssh myvm1 "docker swarm init --advertise-addr \<myvm1 ip>"
+
+> docker-machine ssh myvm2 "docker swarm join --tokern \<token> \<myvm1_ip>:port"
+
+#### Configure a docker-machine shell to the swarm manager
+> docker-machine env myvm1
+
+> echo $(docker-machine env myvm1)
+
+#### Deploy the app on the swarm manager
+> docker stack deploy -c docker-compose.yml ServiceName
+
+
+
 
