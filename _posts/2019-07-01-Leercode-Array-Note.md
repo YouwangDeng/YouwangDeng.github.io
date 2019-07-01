@@ -12,4 +12,7 @@ categories: [Leetcode-Array]
 - use `HashMap` to cache data
 - `two pointers` used on sorted array
 - `math logic` usually related with `swap` and `reverse`
+- `2D` index manipulation
+- use `boolean array` to cache `used` or `visited` state
+
 
