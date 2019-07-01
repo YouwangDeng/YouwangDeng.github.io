@@ -26,5 +26,6 @@ categories: [Leetcode-Array]
 - two pass, `forward` and `backword`
 - shift k position -- `triple reversion` -- (n-k)(1),k(2), n(3)
 - `slidig window` and `Map` or `Set` or TreeMap or TreeSet(ceiling(x), floor(x))
+- update `min1` and `min2` pointer 
 
 
