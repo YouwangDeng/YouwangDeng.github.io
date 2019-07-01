@@ -14,5 +14,6 @@ categories: [Leetcode-Array]
 - `math logic` usually related with `swap` and `reverse`
 - `2D` index manipulation
 - use `boolean array` to cache `used` or `visited` state
+- consider `each element` and then combine the result
 
 
