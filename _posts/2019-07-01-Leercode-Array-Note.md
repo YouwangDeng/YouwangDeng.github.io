@@ -4,7 +4,7 @@ title:  "Leetcode Array Note"
 date:   2019-07-01 18:30:00 +0800
 categories: [Leetcode-Array]
 ---
-### Leetcode Array Note
+### Array - linear data structure
 - index(`pointer`) manipulation
 - check `bound` in `loop`
 - `skip` element to avoid `duplicate`
@@ -16,4 +16,5 @@ categories: [Leetcode-Array]
 - use `boolean array` to cache `used` or `visited` state
 - consider `each element` and then combine the result
 - `digits` manipulation, use of a `carry` state
+- 
 
