@@ -16,5 +16,6 @@ categories: [Leetcode-Array]
 - use `boolean array` to cache `used` or `visited` state
 - consider `each element` and then combine the result
 - `digits` manipulation, use of a `carry` state
-- 
+- `int[] arr = new int[n+1]`
+
 
