@@ -17,5 +17,9 @@ categories: [Leetcode-Array]
 - consider `each element` and then combine the result
 - `digits` manipulation, use of a `carry` state
 - `int[] arr = new int[n+1]`
+- `In place` manipulation
+    - use one pointer to move
+    - use two pointers to swap
+    - use value to store state, 0 or 1, or use equations to generate multiply states
 
 
