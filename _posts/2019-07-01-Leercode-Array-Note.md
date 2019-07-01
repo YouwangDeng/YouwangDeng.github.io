@@ -21,5 +21,9 @@ categories: [Leetcode-Array]
     - use one pointer to move
     - use two pointers to swap
     - use value to store state, 0 or 1, or use equations to generate multiply states
+- index usually involved with '`+1`' or '`-1`'
+- usage of `sum`
+- two pass, `forward` and `backword`
+- shift k position -- `triple reversion` -- (n-k)(1),k(2), n(3)
 
 
