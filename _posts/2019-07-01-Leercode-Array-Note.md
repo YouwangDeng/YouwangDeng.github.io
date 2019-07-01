@@ -6,6 +6,9 @@ categories: [Leetcode-Array]
 ---
 ### Leetcode Array Note
 - index(`pointer`) manipulation
-- check bound in loop
-- element remove, replace, partation
-- use HashMap to cache data
+- check `bound` in `loop`
+- `skip` element to avoid `duplicate`
+- element `remove`, `replace`, `partation`
+- use `HashMap` to cache data
+- `two pointers` used on sorted array
+
