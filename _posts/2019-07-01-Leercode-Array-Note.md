@@ -11,4 +11,5 @@ categories: [Leetcode-Array]
 - element `remove`, `replace`, `partation`
 - use `HashMap` to cache data
 - `two pointers` used on sorted array
+- `math logic` usually related with `swap` and `reverse`
 
