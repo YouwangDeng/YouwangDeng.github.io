@@ -15,5 +15,5 @@ categories: [Leetcode-Array]
 - `2D` index manipulation
 - use `boolean array` to cache `used` or `visited` state
 - consider `each element` and then combine the result
-
+- `digits` manipulation, use of a `carry` state
 
