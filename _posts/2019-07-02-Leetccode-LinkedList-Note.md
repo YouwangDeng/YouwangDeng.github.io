@@ -26,3 +26,6 @@ public class ListNode {
 - use `pointers` to manipulate LinkedList 
 - `pre`, `cur`, `next`
 - figure out the `time` and `order` to update those pointers
+- `dummy node` to simplify `modification`
+- basic operations
+    - `reverse`(pre, cur, next)
