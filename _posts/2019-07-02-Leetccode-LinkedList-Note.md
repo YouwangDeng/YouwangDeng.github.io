@@ -30,3 +30,4 @@ public class ListNode {
 - basic operations
     - `reverse`(pre, cur, next)
     - `reorder`(dummy), be careful about the next pointer of each node element
+    - `combine`, be carful about the `end(null)` of the LinkedList
