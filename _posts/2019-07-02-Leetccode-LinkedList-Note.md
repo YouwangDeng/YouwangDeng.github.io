@@ -23,4 +23,6 @@ public class ListNode {
 }
 ```
 #### Notes
-- 
+- use `pointers` to manipulate LinkedList 
+- `pre`, `cur`, `next`
+- figure out the `time` and `order` to update those pointers
