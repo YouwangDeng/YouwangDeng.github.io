@@ -29,3 +29,4 @@ public class ListNode {
 - `dummy node` to simplify `modification`
 - basic operations
     - `reverse`(pre, cur, next)
+    - `reorder`(dummy), be careful about the next pointer of each node element
