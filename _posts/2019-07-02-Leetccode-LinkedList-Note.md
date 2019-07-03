@@ -36,3 +36,4 @@ public class ListNode {
     - reverse `by group or length`, use `pre`(only change next pointer), `subTail`(only change next pointer), `Temp`(keep moving), `reverse pointer between subTail and Temp`, `insert Temp after pre`
     - whenever use a dummy node, means use two nodes, `ListNode dummy = new ListNode(-1); ListNode iter = dummy;`
     - remember to cut the tail at the end of LinkedList, `cur.next = null;`
+    - use `recursion` and `HashMap` to `deep copy` a LinkedList
