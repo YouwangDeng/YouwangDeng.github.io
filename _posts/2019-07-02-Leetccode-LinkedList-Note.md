@@ -31,6 +31,7 @@ public class ListNode {
     - `reverse`(pre, cur, next)
     - `reorder`(dummy), be careful about the next pointer of each node element
     - `combine`, be carful about the `end(null)` of the LinkedList
+    - `rotate` the list by k steps, invloved with building a loop and cut a loop
 - advanced operations
     - reverse `by group or length`, use `pre`(only change next pointer), `subTail`(only change next pointer), `Temp`(keep moving), `reverse pointer between subTail and Temp`, `insert Temp after pre`
     - whenever use a dummy node, means use two nodes, `ListNode dummy = new ListNode(-1); ListNode iter = dummy;`
