@@ -37,4 +37,4 @@ public class ListNode {
     - whenever use a dummy node, means use two nodes, `ListNode dummy = new ListNode(-1); ListNode iter = dummy;`
     - remember to cut the tail at the end of LinkedList, `cur.next = null;`
     - use `recursion` and `HashMap` to `deep copy` a LinkedList
-    - DoubleLinkedList implemementation
+    - `DoubleLinkedList` implemementation
