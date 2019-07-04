@@ -8,3 +8,4 @@ categories: [Leetcode-String]
 - String is `immutable`
 - char array is `mutable`
 - `StringBuilder` reduce space complexity
+- `Palindrome` problem
