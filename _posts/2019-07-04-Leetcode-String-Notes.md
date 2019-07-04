@@ -11,3 +11,4 @@ categories: [Leetcode-String]
 - `Palindrome` problem
 - `bound check`
 - `length -1`
+- `Edge case` consideration
