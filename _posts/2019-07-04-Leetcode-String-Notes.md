@@ -6,3 +6,4 @@ categories: [Leetcode-String]
 ---
 ### String - linear data structure
 - String is `immutable`
+- char array is `mutable`
