@@ -11,4 +11,5 @@ categories: [Leetcode-String]
 - `Palindrome` problem
 - `bound check`
 - `length -1`
-- `Edge case` consideration
+- `Edge case` consideration, `detail case problem`
+- use `Integer.MAX_VALUE / 10` and `Integer.MAX_VALUE % 10` to check `overflow`
