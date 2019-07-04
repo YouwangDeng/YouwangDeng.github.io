@@ -13,3 +13,4 @@ categories: [Leetcode-String]
 - `length -1`
 - `Edge case` consideration, `detail case problem`
 - use `Integer.MAX_VALUE / 10` and `Integer.MAX_VALUE % 10` to check `overflow`
+- string is a linear structure, could use `Dynamic Programming` to solve `optimization problems`
