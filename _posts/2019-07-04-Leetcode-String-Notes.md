@@ -9,3 +9,5 @@ categories: [Leetcode-String]
 - char array is `mutable`
 - `StringBuilder` reduce space complexity
 - `Palindrome` problem
+- `bound check`
+- `length -1`
