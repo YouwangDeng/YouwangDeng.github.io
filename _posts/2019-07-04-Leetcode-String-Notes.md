@@ -14,4 +14,4 @@ categories: [Leetcode-String]
 - `Edge case` consideration, `detail case problem`
 - use `Integer.MAX_VALUE / 10` and `Integer.MAX_VALUE % 10` to check `overflow`
 - string is a linear structure, could use `Dynamic Programming` to solve `optimization problems`
-- `Regular expression matching` is a `DP` problems
+- `Regular expression matching` is a `DP` or recursion problems, just try out all possiblilities
