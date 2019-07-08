@@ -15,4 +15,5 @@ categories: [Leetcode-String]
 - use `Integer.MAX_VALUE / 10` and `Integer.MAX_VALUE % 10` to check `overflow`
 - string is a linear structure, could use `Dynamic Programming` to solve `optimization problems`
 - `Regular expression matching` is a `DP` or recursion problems, just try out all possiblilities
-- brute force solution to visite each character in the string once
+- `brute force` solution to visite `each character` in the string once
+- `s.toCharArray()` return a char array char[]
