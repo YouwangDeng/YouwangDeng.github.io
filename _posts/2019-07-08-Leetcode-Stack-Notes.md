@@ -2,7 +2,7 @@
 layout: post
 title:  "Leetcode Stack Note"
 date:   2019-07-08 18:30:00 +0800
-categories: [Leetcode-String]
+categories: [Leetcode-Stack]
 ---
 ### Stack - FILO data structure
 - could be implemented with Array or LinkedList
