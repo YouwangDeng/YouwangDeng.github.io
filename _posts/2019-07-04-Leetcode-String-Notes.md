@@ -17,3 +17,4 @@ categories: [Leetcode-String]
 - `Regular expression matching` is a `DP` or recursion problems, just try out all possiblilities
 - `brute force` solution to visite `each character` in the string once
 - `s.toCharArray()` return a char array char[]
+- use `26 letters` array `freq[]` to reduce space complexity to `O(1)`
