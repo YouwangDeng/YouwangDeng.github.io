@@ -7,3 +7,4 @@ categories: [Leetcode-Stack]
 ### Stack - FILO data structure
 - could be `implemented` with `Array` or `LinkedList`
 - use `helper stack` to assist getMin, getMax, reverse, swap or replace element
+- use stack to store the index of the element instead of the element itself
