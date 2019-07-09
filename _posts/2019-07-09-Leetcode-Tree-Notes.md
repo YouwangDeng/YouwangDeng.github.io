@@ -30,3 +30,4 @@ public class TreeNode {
         - left --> root --> right
         - right --> root --> left
 - BFS
+    - use queue level by level traversal
