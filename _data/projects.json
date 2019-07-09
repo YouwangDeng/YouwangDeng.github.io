@@ -1,17 +1,18 @@
 [
-	// {
-	// 	"slug": "cool-project",
-	// 	"name": "Cool project 1",
-	// 	"image": "placeholder.jpg",
-	// 	"url": "https://www.google.com",
-	// 	"date": "Jan 2014",
-	// 	"tags": ["Angular JS","NotExist"]
-	// },
-	// {
-	// 	"name": "Cool project 2",
-	// 	"image": "placeholder.jpg",
-	// 	"url": "#",
-	// 	"date": "May 2014",
-	// 	"tags": ["Python","Django"]
-	// },
+	{
+		"slug": "project0",
+		"name": "Project 0 Demo",
+		"image": "placeholder.jpg",
+		"url": "https://www.baidu.com",
+		"date": "June 2019",
+		"tags": ["Java","Server"]
+	},
+	{
+		"slug": "project1",
+		"name": "Project 1 Demo",
+		"image": "placeholder.jpg",
+		"url": "https://www.baidu.com",
+		"date": "May 2019",
+		"tags": ["Javascript"]
+	},
 ]
