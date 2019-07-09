@@ -19,12 +19,14 @@ public class TreeNode {
 
 #### Traversal of Binary Tree
 
-- pre-order traversal
-    - root --> left --> right
-    - root --> right --> left
-- post-order traversal
-    - left --> right --> root
-    - right --> left --> root
-- in-order traversal
-    - left --> root --> right
-    - right --> root --> left
+- DFS
+    - pre-order traversal
+        - root --> left --> right
+        - root --> right --> left
+    - post-order traversal
+        - left --> right --> root
+        - right --> left --> root
+    - in-order traversal
+        - left --> root --> right
+        - right --> root --> left
+- BFS
