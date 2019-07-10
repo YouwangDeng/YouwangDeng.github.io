@@ -21,10 +21,10 @@ layout: default
       {% include project_tags.html %}
       
       {% for i in site.data.projects %}
-      <div class="project-item project-outer" data-tags='{{ i.tags | jsonify | downcase }}' style="margin:20;">
+      <div class="project-item project-outer" data-tags='{{ i.tags | jsonify | downcase }}' style="margin:20px;">
         <div class="project-inner">
           <a href="/static/projects/{{ i.image }}" class="thickbox">
-            <div class="project-img bordered" style="background-image: url('/static/projects/{{ i.image }}'); background-repeat: no-repeat; background-size: contain; "></div>
+            <div class="project-img bordered" style="width: 150px; height: 100px; background-image: url('/static/projects/{{ i.image }}'); "></div>
           </a>
           {% assign p_url = nil %}
           {% for pr in p_array %}
