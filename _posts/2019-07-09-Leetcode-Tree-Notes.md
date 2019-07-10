@@ -43,5 +43,9 @@ public class TreeNode {
         - use stack
             1. p = root
             2. while stack is not empty || p is not null do: if(p) push p into stack, p = p.left; else pop element from stack and visit it, p = p.right
-        
+        - Morris Algorithm
+    - post-order
+        - use stack
+            1. push root into stack, pre = null
+            2. while stack is not empty do: cur = stack.peek(), case one: pre is null || pre.left == cur || pre.right == cur,  then if(cur.left), push cur.left, if(cur.right) push cur.right, else pop and visit that elemet; case two: cur.left = pre, if(cur.right), push cur.right else pop and visit that element; case three: cur.right = pre, just pop and visit that element; pre = cur and re-enter loop
         
