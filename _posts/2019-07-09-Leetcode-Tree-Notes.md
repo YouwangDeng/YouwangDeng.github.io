@@ -37,5 +37,11 @@ public class TreeNode {
     - pre-order
         - use stack
             1. push root into stack
-            2. while stack is not empty do: pop element and visit it, push `right` node into stack if `not null`, push `left` node into stack if `not null`
+            2. while stack is not empty do: pop element and visit it, p = pop(), push `p.right` node into stack if `not null`, push `p.left` node into stack if `not null`
+        - Morris Algorithm
     - in-order
+        - use stack
+            1. p = root
+            2. while stack is not empty || p is not null do: if(p) push p into stack, p = p.left; else pop element from stack and visit it, p = p.right
+        
+        
