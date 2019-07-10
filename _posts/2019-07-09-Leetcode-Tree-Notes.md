@@ -34,3 +34,8 @@ public class TreeNode {
 
 - Recursively traversal
 - Iteratively traversal
+    - pre-order
+        - use stack
+            1. push root into stack
+            2. while stack is not empty do: pop element and visit it, push `right` node into stack if `not null`, push `left` node into stack if `not null`
+    - in-order
