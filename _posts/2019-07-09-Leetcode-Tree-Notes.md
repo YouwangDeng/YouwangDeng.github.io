@@ -31,6 +31,7 @@ public class TreeNode {
         - right --> root --> left
 - BFS
     - use queue level by level traversal
+    - use recursive method and update the level state
 
 - Recursively traversal
 - Iteratively traversal
