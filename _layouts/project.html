@@ -21,7 +21,7 @@ layout: default
       {% include project_tags.html %}
       
       {% for i in site.data.projects %}
-      <div class="project-item project-outer" data-tags='{{ i.tags | jsonify | downcase }}' style="margin:20px; width: 150px;">
+      <div class="project-item project-outer" data-tags='{{ i.tags | jsonify | downcase }}' style="width: 150px; height:180px;">
         <div class="project-inner" style="width:150px;">
           <a href="/static/projects/{{ i.image }}" class="thickbox" style="width:150px;">
             <div class="project-img bordered" style="width: 150px; height: 100px; background-image: url('/static/projects/{{ i.image }}'); "></div>
