@@ -54,6 +54,9 @@ public class TreeNode {
 - in-order traversal return a sorted array
 - use global pointer in recursive solution
 
-#### construct binary search tree
-- 
+#### construct binary tree
+- from pre-order and in-order array
+    - recursively solution
+- form post-order and in-order array
+    - recursively solution
 
