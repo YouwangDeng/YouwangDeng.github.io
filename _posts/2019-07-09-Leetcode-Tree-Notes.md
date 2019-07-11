@@ -62,5 +62,9 @@ public class TreeNode {
     - recursively solution
 - form post-order and in-order array
     - recursively solution
+- from a sorted array
+    - binary divided
+- from a sorted LinkedList
+    - cut at middle
 
 
