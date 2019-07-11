@@ -53,10 +53,12 @@ public class TreeNode {
 - in order
 - in-order traversal return a sorted array
 - use global pointer in recursive solution
+- math related problem usally related with recursively tree structure, should analyze from one node to n nodes
 
 #### construct binary tree
 - from pre-order and in-order array
     - recursively solution
 - form post-order and in-order array
     - recursively solution
+
 
