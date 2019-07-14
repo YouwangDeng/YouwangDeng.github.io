@@ -80,6 +80,7 @@ private static void bucketSort(int[] nums) {
 - radix sort O(n)
     - sort positive numbers
     - use elements digit by digit
+    - compare new String(num1) and new String(num2) digit by digit could be done with (s1+s2).compareTo(s2+s1)
 
 ```java
 private static void radixSort(int[] nums) {
