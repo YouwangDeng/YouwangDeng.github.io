@@ -8,3 +8,30 @@ categories: [Leetcode-Array, Leetcode-ArrayList, Leetcode-LinkedList, Algorithm]
 - `Binary Search`
 - `Special` kind of Binary Search
     - find `lower` bound
+
+        ```java
+        while(lo != hi) {
+            mid = lo + (hi - lo) / 2;
+            if(nums[mid] < target) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        // this will return a index that nums[lo] = target
+        return lo;
+        ```
+    - find `higher` bound
+
+        ```java
+        while(lo != hi) {
+            mid = lo + (hi - lo) / 2;
+            if(nums[mid] <= target) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        // this will return a index that nums[lo] > target
+        return lo;
+        ```
