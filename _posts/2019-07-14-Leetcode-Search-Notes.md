@@ -55,3 +55,18 @@ categories: [Leetcode-Array, Leetcode-ArrayList, Leetcode-LinkedList, Algorithm]
             }
         }
         ```
+    - search in `2D array`, move from right-bottom corner or right-top corner
+    ```java
+    while (first < last) {
+            int mid = first + (last - first) / 2;
+            // key point here
+            int value = matrix[mid / n][mid % n];
+
+            if (value == target)
+                return true;
+            else if (value < target)
+                first = mid + 1;
+            else
+                last = mid;
+        }
+    ```
