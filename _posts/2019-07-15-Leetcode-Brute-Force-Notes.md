@@ -6,3 +6,5 @@ categories: [Leetcode-Array, Leetcode-ArrayList, Leetcode-LinkedList, Algorithm]
 ---
 ### Brute Force
 - backtracking try out all possibilities
+    - every element have several choice
+    - restore state after one loop
