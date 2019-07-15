@@ -70,3 +70,5 @@ categories: [Leetcode-Array, Leetcode-ArrayList, Leetcode-LinkedList, Algorithm]
                 last = mid;
         }
     ```
+    - find k-th in two sorted array
+        - recursively reduce search space by k/2
