@@ -12,7 +12,7 @@ categories: [Leetcode-BFS, Leetcode-DFS,Leetcode-Array, Leetcode-ArrayList, Leet
 
 ### Depth First Search
 - the entry point of loop or recursion is most important
-- return condition(cut branches)
+- return condition(prunning)
 - backtracking(brute force)
 - the problem could use DFS, consider using DP to reduce time complexity and space complexity
 - cache array & DFS = top-down approach
@@ -24,13 +24,13 @@ categories: [Leetcode-BFS, Leetcode-DFS,Leetcode-Array, Leetcode-ArrayList, Leet
     public static void dfs(List<List<String>> result, List<String> path, int index) {
         // 1. end condition, add path to result and return
 
-        // 2. cut branches, multiple return conditions
+        // 2. prunning, multiple return conditions
 
-        // 3. for loop dfs condition, have to cut branches and restore state after dfs
+        // 3. for loop dfs condition, have to prunning and restore state after dfs
     }
     ```
 - how to reduce time complexity
     - cache result
-    - cut branches
+    - prunning
 - avoid duplicate or infinite loop
     - use visited set or boolean array
