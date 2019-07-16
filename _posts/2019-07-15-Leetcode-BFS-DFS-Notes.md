@@ -17,4 +17,15 @@ categories: [Leetcode-BFS, Leetcode-DFS,Leetcode-Array, Leetcode-ArrayList, Leet
 - the problem could use DFS, consider using DP to reduce time complexity and space complexity
 - cache array & DFS = top-down approach
 - cache array & nested for loop = DP, bottom-up approach
-- N-Queens, diagnal(diag[row - j + N - 1] is true or false) and anti-diagnal check(antiDiag[row + j] is true or false)
+- N-Queens, diagnal(diag[row - j + N - 1] is true or false) and anti-diagnal check(antiDiag[row + j] is true or false), use 1D array to represent queen position
+- classic dfs program structure
+
+    ```java
+    public static void dfs(List<List<String>> result, List<String> path, int index) {
+        // 1. end condition, add path to result and return
+
+        // 2. cut branches, multiple return conditions
+
+        // 3. for loop dfs condition, have to cut branches and restore state after dfs
+    }
+    ```
