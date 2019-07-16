@@ -6,4 +6,4 @@ categories: [Leetcode-Array, Leetcode-ArrayList, Leetcode-LinkedList, Algorithm]
 ---
 ### Divide and Conquer
 - divide problem into many subproblems, solve the least subproblem and combine those subproblems together
-- 
+- binary search
