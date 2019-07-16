@@ -5,3 +5,4 @@ date:   2019-07-16 19:30:00 +0800
 categories: [Leetcode-Greedy, Leetcode-Array, Leetcode-ArrayList, Leetcode-LinkedList, Algorithm]
 ---
 ### Greedy
+- follow a simple strategy to update pointer
