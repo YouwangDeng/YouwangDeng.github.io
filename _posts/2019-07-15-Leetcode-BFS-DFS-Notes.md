@@ -29,3 +29,8 @@ categories: [Leetcode-BFS, Leetcode-DFS,Leetcode-Array, Leetcode-ArrayList, Leet
         // 3. for loop dfs condition, have to cut branches and restore state after dfs
     }
     ```
+- how to reduce time complexity
+    - cache result
+    - cut branches
+- avoid duplicate or infinite loop
+    - use visited set or boolean array
