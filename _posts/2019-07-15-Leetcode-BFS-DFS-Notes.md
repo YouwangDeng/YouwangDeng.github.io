@@ -11,3 +11,5 @@ categories: [Leetcode-BFS, Leetcode-DFS,Leetcode-Array, Leetcode-ArrayList, Leet
 - use hashset to store visited elements
 
 ### Depth First Search
+- the entry point of loop or recursion is most important
+- return condition(cut branches)
