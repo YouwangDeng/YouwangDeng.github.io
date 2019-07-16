@@ -13,3 +13,4 @@ categories: [Leetcode-BFS, Leetcode-DFS,Leetcode-Array, Leetcode-ArrayList, Leet
 ### Depth First Search
 - the entry point of loop or recursion is most important
 - return condition(cut branches)
+- backtracking(brute force)
