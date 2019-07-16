@@ -14,3 +14,7 @@ categories: [Leetcode-BFS, Leetcode-DFS,Leetcode-Array, Leetcode-ArrayList, Leet
 - the entry point of loop or recursion is most important
 - return condition(cut branches)
 - backtracking(brute force)
+- the problem could use DFS, consider using DP to reduce time complexity and space complexity
+- cache array & DFS = top-down approach
+- cache array & nested for loop = DP, bottom-up approach
+- N-Queens, diagnal(diag[row - j + N - 1] is true or false) and anti-diagnal check(antiDiag[row + j] is true or false)
