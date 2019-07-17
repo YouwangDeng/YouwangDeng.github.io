@@ -9,3 +9,5 @@ categories: [Leetcode-DynamicProgramming, Algorithm]
 - transition formula
 - bottom-up or top-down for loop
 - use a global variable to update global min or max
+- (i,j) max or min DP, usually involved with traverse i < k < j
+-  
