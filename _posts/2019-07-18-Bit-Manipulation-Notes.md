@@ -24,4 +24,5 @@ categories: [Leetcode-BitManipulation, Algorithm]
             lo++;
         }
     ```
-- use bit to store multiple states
+- use bit to store multiple states to reduce space complexity
+- use '^' to seperate two number, find the first '1' position
