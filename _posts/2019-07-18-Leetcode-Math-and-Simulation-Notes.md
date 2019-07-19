@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Leetcode Math Note"
+title:  "Leetcode Math and Simulation Note"
 date:   2019-07-18 20:30:00 +0800
 categories: [Leetcode-Math, Algorithm]
 ---
