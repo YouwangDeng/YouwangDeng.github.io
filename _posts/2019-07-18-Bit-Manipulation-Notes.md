@@ -26,3 +26,6 @@ categories: [Leetcode-BitManipulation, Algorithm]
     ```
 - use bit to store multiple states to reduce space complexity
 - use '^' to seperate two number, find the first '1' position
+- condition check
+    - (expression A) ^ (expressiion B), to check if two expressions has different results
+ 
