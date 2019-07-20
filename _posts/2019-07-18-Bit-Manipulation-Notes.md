@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Leetcode Bit Manipulation Note"
-date:   2019-07-18 19:30:00 +0800
+date:   2019-07-19 19:30:00 +0800
 categories: [Leetcode-BitManipulation, Algorithm]
 ---
 ### Bit Manipulation
