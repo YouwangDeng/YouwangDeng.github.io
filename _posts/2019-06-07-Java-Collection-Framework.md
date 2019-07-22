@@ -19,8 +19,8 @@ categories: [Data-Structure, Time-Complexity, Java]
     ![interface](https://github.com/YouwangDeng/YouwangDeng.github.io/raw/master/static/img/_posts/java_collection_interface.png)
 
 * Full Hierachy
-
-    ![hierachy](https://github.com/YouwangDeng/YouwangDeng.github.io/raw/master/static/img/_posts/java-collection-hierachy.svg)
+    
+    ![hierachy](https://github.com/YouwangDeng/YouwangDeng.github.io/raw/master/static/img/_posts/java-collection-hierachy.jpg)
 
 * Implementation
 
