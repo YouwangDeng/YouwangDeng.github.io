@@ -27,4 +27,6 @@ categories: [System-Design]
 - Needs 
     - multiple tasks with timestamp
 - Solutions
-
+    - PriorityBlockingQueue + Polling
+    - DelayQueue + Producer + Consumer
+    - HashedWheelTimer
