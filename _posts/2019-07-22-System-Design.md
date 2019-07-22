@@ -30,3 +30,9 @@ categories: [System-Design]
     - PriorityBlockingQueue + Polling
     - DelayQueue + Producer + Consumer
     - HashedWheelTimer
+### News Feed
+- Needs
+
+### API rate limiting
+- Needs
+    - limit each user api request to 1000/min
