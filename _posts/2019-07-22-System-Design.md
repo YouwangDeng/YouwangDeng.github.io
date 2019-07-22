@@ -36,3 +36,12 @@ categories: [System-Design]
 ### API rate limiting
 - Needs
     - limit each user api request to 1000/min
+
+### Synchronized HashMap
+- Needs 
+    - design a thread safe HashMap
+- Solutions
+    - add a global lock to HashMap(HashTable)
+    - add a lock to each bucket in HashMap
+    - category buckets to 16 segments, add a lock to each segment(java.util.concurrent.ConcurrentHashMap implementation in JDK 7)
+    - when the length of LinkedList in each bucket exceed 8, rebuild the LinkedList to a Red-Black Tree(java.util.concurrent.ConcurrentHashMap implementation in JDK 8)
