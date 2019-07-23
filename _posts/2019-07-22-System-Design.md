@@ -45,3 +45,10 @@ categories: [System-Design]
     - add a lock to each bucket in HashMap
     - category buckets to 16 segments, add a lock to each segment(java.util.concurrent.ConcurrentHashMap implementation in JDK 7)
     - when the length of LinkedList in each bucket exceed 8, rebuild the LinkedList to a Red-Black Tree(java.util.concurrent.ConcurrentHashMap implementation in JDK 8)
+
+### TOP 10 IP visiting during recent 1 hour
+- Needs
+    - get the top 10 visiting IP in recent 1 hour
+    - request rate: 100 k / sec
+### Design a Load Balancer
+- 
