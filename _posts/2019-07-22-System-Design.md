@@ -68,3 +68,10 @@ categories: [System-Design]
 - Needs
     - PageRank Algorithm
     - Distributed
+
+### Design a Search Engine
+- Needs
+    - Index System
+    - Download System
+    - Search System
+    - Analyze System
