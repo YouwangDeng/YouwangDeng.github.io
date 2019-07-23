@@ -80,4 +80,7 @@ categories: [System-Design]
 - Needs
     - a stream will infinite integers
     - sampling k integers with same possibility
-    
+
+### Unique Visitor
+- Needs 
+    - count the unique visitor of a stream
