@@ -75,3 +75,9 @@ categories: [System-Design]
     - Download System
     - Search System
     - Analyze System
+
+### Random Sampling
+- Needs
+    - a stream will infinite integers
+    - sampling k integers with same possibility
+    
