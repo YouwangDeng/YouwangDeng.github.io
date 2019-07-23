@@ -58,3 +58,9 @@ categories: [System-Design]
 - Needs
     - high performance
 
+### Design a web crawler
+- Needs
+    - distributed deployment
+    - IP pool
+    - URL filter
+
