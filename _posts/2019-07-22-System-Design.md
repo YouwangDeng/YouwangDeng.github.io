@@ -50,4 +50,11 @@ categories: [System-Design]
 - Needs
     - get the top 10 visiting IP in recent 1 hour
     - request rate: 100 k / sec
+
 ### Design a Load Balancer
+
+### Design a key-value store
+- storage engine is different from database(including storage engine)
+- Needs
+    - high performance
+
