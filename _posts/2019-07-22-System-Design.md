@@ -51,4 +51,3 @@ categories: [System-Design]
     - get the top 10 visiting IP in recent 1 hour
     - request rate: 100 k / sec
 ### Design a Load Balancer
-- 
