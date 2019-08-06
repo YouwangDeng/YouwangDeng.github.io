@@ -1,7 +1,7 @@
 [
 	{
 		"slug": "Discover",
-		"name": "Discover - product search service",
+		"name": "Discover",
 		"image": "placeholder.jpg",
 		"url": "https://github.com/YouwangDeng/Discover",
 		"date": "May 2019",
@@ -9,7 +9,7 @@
 	},
 	{
 		"slug": "USC-CGSA",
-		"name": "USC-CGSA Website",
+		"name": "USC-CSGA",
 		"image": "placeholder.jpg",
 		"url": "https://www.usccgsa.com/",
 		"date": "March 2019",
@@ -17,7 +17,7 @@
 	},
 	{
 		"slug": "Aureus",
-		"name": "Aureus - lightweight web framework",
+		"name": "Aureus",
 		"image": "placeholder.jpg",
 		"url": "https://github.com/YouwangDeng/aureus",
 		"date": "September 2018",
@@ -25,7 +25,7 @@
 	},
 	{
 		"slug": "EasyCareer",
-		"name": "EasyCareer - chat web app",
+		"name": "EasyCareer",
 		"image": "placeholder.jpg",
 		"url": "https://youtu.be/Ce3zfVbdtmE",
 		"date": "August 2018",
@@ -33,7 +33,7 @@
 	},
 	{
 		"slug": "QuickSearch",
-		"name": "QuickSearch - tech search service",
+		"name": "QuickSearch",
 		"image": "placeholder.jpg",
 		"url": "https://github.com/YouwangDeng/QuickSearch",
 		"date": "May 2018",
@@ -41,7 +41,7 @@
 	},
 	{
 		"slug": "BlogPlaza",
-		"name": "BlogPlaza - personalized blog platform",
+		"name": "BlogPlaza",
 		"image": "placeholder.jpg",
 		"url": "https://github.com/YouwangDeng/Spring-Boot-Forum",
 		"date": "Feb 2018",
