@@ -43,7 +43,7 @@ layout: default
           {% endif %}
 
           <div class="project-content">
-            <div class="tag-holder">
+            <div class="tag-holder" style="height: 60px;">
               {% if i.tags %}
                 {% for j in i.tags %}
                   <span class="tags tag-filter" data-tag="{{ j | downcase }}"><a href="#{{ j }}">{{ j }}</a></span>
