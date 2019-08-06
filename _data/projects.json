@@ -1,18 +1,51 @@
 [
 	{
-		"slug": "project0",
-		"name": "Project 0 Demo",
+		"slug": "Discover",
+		"name": "Discover - product search service",
 		"image": "placeholder.jpg",
-		"url": "https://www.baidu.com",
-		"date": "June 2019",
-		"tags": ["Java","Server"]
+		"url": "https://github.com/YouwangDeng/Discover",
+		"date": "May 2019",
+		"tags": ["Java","Android", "Angular", "Node.js", "Bootstrap", "Express", "GCP"]
 	},
 	{
-		"slug": "project1",
-		"name": "Project 1 Demo",
+		"slug": "USC-CGSA",
+		"name": "USC-CGSA Website",
 		"image": "placeholder.jpg",
-		"url": "https://www.baidu.com",
-		"date": "May 2019",
-		"tags": ["Javascript"]
+		"url": "https://www.usccgsa.com/",
+		"date": "March 2019",
+		"tags": ["HTML", "CSS", "Bootstrap", "ES6", "AWS"]
 	},
+	{
+		"slug": "Aureus",
+		"name": "Aureus - lightweight web framework",
+		"image": "placeholder.jpg",
+		"url": "https://github.com/YouwangDeng/aureus",
+		"date": "September 2018",
+		"tags": ["Python","WSGI", "MVC", "HTTP"]
+	},
+	{
+		"slug": "EasyCareer",
+		"name": "EasyCareer - chat web app",
+		"image": "placeholder.jpg",
+		"url": "https://youtu.be/Ce3zfVbdtmE",
+		"date": "August 2018",
+		"tags": ["ReactJS", "JavaScript", "MongoDB", "Redux"]
+	},
+	{
+		"slug": "QuickSearch",
+		"name": "QuickSearch - tech search service",
+		"image": "placeholder.jpg",
+		"url": "https://github.com/YouwangDeng/QuickSearch",
+		"date": "May 2018",
+		"tags": ["Python", "Scrapy", "ElasticSearch", "MySQL", "Django"]
+	},
+	{
+		"slug": "BlogPlaza",
+		"name": "BlogPlaza - personalized blog platform",
+		"image": "placeholder.jpg",
+		"url": "https://github.com/YouwangDeng/Spring-Boot-Forum",
+		"date": "Feb 2018",
+		"tags": ["Java", "SpringBoot", "Gradle", "MongoDB"]
+	},
+
 ]
