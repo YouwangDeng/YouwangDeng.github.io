@@ -2,15 +2,15 @@
 	{
 		"slug": "Discover",
 		"name": "Discover",
-		"image": "placeholder.jpg",
+		"image": "ebay.png",
 		"url": "https://github.com/YouwangDeng/Discover",
 		"date": "May 2019",
 		"tags": ["Java","Android", "Angular", "Node.js", "Bootstrap", "Express", "GCP"]
 	},
 	{
 		"slug": "USC-CGSA",
-		"name": "USC-CSGA",
-		"image": "placeholder.jpg",
+		"name": "USC-CGSA",
+		"image": "usc-cgsa.jpg",
 		"url": "https://www.usccgsa.com/",
 		"date": "March 2019",
 		"tags": ["HTML", "CSS", "Bootstrap", "ES6", "AWS"]
@@ -18,7 +18,7 @@
 	{
 		"slug": "Aureus",
 		"name": "Aureus",
-		"image": "placeholder.jpg",
+		"image": "aureus.jpg",
 		"url": "https://github.com/YouwangDeng/aureus",
 		"date": "September 2018",
 		"tags": ["Python","WSGI", "MVC", "HTTP"]
@@ -26,7 +26,7 @@
 	{
 		"slug": "EasyCareer",
 		"name": "EasyCareer",
-		"image": "placeholder.jpg",
+		"image": "easycareer.jpg",
 		"url": "https://youtu.be/Ce3zfVbdtmE",
 		"date": "August 2018",
 		"tags": ["ReactJS", "JavaScript", "MongoDB", "Redux"]
@@ -34,7 +34,7 @@
 	{
 		"slug": "QuickSearch",
 		"name": "QuickSearch",
-		"image": "placeholder.jpg",
+		"image": "quicksearch.jpg",
 		"url": "https://github.com/YouwangDeng/QuickSearch",
 		"date": "May 2018",
 		"tags": ["Python", "Scrapy", "ElasticSearch", "MySQL", "Django"]
@@ -42,7 +42,7 @@
 	{
 		"slug": "BlogPlaza",
 		"name": "BlogPlaza",
-		"image": "placeholder.jpg",
+		"image": "blogplaza.jpg",
 		"url": "https://github.com/YouwangDeng/Spring-Boot-Forum",
 		"date": "Feb 2018",
 		"tags": ["Java", "SpringBoot", "Gradle", "MongoDB"]
