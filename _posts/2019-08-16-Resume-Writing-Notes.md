@@ -22,3 +22,4 @@ categories: [Resume, Interview]
 - have a reasonable logic between bullet points
 - reduce use of acronym
 - reduce bullet points of projects(2~3), just write abstract and technologies
+- focus on the real impact of projects, show passion about tech and programming
