@@ -102,7 +102,7 @@ public class ListNode {
     * Array
     * ListNode
 * **import java.util.LinkedList;**
-* **Queue<Integer> queue = new LinkedList<>();** or **Queue<Integer> queue = new LinkedList<>(Collection<T>);**
+* Queue<Integer> queue = new LinkedList<>(); or Queue<Integer> queue = new LinkedList<>(Collection<T>);
 * is an `interface` not a `class`
 * Java API for [java.util.Queue](https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html)
     * LinkedList is an implementation of Queue
@@ -110,13 +110,13 @@ public class ListNode {
     * queue.poll()
     * queue.peek()
 
-###Deque(pronounced as 'deck')
+### Deque(pronounced as 'deck')
 * double end queue
 * an `interface` not a `class`
 * `ArrayDeque` is an implementation of `Deque`
 * **import java.util.Deque;**
 * **import java.util.ArrayDeque;**
-* **Deque<Integer> deque = new ArrayDeque<Integer>();**
+* Deque<Integer> deque = new ArrayDeque<Integer>();
 * Java API for [java.util.ArrayDeque](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayDeque.html)
     * deque.add(value), deque.addFirst(value) or deque.addLast(value), `add` would return void
     * deque.offer(value) or deque.offerFirst(value) or deque.offerLast(value), `offer` method return a `boolean`, offer will add value at the tail
