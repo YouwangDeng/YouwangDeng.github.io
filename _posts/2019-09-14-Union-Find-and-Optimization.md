@@ -5,7 +5,7 @@ date:   2019-09-14 20:30:00 +0800
 categories: [Algorithm, Interview, Java]
 ---
 
-### Union Find
+#### Union Find
 
 > Union Find is a effective algorithm to deal with group problem, such as connect a bunch of elements into a group, and then count how many group there remains.
 
