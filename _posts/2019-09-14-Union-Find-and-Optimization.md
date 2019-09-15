@@ -15,7 +15,7 @@ categories: [Algorithm, Interview, Java]
 
 > Union Find use union-by-size and path compression would take amortized O(1) time to union two element
 
-### Basic Union Find
+#### Basic Union Find
 
 ```java
 class UnionFind {
@@ -51,7 +51,7 @@ class UnionFind {
 
 ```
 
-### Union Find(union by size)
+#### Union Find(union by size)
 
 ```java
 class UnionFind {
@@ -95,7 +95,7 @@ class UnionFind {
 }
 ```
 
-### Union Find(union by size && path compression)
+#### Union Find(union by size && path compression)
 
 ```java
 class UnionFind {
