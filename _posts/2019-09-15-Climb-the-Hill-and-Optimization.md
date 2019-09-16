@@ -36,7 +36,7 @@ dp[0][j] = sorted[j], when 0 <= j <= m;
 class Solution {
     public static void main(String[] args) {
         int[] heights = {100,90,70,70,80,80,80,80,80};
-		System.out.println(ClimbTheHill(heights));
+        System.out.println(ClimbTheHill(heights));
         // 20
     }
 
