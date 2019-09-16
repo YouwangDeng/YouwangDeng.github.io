@@ -41,44 +41,44 @@ class Solution {
     }
 
     public static long ClimbTheHill(int[] heights) {
-		long incrMin = ClimbTheHillIncr(heights);
-		int left = 0;
-		int right = heights.length - 1;
-		while(left < right) {
-			int temp = heights[left];
-			heights[left] = heights[right];
-			heights[right] = temp;
-			left++;
-			right--;
-		}
-		long decrMin = ClimbTheHillIncr(heights);
-		return Math.min(incrMin, decrMin);
-	}
+        long incrMin = ClimbTheHillIncr(heights);
+        int left = 0;
+        int right = heights.length - 1;
+        while(left < right) {
+            int temp = heights[left];
+            heights[left] = heights[right];
+            heights[right] = temp;
+            left++;
+            right--;
+        }
+        long decrMin = ClimbTheHillIncr(heights);
+        return Math.min(incrMin, decrMin);
+    }
 
     public static long ClimbTheHillIncr(int[] heights) {
-		int n = heights.length;
-		TreeSet<Integer> set = new TreeSet<>();
-		for(int i = 0; i < n; i++) set.add(heights[i]);
-		int m = set.size();
-		long[] nums = new long[m+1];
-		int index = 1;
-		Iterator<Integer> iter = set.iterator();
-		while(iter.hasNext()) nums[index++] = (long) iter.next();
+        int n = heights.length;
+        TreeSet<Integer> set = new TreeSet<>();
+        for(int i = 0; i < n; i++) set.add(heights[i]);
+        int m = set.size();
+        long[] nums = new long[m+1];
+        int index = 1;
+        Iterator<Integer> iter = set.iterator();
+        while(iter.hasNext()) nums[index++] = (long) iter.next();
 
-		long[][] dp = new long[n+1][m+1];
-		for(int i = 0; i < m + 1; i++) dp[0][i] = nums[i];
+        long[][] dp = new long[n+1][m+1];
+        for(int i = 0; i < m + 1; i++) dp[0][i] = nums[i];
 
-		for(int i = 1; i < n + 1; i++) {
-			long min = dp[i-1][0];
-			for(int j = 0; j < m + 1; j++) {
-				min = Math.min(min, dp[i-1][j]);
-				dp[i][j] = Math.abs(heights[i-1] - nums[j]) + min;
-			}
-		}
-		long result = dp[n][1];
-		for(int j = 2; j <= m; j++) result = Math.min(result, dp[n][j]);
-		return result;
-	}
+        for(int i = 1; i < n + 1; i++) {
+            long min = dp[i-1][0];
+            for(int j = 0; j < m + 1; j++) {
+                min = Math.min(min, dp[i-1][j]);
+                dp[i][j] = Math.abs(heights[i-1] - nums[j]) + min;
+            }
+        }
+        long result = dp[n][1];
+        for(int j = 2; j <= m; j++) result = Math.min(result, dp[n][j]);
+        return result;
+    }
 }
 ```
 
@@ -90,29 +90,29 @@ class Solution {
 
 ```java
 public static long ClimbTheHillIncr(int[] heights) {
-		int n = heights.length;
-		TreeSet<Integer> set = new TreeSet<>();
-		for(int i = 0; i < n; i++) set.add(heights[i]);
-		int m = set.size();
-		long[] nums = new long[m+1];
-		int index = 1;
-		Iterator<Integer> iter = set.iterator();
-		while(iter.hasNext()) nums[index++] = (long) iter.next();
-        // optimization start here
-		long[] dp = new long[m+1];
-		for(int i = 0; i < m + 1; i++) dp[i] = nums[i];
+    int n = heights.length;
+    TreeSet<Integer> set = new TreeSet<>();
+    for(int i = 0; i < n; i++) set.add(heights[i]);
+    int m = set.size();
+    long[] nums = new long[m+1];
+    int index = 1;
+    Iterator<Integer> iter = set.iterator();
+    while(iter.hasNext()) nums[index++] = (long) iter.next();
+    // optimization start here
+    long[] dp = new long[m+1];
+    for(int i = 0; i < m + 1; i++) dp[i] = nums[i];
 
-		for(int i = 1; i < n + 1; i++) {
-			long min = dp[0];
-			for(int j = 0; j < m + 1; j++) {
-				min = Math.min(min, dp[j]);
-				dp[j] = Math.abs(heights[i-1] - nums[j]) + min;
-			}
-		}
-		long result = dp[1];
-		for(int j = 2; j <= m; j++) result = Math.min(result, dp[j]);
-		return result;
-	}
+    for(int i = 1; i < n + 1; i++) {
+        long min = dp[0];
+        for(int j = 0; j < m + 1; j++) {
+            min = Math.min(min, dp[j]);
+            dp[j] = Math.abs(heights[i-1] - nums[j]) + min;
+        }
+    }
+    long result = dp[1];
+    for(int j = 2; j <= m; j++) result = Math.min(result, dp[j]);
+    return result;
+}
 ```
 
 
