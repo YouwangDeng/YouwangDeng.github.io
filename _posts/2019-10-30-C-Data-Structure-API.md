@@ -21,7 +21,7 @@ foreach(var elem in test) {
     Console.WriteLine("array after sort: " + elem);
 }
 // multiple dimension array
-int[,] matrix = new int[3,2]{{1,2}, {3,4}, {5,6}};
+int[,] matrix = new int[3,2]{{1,2}, {3,4},{5,6}};
 for(var i = 0; i < matrix.GetLength(0); i++) {
     for(var j = 0; j < matrix.GetLength(1); j++) {
         Console.Write(matrix[i,j] + " ");
