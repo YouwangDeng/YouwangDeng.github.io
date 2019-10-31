@@ -4,7 +4,7 @@ title:  "C Data Structure"
 date:   2019-10-30 20:30:00 +0800
 categories: [Data-Structure, Interview, C]
 ---
-#### C Data Structure
+#### C# Data Structure
 
 ##### Array
 
