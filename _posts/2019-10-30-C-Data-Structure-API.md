@@ -8,7 +8,7 @@ categories: [Data-Structure, Interview, C]
 
 ##### Array
 
-```C
+```java
 // init
 string[] keys = { "a", "b", "c", "d" };
 int[] values = { 1, 2, 3, 4 };
@@ -32,7 +32,7 @@ for(var i = 0; i < matrix.GetLength(0); i++) {
 
 ##### ArrayList
 
-```C
+```java
 List<string> arrayList = new List<string> ();
 foreach (var key in keys) {
     arrayList.Add (key);
@@ -55,7 +55,7 @@ foreach(var key in arrayList) {
 
 ##### LinkedList
 
-```C
+```java
 LinkedList<string> linkedList = new LinkedList<string> (keys);
 var cur = linkedList.First;
 while(cur != null) {
@@ -76,7 +76,7 @@ LinkedListNode<string> dummy = new LinkedListNode<string>("");
 
 ##### String and StringBuilder
 
-```C
+```java
 // String, ToUpper(), ToLower(), Trim(), ToCharArray(),
 string text = "this is a text! ";
 Console.WriteLine("string length is: " + text.Length + ", text substring(0,10): " + text.Substring(0,10));
@@ -95,7 +95,7 @@ Console.WriteLine("stringbuilder, length is: " + sb.Length + ", text: " + sb.ToS
 
 ##### HashMap
 
-```C
+```java
 Dictionary<string, int> map = new Dictionary<string, int>();
 for (var i = 0; i < keys.Length; i++) {
     map[keys[i]] = values[i];
@@ -110,7 +110,7 @@ Console.WriteLine ("contains e ? : " + map.ContainsKey ("e"));
 
 ##### TreeMap
 
-```C
+```java
 // TreeMap
 string[] newKeys = {"b", "c", "a", "d"};
 SortedList<string, int> treeMap = new SortedList<string, int>(new StringComparer());
@@ -124,7 +124,7 @@ foreach(var key in treeMap.Keys) {
 
 ##### HashSet
 
-```C
+```java
 // HashSet
 HashSet<string> set = new HashSet<string>();
 foreach(var key in newKeys) {
@@ -137,7 +137,7 @@ Console.WriteLine("set contains d ? : " + set.Contains("d"));
 
 ##### TreeSet
 
-```C
+```java
 // TreeSet
 SortedSet<string> treeSet = new SortedSet<string>(new StringComparer());
 foreach(var key in newKeys) {
@@ -150,7 +150,7 @@ foreach(var key in treeSet) {
 
 ##### Stack
 
-```C
+```java
 Stack<string> stack = new Stack<string>();
 foreach(var key in keys) {
     stack.Push(key);
@@ -161,7 +161,7 @@ while(stack.Count > 0) {
 
 ##### Queue
 
-```C
+```java
 Queue<string> queue = new Queue<string>();
 foreach(var key in keys) {
     queue.Enqueue(key);
