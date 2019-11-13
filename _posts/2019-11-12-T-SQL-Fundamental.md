@@ -12,3 +12,19 @@ categories: [Database,T-SQL]
 - Schemas are namespaces for database objects
 - Fully-qualified names:
     - [server_name.][database_name.][schema_name.]object_name
+- Within database context, best practice is to include schema name: schema_name.object_name
+
+#### SQL Statement Types
+- Data Manipulation Language(DML) - Statements for querying and modifying data
+    - SELECT
+    - INSERT
+    - UPDATE
+    - DELETE
+- Data Defination Language(DDL) - Statements for database objects
+    - CREATE
+    - ALTER
+    - DROP
+- Data Control Language(DCL) - Statements for assigning security permissions
+    - GRANT
+    - REVOKE
+    - DENY
