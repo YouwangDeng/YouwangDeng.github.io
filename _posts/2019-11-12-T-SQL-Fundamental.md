@@ -28,3 +28,11 @@ categories: [Database,T-SQL]
     - GRANT
     - REVOKE
     - DENY
+
+#### SELECT Statement
+- SELECT - defines which columns to return
+- FROM - defines tables to query
+- WHERE - filters rows using a predicate
+- GROUP BY - arrange rows by groups
+- HAVING - filters groups using a predicate
+- ORDER BY - sorts the output
