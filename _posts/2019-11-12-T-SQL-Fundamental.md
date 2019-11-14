@@ -36,3 +36,29 @@ categories: [Database,T-SQL]
 - GROUP BY - arrange rows by groups
 - HAVING - filters groups using a predicate
 - ORDER BY - sorts the output
+
+>Example:
+
+```sql
+SELECT OrderDate, COUNT(OrderID)
+FROM Sales.SalesOrder
+WHERE Status = 'Shipped'
+GROUP BY OrderDate
+HAVING COUNT(OrderID) > 1
+ORDER BY OrderDate DESC;
+```
+
+> execute sequence: FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY
+
+>Basic SELECT Query Examples
+
+```sql
+-- All columns
+SELECT * FROM Production.Product
+-- Specific columns
+SELECT Name, ListPrice
+FROM Production.Product;
+-- Expressions ans Aliases
+SELECT Name as Product, ListPrice * 0.9 AS SalesPrice
+FROM Production.Product
+```
