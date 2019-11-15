@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "T-SQL Data Types"
-date:   2019-11-12 20:30:00 +0800
+date:   2019-11-14 20:30:00 +0800
 categories: [Database,T-SQL]
 ---
 #### Data Types
