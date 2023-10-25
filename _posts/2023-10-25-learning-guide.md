@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "学习数据结构的框架思维"
+date:   2023-10-25 20:30:00 +0800
+categories: [Algorithm]
+---
 -----------
 
 这是好久之前的一篇文章 [学习数据结构的框架思维](http://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247484520&idx=1&sn=2c6507c7f25c0fd29fd1d146ee3b067c&chksm=9bd7fa60aca073763785418d15ed03c9debdd93ca36f4828fa809990116b1e7536c3f68a7b71&scene=21#wechat_redirect) 的修订版。之前那篇文章收到广泛好评，没看过也没关系，这篇文章会涵盖之前的所有内容，并且会举很多代码的实例，谈谈如何使用框架思维，并且给对于算法无从下手的朋友给一点**具体可执行**的刷题建议。
