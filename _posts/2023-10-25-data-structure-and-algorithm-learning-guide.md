@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "数据结构和算法学习指南"
+title:  "Data Structure and Algorithm learning guide"
 date:   2023-10-25 20:31:00 +0800
 categories: [Algorithm]
 ---
