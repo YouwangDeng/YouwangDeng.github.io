@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "算法秘籍目录"
+title:  "Crack Algorithms"
 date:   2023-10-25 20:30:00 +0800
 categories: [Algorithm]
 ---
