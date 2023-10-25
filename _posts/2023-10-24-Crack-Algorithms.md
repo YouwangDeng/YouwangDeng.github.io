@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Crack Algorithms"
-date:   2023-10-25 20:30:00 +0800
+date:   2023-10-24 20:30:00 +0800
 categories: [Algorithm]
 ---
 ### 无剑篇、刷题心法
