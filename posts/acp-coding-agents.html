@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACP Is the Missing Protocol for AI Coding Agents — Youwang Deng</title>
+<meta name="description" content="The Agent Client Protocol turns N×M agent-editor integrations into N+M. Here's why it matters, what it actually does, and what I learned implementing it in pure bash.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Blog</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/" class="back-link">← Back to all posts</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-14</time>
+        <span class="post-tag">protocols</span>
+        <span class="post-tag">agents</span>
+        <span class="post-tag">open-source</span>
+      </div>
+      <h1 class="post-title">ACP Is the Missing Protocol for AI Coding Agents</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">Every AI coding agent speaks its own language. Claude Code has <code>-p --output-format stream-json</code>. Cline has <code>--act --json</code>. Goose, Kiro, Gemini — each with their own CLI flags and output formats. The <strong>Agent Client Protocol</strong> makes them all speak the same one.</p>
+
+      <h2>The N×M Problem</h2>
+
+      <p>Right now, if you want to integrate M agents into N editors (or tools), you need N×M custom integrations. JetBrains needs a Cline plugin, a Claude plugin, a Goose plugin. VS Code needs the same. Zed needs the same. Every combination is a separate engineering effort.</p>
+
+      <p>We've seen this movie before. Before LSP, every editor had custom language support for every programming language. TypeScript worked in VS Code, sort of worked in Vim, barely worked in Emacs. <strong>LSP turned N×M into N+M</strong> — implement the protocol once per editor and once per language, and everything connects.</p>
+
+      <p>ACP is LSP for AI coding agents.</p>
+
+      <h2>What It Actually Is</h2>
+
+      <p>JSON-RPC 2.0 over stdio. That's it. An agent is a process that reads JSON from stdin and writes JSON to stdout. The protocol defines a handful of methods:</p>
+
+<pre><code><span class="code-comment"># 1. Client says hello</span>
+→ initialize {clientInfo, capabilities}
+← {agentInfo, capabilities}
+
+<span class="code-comment"># 2. Create a workspace session</span>
+→ session/new {workspaceRoots, cwd}
+← {sessionId}
+
+<span class="code-comment"># 3. Send a prompt</span>
+→ session/prompt {sessionId, prompt: [{type: "text", text: "..."}]}
+
+<span class="code-comment"># 4. Agent streams updates back</span>
+← session/update {agent_message_chunk}  <span class="code-comment"># text</span>
+← session/update {tool_call}            <span class="code-comment"># agent using a tool</span>
+← session/update {plan}                 <span class="code-comment"># execution plan</span>
+
+<span class="code-comment"># 5. Done</span>
+← session/prompt response {stopReason: "end_turn"}</code></pre>
+
+      <p>The <strong>session</strong> is the key concept. Unlike one-shot CLI invocations, an ACP session persists. You send prompt #1, the agent works, you send prompt #2 — the agent has full conversation context. It remembers what files it created, what decisions it made, what you asked before.</p>
+
+      <h2>Why This Matters Beyond Editors</h2>
+
+      <p>The obvious use case is editors: JetBrains, Zed, Neovim get universal agent support. But ACP is more interesting than that.</p>
+
+      <p><strong>Any program can be an ACP client.</strong> Not just IDEs. I implemented an ACP client in bash — 220 lines with named pipes and jq. It runs inside <a href="https://github.com/youwangd/SageCLI">sage</a>, my terminal-based agent orchestrator, and can talk to any ACP-compatible agent:</p>
+
+<pre><code>sage create worker --agent cline
+sage create reviewer --agent goose
+sage create planner --agent kiro
+
+sage send worker "Build the REST API"
+sage send worker "Now add authentication"  <span class="code-comment"># same session, full context</span>
+sage send worker "Switch to PostgreSQL" --force  <span class="code-comment"># cancel mid-task</span></code></pre>
+
+      <p>One universal runtime for every agent. No custom parsers. No per-agent output format handling. Just the protocol.</p>
+
+      <h2>What I Learned Implementing It</h2>
+
+      <p>I added ACP support to sage as an experiment. Here's what surprised me:</p>
+
+      <h3>1. Interactive TUI modes are a dead end</h3>
+
+      <p>Running agents in interactive mode inside tmux and sending keystrokes via <code>tmux send-keys</code> doesn't work. Both Claude Code and Cline use full terminal UI frameworks with theme pickers, security prompts, and permission selectors that don't respond reliably to raw keystroke injection. ACP bypasses all of this — no TUI, just stdio JSON-RPC.</p>
+
+      <h3>2. Persistent sessions change everything</h3>
+
+      <p>With one-shot CLI modes (<code>claude -p</code>, <code>cline --act</code>), every task is a fresh process. The agent has no memory of previous work. If you want to iterate — "now add error handling to what you just built" — you need to re-explain the entire context.</p>
+
+      <p>With ACP sessions, follow-up prompts are just <code>session/prompt</code> into the same session. The agent remembers. This is the difference between sending emails to a contractor and having a conversation with a teammate.</p>
+
+      <h3>3. The permission model differs per agent</h3>
+
+      <p>Cline handles tool permissions internally — it rarely asks the client. Claude Code's ACP adapter sends <code>session/request_permission</code> with specific option IDs, and the response format needs a nested <code>outcome</code> object, not a simple boolean. Both also require <code>cwd</code> and <code>mcpServers</code> in <code>session/new</code> params, which aren't in the base spec. Plan for a few lines of agent-specific handling per agent, not zero.</p>
+
+      <h3>4. You don't need Node.js for JSON-RPC</h3>
+
+      <p>Bidirectional JSON-RPC over stdio sounds like it needs a proper runtime. It doesn't. Named pipes and file descriptors handle it cleanly in bash:</p>
+
+<pre><code>mkfifo "$fifo_in" "$fifo_out"
+agent --acp < "$fifo_in" > "$fifo_out" &
+exec 7>"$fifo_in"   <span class="code-comment"># write to agent</span>
+exec 8<"$fifo_out"   <span class="code-comment"># read from agent</span>
+
+echo '{"jsonrpc":"2.0",...}' >&7  <span class="code-comment"># send</span>
+read -r response <&8              <span class="code-comment"># receive</span></code></pre>
+
+      <p>A complete ACP client — initialization, session management, event streaming, permission handling, cancel support — fits in ~220 lines of bash with zero dependencies beyond jq.</p>
+
+      <h2>The Ecosystem Right Now</h2>
+
+      <p>As of March 2026, 25+ agents implement ACP:</p>
+
+      <p><strong>Verified working:</strong> Cline, Claude Code (via adapter), Goose, Kiro, Gemini CLI, Copilot CLI (preview)</p>
+
+      <p><strong>Also listed:</strong> Augment Code, Cursor, OpenCode, Qwen Code, Mistral Vibe, OpenHands, Docker's cagent, and more via the <a href="https://agentclientprotocol.com/get-started/agents">ACP Agent Registry</a>.</p>
+
+      <p>JetBrains and Zed co-develop the spec. The protocol is at version 1 — simple, stable, and doing exactly what it needs to.</p>
+
+      <h2>ACP vs MCP vs A2A</h2>
+
+      <p>Three protocols, three different problems:</p>
+
+      <ul>
+        <li><strong>MCP</strong> (Anthropic) — how agents connect to <strong>tools</strong>. Database access, web search, file systems. Agent-to-tool.</li>
+        <li><strong>ACP</strong> (JetBrains/Zed) — how <strong>clients</strong> connect to agents. Editors, terminals, orchestrators talking to coding agents. Client-to-agent.</li>
+        <li><strong>A2A</strong> (Google) — how agents talk to <strong>each other</strong>. Multi-agent collaboration and delegation. Agent-to-agent.</li>
+      </ul>
+
+      <p>They're complementary, not competing. An ACP client sends a task to an agent, the agent uses MCP to access tools, and might delegate sub-tasks to other agents via A2A. Different layers of the same stack.</p>
+
+      <h2>The Honest Downsides</h2>
+
+      <p>ACP isn't all upside. Here's what gave me pause:</p>
+
+      <p><strong>You lose direct control.</strong> With <code>claude -p</code>, I control exactly what flags get passed, what tools are allowed, what model is used. With ACP, the agent decides. The protocol has no standard way to say "use this model" or "don't use bash." You're trusting the agent's defaults, and each agent's defaults are different.</p>
+
+      <p><strong>The spec is thin — implementations fill the gaps.</strong> ACP v1 is intentionally minimal. That means agents interpret it differently. Cline requires <code>mcpServers</code> in session/new. Claude's adapter needs a nested <code>outcome</code> object for permissions. These aren't bugs — they're the cost of a young spec where implementors made independent choices. You end up writing per-agent quirk handling anyway.</p>
+
+      <p><strong>Session state is opaque.</strong> Once you start an ACP session, you can't inspect it. There's no "give me the conversation history" or "what files have you touched." The agent tracks this internally. If the agent process dies, your session context is gone. With one-shot CLIs, at least the state is explicit — it's whatever's on disk.</p>
+
+      <p><strong>Debugging is harder.</strong> When <code>cline --act --json</code> breaks, I read the JSON output. When ACP breaks, I'm staring at bidirectional JSON-RPC over named pipes, trying to figure out which side dropped a message. The indirection adds a debugging layer that didn't exist before.</p>
+
+      <p><strong>It's another protocol to maintain.</strong> We now have MCP for tools, ACP for agents, A2A for agent-to-agent. Each has SDKs, versions, breaking changes. If you're a small team building a coding tool, that's three specs to track. The "just parse CLI output" approach is ugly but has zero spec dependencies.</p>
+
+      <h2>The Takeaway</h2>
+
+      <p>ACP solves a real problem with a simple protocol. If you're building anything that talks to AI coding agents — an editor plugin, a CI pipeline, a terminal tool, an orchestrator — you should be speaking ACP instead of parsing custom CLI output formats.</p>
+
+      <p>The protocol is small enough to implement in a weekend. The ecosystem is big enough that your implementation immediately works with 25+ agents. And sessions give you something no amount of CLI flag parsing can: actual conversations with your agents.</p>
+
+      <p>Just go in with eyes open. The spec is young, implementations diverge, and you'll still need per-agent edge case handling. But the direction is right — and it's a lot better than maintaining N custom parsers.</p>
+
+      <p><strong>Links:</strong> <a href="https://agentclientprotocol.com">ACP Spec</a> · <a href="https://github.com/youwangd/SageCLI">sage (my ACP implementation)</a> · <a href="https://agentclientprotocol.com/get-started/agents">Agent Registry</a></p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng. Built with HTML, CSS, and opinions.</p>
+  </div>
+</footer>
+
+</body>
+</html>
