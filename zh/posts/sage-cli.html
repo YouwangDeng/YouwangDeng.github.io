@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我用 1500 行 Bash 写了一个智能体框架 — Youwang Deng</title>
-<meta name="description" content="最好的智能体编排框架，也许是那个零依赖的。介绍 sage —— 智能体即进程，消息即文件，tmux 就是你的 IDE。">
+<title>1500 行 Bash，一个智能体框架 — Youwang Deng</title>
+<meta name="description" content="最好的智能体编排框架，也许就是零依赖的那个。sage — 进程即智能体，文件即消息，tmux 即 IDE。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,95 +37,167 @@
         <span class="post-tag">unix</span>
         <span class="post-tag">bash</span>
       </div>
-      <h1 class="post-title">我用 1500 行 Bash 写了一个智能体框架</h1>
+      <h1 class="post-title">1500 行 Bash，一个智能体框架</h1>
     </header>
 
     <div class="post-body">
 
-      <p class="post-lead">每个智能体框架都想让你学一门新语言、装一套运行时、融入一个生态。而我只想编排几个 AI 编程智能体。于是我写了 1500 行 bash，取名 <strong>sage</strong>。</p>
+      <p class="post-lead">市面上的智能体框架，个个都想让你学新语言、装运行时、绑定生态。我只想编排几个 AI 编程智能体而已。于是写了 1500 行 bash，叫它 <strong>sage</strong>。</p>
 
-      <h2>问题出在哪</h2>
+      <h2>痛点</h2>
 
-      <p>当时的状态是：一个智能体写前端，另一个写后端，而我自己成了瓶颈——来回切终端、复制粘贴结果、完全记不住谁在干什么。</p>
+      <p>我日常用 Claude Code、Cline 这些 AI 编程智能体干活，但总觉得别扭。一个写前端，一个写后端，我自己反倒成了瓶颈——来回切终端，复制粘贴，记不清谁在干什么。</p>
 
-      <p>市面上的「智能体框架」无一例外：Python + pip + virtualenv + 一堆依赖，自定义 DSL，守护进程，数据库。我不需要这些。我只需要把任务分发给 CLI 智能体，然后看着它们干活。</p>
-
-      <h2>关键洞察：Unix 早就解决了这个问题</h2>
-
-      <p>进程通过文件通信，用信号管理，通过终端观察。如果「智能体框架」就是 Unix 原语呢？</p>
+      <p>我去看了看现有方案。每个所谓的「智能体框架」都要我：</p>
 
       <ul>
-        <li><strong>智能体</strong> = tmux 窗口里的进程</li>
-        <li><strong>消息</strong> = inbox 目录下的 JSON 文件</li>
-        <li><strong>任务</strong> = 状态文件 + 结果文件</li>
+        <li>装 Python + pip + virtualenv + 一堆包</li>
+        <li>学一套自定义 DSL 来描述工作流</li>
+        <li>跑守护进程或服务</li>
+        <li>把状态塞进数据库</li>
+        <li>接受一套两周后必然想掀桌的架构设计</li>
+      </ul>
+
+      <p>这些我都不需要。我的需求就一句话：<em>把任务丢给 CLI 智能体，看它们干活</em>。完事。</p>
+
+      <h2>灵感</h2>
+
+      <p>Unix 五十年前就把进程编排玩明白了。进程靠文件通信，靠信号管理，靠终端观察。</p>
+
+      <p>那「智能体框架」是不是也可以就是……Unix 原语？</p>
+
+      <ul>
+        <li><strong>智能体</strong> = 跑在 tmux 窗口里的进程</li>
+        <li><strong>消息</strong> = 往 inbox 目录丢 JSON 文件</li>
+        <li><strong>任务</strong> = ID + 状态文件 + 结果文件</li>
+        <li><strong>编排</strong> = 智能体创建智能体</li>
         <li><strong>可观测性</strong> = <code>tmux capture-pane</code></li>
       </ul>
 
-      <p>没有守护进程，没有数据库，没有 Docker，没有 npm。所有东西都是文件，<code>cat</code> 就能看。</p>
+      <p>不用守护进程。不用数据库。不用 Docker。不用 npm。所有东西都是文件，<code>cat</code> 就能看。</p>
 
-      <h2>用起来什么样</h2>
+      <h2>sage 长什么样</h2>
+
+      <p>建个智能体，丢个任务，看它跑：</p>
 
 <pre><code>sage create worker --runtime claude-code
 sage send worker "Build a REST API with auth, tests, and docs"
-sage peek worker   <span class="code-comment"># watch it work in real-time</span></code></pre>
+sage peek worker   # watch it work in real-time</code></pre>
 
-      <p>三条命令搞定。智能体在 tmux 窗格里运行，写代码、调工具。<code>sage peek</code> 实时输出——工具调用、文件创建，全程可见。</p>
+      <p>三条命令。智能体在 tmux 面板里写代码、调工具。<code>sage peek</code> 能实时看到它在干嘛——工具调用一条条流出来：</p>
 
-      <p>多个智能体？它们会自行协调：</p>
+<pre><code>⚡ peek: worker
+
+Runner log:
+  [22:15:28] worker: invoking claude-code...
+  I'll create a professional REST API for you...
+    → ToolSearch
+    → TodoWrite
+    → Write
+    → TodoWrite
+    → Write
+
+Workspace: 4 file(s)
+  22:17  19889  routes.py
+  22:16  23212  app.py</code></pre>
+
+      <p>要跑多个智能体？编排起来：</p>
 
 <pre><code>sage create orch --runtime claude-code
 sage send orch "Build a full-stack app. Delegate to sub-agents."
 
 sage status
-<span class="code-comment">#  orch         running   45s</span>
-<span class="code-comment">#    └─ frontend running   30s</span>
-<span class="code-comment">#    └─ backend  running   28s</span></code></pre>
+#  orch         claude-code  running   45s
+#    └─ frontend claude-code  running   30s
+#    └─ backend  claude-code  running   28s</code></pre>
 
-      <p>智能体跑偏了？随时纠正：</p>
+      <p>智能体跑偏了？随时拉回来，不用重头开始：</p>
 
-<pre><code>sage steer orch "Use PostgreSQL instead of SQLite"
-sage send worker "Actually, use React" --force  <span class="code-comment"># cancel + redirect</span></code></pre>
+<pre><code># Soft steer — guidance for next task
+sage steer orch "Use PostgreSQL instead of SQLite"
 
-      <h2>架构</h2>
+# Hard steer — nuclear option: stop everything, restart with context
+sage steer orch "Switch to Go" --restart</code></pre>
+
+      <p><code>--restart</code> 是级联的——停掉所有子智能体、停掉编排器、写入引导上下文、把进行中的任务重新排队、重启。编排器按需重建子智能体。一条命令。</p>
+
+      <h2>架构（简单到离谱）</h2>
 
 <pre><code>~/.sage/
 ├── agents/worker/
-│   ├── inbox/          <span class="code-comment"># drop a JSON file = send a message</span>
-│   ├── workspace/      <span class="code-comment"># agent writes files here</span>
-│   ├── results/        <span class="code-comment"># task status + output</span>
-│   └── steer.md        <span class="code-comment"># steering context</span>
-├── runtimes/           <span class="code-comment"># bash, cline, claude-code, acp</span>
-├── trace.jsonl         <span class="code-comment"># append-only event log</span>
-└── runner.sh           <span class="code-comment"># the whole engine</span></code></pre>
+│   ├── inbox/          # drop a JSON file = send a message
+│   ├── workspace/      # agent writes files here
+│   ├── results/        # task status + output (mechanical)
+│   └── steer.md        # steering context (injected into prompts)
+├── runtimes/           # bash, cline, claude-code
+├── trace.jsonl         # append-only event log
+└── runner.sh           # 300ms polling loop, that's the whole engine</code></pre>
 
-      <p>runner 就是一个 bash 循环。每 300ms 检查一次 inbox。发现消息 → 加载 runtime → 调用 <code>runtime_inject()</code>。没了。</p>
+      <p>Runner 就是个 bash 循环。每 300ms 扫一次 inbox，有消息就加载对应 runtime（claude-code、cline 或 bash），调 <code>runtime_inject()</code>。没了。这就是全部架构。</p>
 
-      <p>新增一个 runtime 只需要一个文件，里面写两个函数：<code>runtime_start()</code> 和 <code>runtime_inject()</code>。</p>
+      <p>想加个新 runtime——比如 Gemini CLI 或 Aider？写一个文件，实现两个函数：<code>runtime_start()</code> 和 <code>runtime_inject()</code>。全部代码，一个下午读完。</p>
 
-      <h2>最关键的设计决策</h2>
+      <h2>机械化 > 行为化</h2>
 
-      <p>我见过的每个智能体框架都犯同一个错误：让 LLM 管理状态。「记得汇报你的结果。」「记录你的进度。」但 LLM 会遗忘，会幻觉出各种协议，会跳过步骤。</p>
+      <p>这是我反复验证的核心设计原则。市面上的智能体框架都犯同一个毛病：让 LLM 管状态。「记得汇报结果。」「追踪你的进度。」「做完了通知编排器。」</p>
 
-      <p>在 sage 里，<strong>一切重要的事都是机械化的</strong>。任务状态由 <em>runner</em> 来写，不是 LLM。父子关系由<em>引擎</em>来追踪。结果由 <em>runner</em> 捕获。Trace 日志是 runner 代码写入的 append-only JSONL，而不是智能体的自我汇报。</p>
+      <p>LLM 会忘事。会编造协议。会跳步骤。在一个概率模型的「行为承诺」上建可靠系统？不可能的。</p>
 
-      <p>LLM 只做它擅长的事——推理和写代码。其余的交给引擎。</p>
+      <p>sage 里，<strong>所有关键操作都是机械化的</strong>：</p>
 
-      <h2>试试看</h2>
+      <ul>
+        <li>任务状态？<em>Runner</em> 写 <code>queued → running → done</code>。不是 LLM 写的。</li>
+        <li>父子关系？<em>引擎</em>通过 <code>SAGE_AGENT_NAME</code> 环境变量记录。不靠智能体自觉。</li>
+        <li>结果输出？<em>Runner</em> 捕获并写文件。不靠提示词里的一句嘱咐。</li>
+        <li>链路追踪？Runner 代码写的 append-only JSONL。不靠智能体自我汇报。</li>
+      </ul>
 
-<pre><code><span class="code-comment"># Install (pick one)</span>
+      <p>LLM 只干它擅长的事：推理，写代码。剩下的，引擎全包。</p>
+
+      <h2>实时流式输出（最难啃的骨头）</h2>
+
+      <p>工程上最折腾的问题：怎么拿到实时输出。<code>claude -p</code>（print 模式）执行时会吞掉所有终端输出。stdout 是 TTY 也好，管道也好，套 <code>script(1)</code> 也好，都没用。Print 模式攒着所有内容，最后一次性吐出来。</p>
+
+      <p>我把能试的都试了：<code>tee</code>、<code>tail -f</code>、<code>script --flush</code>、进程替换、<code>tmux pipe-pane</code>。全是死胡同——CLI 在工具调用期间压根不往 stdout 写东西。</p>
+
+      <p>最后的解法：<code>--output-format stream-json --verbose</code>。Claude 会实时吐 JSONL 事件——每个工具调用一条，每段文本一条。用 <code>while read</code> 循环逐条解析，打印到终端：</p>
+
+<pre><code>cat "$prompt" | claude -p --output-format stream-json --verbose \
+  --allowedTools "Bash(*)" "Write(*)" "Read(*)" "Edit(*)" \
+  | while IFS= read -r line; do
+    # parse JSON event, print tool calls + text
+  done</code></pre>
+
+      <p>Cline 用 <code>--json</code> 也是同理。每个 CLI 的事件格式不同，但套路一样：结构化事件过解析器，输出到终端。</p>
+
+      <h2>收获</h2>
+
+      <p><strong>约束即特性。</strong>「只用 bash、jq 和 tmux」听着很受限，实则是解放。没有依赖地狱。没有版本冲突。没有构建步骤。整个工具就一个文件——读得懂、看得透、改得动。</p>
+
+      <p><strong>文件就是万能 API。</strong>所有工具都会读写文件。目录里的 JSON 就是最朴素的消息总线。重启不丢，<code>cat</code> 能查，<code>ls -la</code> 能调试，零基础设施。</p>
+
+      <p><strong>可观测性不是锦上添花。</strong>第一版没有 <code>peek</code>，没有 <code>trace</code>，没有流式输出。跟蒙眼开车一样。提交任务，然后等。30 秒搞定？还是卡了 5 分钟？完全不知道。加上实时输出后体验天翻地覆——从「提交后祈祷」变成了「提交后围观」。</p>
+
+      <p><strong>LLM 是系统里最靠不住的环节。</strong>不是说它差——它写代码的能力惊人。但遵守协议这事，它真的不行。每次让智能体「记住」要做什么（汇报、清理、通信），它都会忘。把这些从行为约定改成机械执行，是可靠性提升最大的一刀。</p>
+
+      <h2>来试试</h2>
+
+<pre><code># Install (pick one)
 brew tap youwangd/sage && brew install sage
 npm install -g @youwangd/sage
 curl -fsSL https://raw.githubusercontent.com/youwangd/SageCLI/main/install.sh | bash
 
-<span class="code-comment"># Use it</span>
+# Use it
 sage init
 sage create worker --runtime claude-code
 sage send worker "Build something cool"
 sage peek worker</code></pre>
 
-      <p>开源项目：<a href="https://github.com/youwangd/SageCLI" target="_blank">github.com/youwangd/SageCLI</a>。约 1500 行 bash，MIT 协议。一个下午就能读完。</p>
+      <p>完全开源：<a href="https://github.com/youwangd/SageCLI" target="_blank">github.com/youwangd/SageCLI</a></p>
 
-      <p>因为最好的智能体框架，是你真正能看懂的那个。</p>
+      <p>~1500 行 bash。MIT 协议。一个下午读完，一个晚上魔改。</p>
+
+      <p>最好的智能体框架，就是你真正能读懂的那个。</p>
 
     </div>
   </article>
