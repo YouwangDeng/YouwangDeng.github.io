@@ -438,6 +438,36 @@ a:hover { color: var(--text-bright); }
 
 .back-link:hover { color: var(--accent); }
 
+/* ═══ Post Images ═══ */
+.post-image,
+.post-body img {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 8px;
+  margin: 32px auto;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.post-image-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.post-image-pair img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+@media (max-width: 640px) {
+  .post-image-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ═══ Responsive ═══ */
 @media (max-width: 640px) {
   .nav { padding: 16px 20px; }

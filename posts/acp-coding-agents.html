@@ -51,6 +51,11 @@
 
       <p>ACP is LSP for AI coding agents.</p>
 
+      <div class="post-image-pair">
+        <img src="/images/acp-nxm-problem.png" alt="Without ACP: N×M integrations — a messy web of 16 lines connecting 4 editors to 4 agents" loading="lazy">
+        <img src="/images/acp-npm-solution.png" alt="With ACP: N+M integrations — all editors and agents connect through a single ACP hub" loading="lazy">
+      </div>
+
       <h2>What It Actually Is</h2>
 
       <p>JSON-RPC 2.0 over stdio. That's it. An agent is a process that reads JSON from stdin and writes JSON to stdout. The protocol defines a handful of methods:</p>
@@ -145,6 +150,8 @@ read -r response <&8              <span class="code-comment"># receive</span></c
       </ul>
 
       <p>They're complementary, not competing. An ACP client sends a task to an agent, the agent uses MCP to access tools, and might delegate sub-tasks to other agents via A2A. Different layers of the same stack.</p>
+
+      <img src="/images/acp-protocol-stack.png" alt="The Protocol Stack: A2A on top, ACP in the middle, MCP at the bottom" class="post-image" loading="lazy">
 
       <h2>The Honest Downsides</h2>
 
