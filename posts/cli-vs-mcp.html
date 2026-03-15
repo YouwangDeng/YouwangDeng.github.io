@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI vs MCP: The Real Tradeoff Nobody's Talking About — Youwang Deng</title>
+<meta name="description" content="Everyone's wrapping CLIs as MCP servers. But agents already have shell access. When does MCP actually help, and when is it just ceremony?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Blog</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/" class="back-link">← Back to all posts</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-14</time>
+        <span class="post-tag">agents</span>
+        <span class="post-tag">tools</span>
+        <span class="post-tag">unix</span>
+      </div>
+      <h1 class="post-title">CLI vs MCP: The Real Tradeoff Nobody's Talking About</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">Search GitHub for "MCP server" and you'll find thousands of repos. MCP server for PostgreSQL. MCP server for GitHub. MCP server for filesystem operations. MCP server for <em>grep</em>. Meanwhile, every AI coding agent already has a shell. So what's actually going on here?</p>
+
+      <h2>The Explosion</h2>
+
+      <p>In the last year, the MCP ecosystem went from a handful of reference implementations to over 10,000 servers on GitHub. There are MCP servers for everything: databases, APIs, file systems, Docker, Kubernetes, Slack, Gmail, weather, calculators, and yes — wrappers around CLI tools that agents could just <em>run directly</em>.</p>
+
+      <p>At the same time, every major AI lab shipped a CLI coding agent. Claude Code, Gemini CLI, Codex CLI, Cline, Goose, Aider, OpenCode, Kiro. All of them run in your terminal. All of them can execute shell commands. All of them can pipe, grep, curl, and jq their way through any task a Unix system can handle.</p>
+
+      <p>This creates a genuine question: <strong>if your agent has a shell, why does it need an MCP server?</strong></p>
+
+      <h2>What MCP Actually Does</h2>
+
+      <p>MCP (Model Context Protocol) standardizes how AI agents discover and invoke tools. An MCP server exposes a set of capabilities — tools, resources, prompts — with typed schemas. The agent reads these schemas, knows what parameters each tool expects, and calls them via structured JSON-RPC.</p>
+
+<pre><code><span class="code-comment"># MCP: structured, typed, schema-driven</span>
+→ tools/call {name: "query_database", arguments: {sql: "SELECT ...", database: "prod"}}
+← {content: [{type: "text", text: "42 rows returned..."}]}
+
+<span class="code-comment"># CLI: just run the command</span>
+$ psql -d prod -c "SELECT ..." --csv</code></pre>
+
+      <p>Both get you the same result. The difference is in the contract.</p>
+
+      <img src="/images/cli-vs-mcp-approaches.png" alt="CLI Approach vs MCP Approach: direct tool access versus structured JSON through an MCP server layer" class="post-image" loading="lazy">
+
+      <h2>The Case for CLI: Why Less Is More</h2>
+
+      <p>The CLI-first argument is compelling, and it's rooted in 50 years of Unix philosophy:</p>
+
+      <p><strong>Zero setup cost.</strong> Every tool your system already has — git, docker, curl, psql, kubectl, jq, grep, awk — is immediately available to any agent with shell access. No server to install, no schema to write, no process to manage. The agent just runs the command.</p>
+
+      <p><strong>Token efficiency.</strong> When Claude Code needs to search your repo, it runs <code>grep -rn "pattern" src/</code>. That's 30 tokens. An MCP server for the same operation loads its entire tool schema into the system prompt — descriptions, parameter types, examples — permanently consuming context window space even when those tools aren't being used.</p>
+
+      <p><strong>LLMs already know CLI.</strong> Models are trained on billions of lines of shell scripts, Stack Overflow answers, and man pages. Ask any LLM to write a <code>find</code> command and it'll nail it. Ask it to use your custom MCP server's <code>search_files</code> tool, and it needs to learn your specific schema first.</p>
+
+      <p><strong>Composability is built in.</strong> Unix pipes are the original tool-chaining mechanism. <code>grep pattern file | sort | uniq -c | sort -rn | head -10</code> is a pipeline that MCP can't express in a single call — you'd need multiple tool invocations with intermediate state management.</p>
+
+      <p><strong>Self-correcting feedback loops.</strong> Exit codes and stderr give agents deterministic signals. Command failed? Read stderr, fix the command, retry. This loop is natural in shells and awkward through MCP's abstraction layer.</p>
+
+      <h2>The Case for MCP: Why Structure Matters</h2>
+
+      <p>So why does MCP exist at all? Because CLI has real limits that become painful at scale:</p>
+
+      <p><strong>Structured output.</strong> <code>psql</code> returns tab-separated text. <code>gh pr list</code> returns formatted tables. Every CLI has its own output format that requires parsing. MCP returns typed JSON. When your agent needs to process the result programmatically — not just show it to a human — structured output eliminates an entire class of parsing bugs.</p>
+
+      <p><strong>Discovery and documentation.</strong> An MCP server's tool list is a machine-readable API contract. The agent knows exactly what tools exist, what parameters they take, and what they return. With CLI, the agent either needs to already know the tool, or run <code>--help</code> and parse human-readable documentation — a lossy process.</p>
+
+      <p><strong>Security boundaries.</strong> Giving an agent <code>bash</code> is giving it everything. MCP servers can scope access precisely: read-only database queries, specific GitHub repo operations, controlled file system access. In enterprise environments where AI agents need guardrails, MCP's permission model is the difference between "deploy it" and "absolutely not."</p>
+
+      <p><strong>Remote and stateful services.</strong> Some tools don't have a CLI, or the CLI is inadequate. Your internal company API? A SaaS platform's webhook system? A database behind a VPN with connection pooling? MCP servers can wrap these cleanly. Shell commands can't <code>curl</code> their way through OAuth2 token refresh flows elegantly.</p>
+
+      <p><strong>Multi-agent safety.</strong> When multiple agents share a system, raw shell access creates race conditions and conflicts. MCP servers can implement locking, queueing, and access control at the tool level — something that's nearly impossible to enforce through shell conventions alone.</p>
+
+      <h2>The Real Problem: Context Pollution</h2>
+
+      <p>Here's the insight most comparisons miss. The CLI vs MCP debate isn't really about capability — it's about <strong>context window economics</strong>.</p>
+
+      <p>Every MCP server you connect to an agent loads its tool schemas into the system prompt. Five MCP servers with 10 tools each? That's 50 tool definitions consuming thousands of tokens <em>before the agent even looks at your code</em>. This is "context pollution" — and it directly degrades the agent's reasoning quality.</p>
+
+      <p>CLI tools don't have this problem. They're invoked on demand. <code>grep</code> consumes zero context tokens until the agent actually decides to search for something. The tool's interface lives in the model's training data, not in the context window.</p>
+
+      <p>This is why Firecrawl, a company that ships <em>both</em> a CLI and an MCP server, explicitly argues that <a href="https://www.firecrawl.dev/blog/why-clis-are-better-for-agents">CLIs are better for agents</a>. Their finding: teams that over-adopted MCP integrations are pulling back, opting for focused tool sets instead.</p>
+
+      <p>The pattern emerging in 2026 is clear: <strong>the best agent setups use few MCP servers, not many</strong>.</p>
+
+      <h2>When to Use What</h2>
+
+      <p>After building agent systems that use both approaches, here's the framework I've landed on:</p>
+
+      <img src="/images/cli-mcp-spectrum.png" alt="The CLI to MCP spectrum: grep and git on the CLI side, SaaS integrations and multi-tenant access on the MCP side" class="post-image" loading="lazy">
+
+      <p><strong>Use CLI when:</strong></p>
+      <ul>
+        <li>The tool exists and is well-known (git, docker, curl, psql, kubectl)</li>
+        <li>The agent has shell access (most coding agents do)</li>
+        <li>Output is consumed by humans or simple text processing</li>
+        <li>You need composability (pipes, redirects, chaining)</li>
+        <li>You want zero setup overhead</li>
+      </ul>
+
+      <p><strong>Use MCP when:</strong></p>
+      <ul>
+        <li>The service has no CLI or a bad one (internal APIs, SaaS platforms)</li>
+        <li>You need structured, typed output for programmatic consumption</li>
+        <li>Security scoping is required (enterprise, multi-tenant, production databases)</li>
+        <li>The agent doesn't have shell access (web-based agents, sandboxed environments)</li>
+        <li>You need remote tool access across network boundaries</li>
+      </ul>
+
+      <p><strong>Don't wrap a CLI as an MCP server</strong> unless you're adding real value beyond what the CLI already provides — like access control, structured output, or remote invocation. A <code>grep</code> MCP server is strictly worse than <code>grep</code>.</p>
+
+      <h2>The Convergence</h2>
+
+      <p>The smartest tools are already converging on a hybrid approach:</p>
+
+      <ul>
+        <li><strong>Claude Code</strong> uses shell for local operations but supports MCP servers for extending into remote services</li>
+        <li><strong>Gemini CLI</strong> runs local commands natively but connects to MCP servers for Google Search, databases, and external APIs</li>
+        <li><strong>Codex CLI</strong> can act as an MCP server itself — other tools call into it, while it uses shell internally</li>
+      </ul>
+
+      <p>The pattern: <strong>shell for local, MCP for remote. Shell for known tools, MCP for custom ones. Shell for quick operations, MCP for governed ones.</strong></p>
+
+      <p>Nobody's going all-CLI or all-MCP. The winning architecture uses both, and the art is knowing which to reach for.</p>
+
+      <h2>The Uncomfortable Truth</h2>
+
+      <p>Most of those 10,000+ MCP servers on GitHub shouldn't exist. They're wrapping tools that agents already know how to use directly. They add latency, consume context, introduce dependencies, and create maintenance burden — all for capabilities the agent already has.</p>
+
+      <p>But the ones that <em>should</em> exist are genuinely transformative. An MCP server that gives an agent governed access to a production database? Essential. One that connects to your company's internal deployment API? Unlocks workflows that shell commands can't reach. One that provides real-time web search with structured results? Materially better than parsing <code>curl</code> output.</p>
+
+      <p>The mistake isn't MCP itself — it's the assumption that every tool needs to be an MCP server. Sometimes <code>grep</code> is just <code>grep</code>.</p>
+
+      <p><strong>Links:</strong> <a href="https://modelcontextprotocol.io">MCP Spec</a> · <a href="https://www.firecrawl.dev/blog/why-clis-are-better-for-agents">Firecrawl: Why CLIs Are Better</a> · <a href="https://github.com/youwangd/SageCLI">sage (CLI-first agent orchestrator)</a></p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng. Built with HTML, CSS, and opinions.</p>
+  </div>
+</footer>
+
+</body>
+</html>
