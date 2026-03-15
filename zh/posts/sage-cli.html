@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我用 1500 行 Bash 写了一个 Agent 框架 — Youwang Deng</title>
+<meta name="description" content="为什么最好的 Agent 编排框架可能是零依赖的那个。介绍 sage — 以进程为 Agent，以文件为消息，以 tmux 为 IDE。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/zh/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/zh/" class="nav-link">博客</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/zh/" class="back-link">← 返回所有文章</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-14</time>
+        <span class="post-tag">open-source</span>
+        <span class="post-tag">agents</span>
+        <span class="post-tag">unix</span>
+        <span class="post-tag">bash</span>
+      </div>
+      <h1 class="post-title">我用 1500 行 Bash 写了一个 Agent 框架</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">每个 Agent 框架都想让你学一门新语言、装一套运行时、绑定一个生态。而我只是想编排 AI 编程 Agent。于是我写了 1500 行 bash，取名 <strong>sage</strong>。</p>
+
+      <h2>问题所在</h2>
+
+      <p>我一直在用 AI 编程 Agent 开发——Claude Code、Cline——但总是遇到同样的摩擦。一个 Agent 写前端，另一个写后端，而我成了瓶颈：在终端之间来回切换、复制粘贴结果、记不住谁在干什么。</p>
+
+      <p>我看了看市面上有什么。每个"Agent 框架"都要我：</p>
+
+      <ul>
+        <li>装 Python + pip + virtualenv + 一堆包</li>
+        <li>学一套自定义 DSL 来定义 Agent 工作流</li>
+        <li>跑一个守护进程或服务</li>
+        <li>把状态存到数据库里</li>
+        <li>接受一套两周后就想掀桌的架构</li>
+      </ul>
+
+      <p>这些我都不需要。我只需要<em>把任务分派给 CLI Agent，然后看着它们干活</em>。就这么简单。</p>
+
+      <h2>关键洞察</h2>
+
+      <p>Unix 五十年前就解决了进程编排的问题。进程通过文件通信，用信号管理，通过终端观察。</p>
+
+      <p>那如果一个"Agent 框架"就是……Unix 原语呢？</p>
+
+      <ul>
+        <li><strong>Agent</strong> = 跑在 tmux 窗口里的进程</li>
+        <li><strong>消息</strong> = 放进 inbox 目录的 JSON 文件</li>
+        <li><strong>任务</strong> = 用 ID、状态文件和结果文件来追踪</li>
+        <li><strong>编排</strong> = Agent 创建其他 Agent</li>
+        <li><strong>可观测性</strong> = <code>tmux capture-pane</code></li>
+      </ul>
+
+      <p>没有守护进程、没有数据库、没有 Docker、没有 npm。一切都是可以 <code>cat</code> 的文件。</p>
+
+      <h2>sage 长什么样</h2>
+
+      <p>创建一个 Agent，给它任务，看它开干：</p>
+
+<pre><code>sage create worker --runtime claude-code
+sage send worker "Build a REST API with auth, tests, and docs"
+sage peek worker   # watch it work in real-time</code></pre>
+
+      <p>三条命令。你的 Agent 在 tmux 面板里运行，写代码，调用工具。<code>sage peek</code> 让你实时看到正在发生什么——工具调用实时流式输出：</p>
+
+<pre><code>⚡ peek: worker
+
+Runner log:
+  [22:15:28] worker: invoking claude-code...
+  I'll create a professional REST API for you...
+    → ToolSearch
+    → TodoWrite
+    → Write
+    → TodoWrite
+    → Write
+
+Workspace: 4 file(s)
+  22:17  19889  routes.py
+  22:16  23212  app.py</code></pre>
+
+      <p>需要多个 Agent？编排它们：</p>
+
+<pre><code>sage create orch --runtime claude-code
+sage send orch "Build a full-stack app. Delegate to sub-agents."
+
+sage status
+#  orch         claude-code  running   45s
+#    └─ frontend claude-code  running   30s
+#    └─ backend  claude-code  running   28s</code></pre>
+
+      <p>Agent 跑偏了？随时纠正，不用从头来过：</p>
+
+<pre><code># Soft steer — guidance for next task
+sage steer orch "Use PostgreSQL instead of SQLite"
+
+# Hard steer — nuclear option: stop everything, restart with context
+sage steer orch "Switch to Go" --restart</code></pre>
+
+      <p><code>--restart</code> 会级联生效。它会停掉所有子 Agent、停掉编排器、写入引导上下文、重新排队进行中的任务，然后重启。编排器会按需重新创建子 Agent。一条命令搞定。</p>
+
+      <h2>架构（简单得令人发指）</h2>
+
+<pre><code>~/.sage/
+├── agents/worker/
+│   ├── inbox/          # drop a JSON file = send a message
+│   ├── workspace/      # agent writes files here
+│   ├── results/        # task status + output (mechanical)
+│   └── steer.md        # steering context (injected into prompts)
+├── runtimes/           # bash, cline, claude-code
+├── trace.jsonl         # append-only event log
+└── runner.sh           # 300ms polling loop, that's the whole engine</code></pre>
+
+      <p>Runner 就是一个 bash 循环。每 300ms 检查一次 inbox，如果有消息，就加载对应的 runtime（claude-code、cline 或 bash）并调用 <code>runtime_inject()</code>。这就是全部架构。</p>
+
+      <p>添加一个新 runtime——比如 Gemini CLI 或 Aider——只需要一个文件、两个函数：<code>runtime_start()</code> 和 <code>runtime_inject()</code>。你一个下午就能读完全部代码。</p>
+
+      <h2>机械化 > 行为化</h2>
+
+      <p>这是我反复印证的设计原则。我见过的每个 Agent 框架都犯同一个错误：让 LLM 来管理状态。"记得汇报结果。""追踪你的进度。""完成后通知编排器。"</p>
+
+      <p>LLM 会遗忘。它们会臆造协议。它们会跳过步骤。你不可能在一个随机模型的行为契约上构建可靠的系统。</p>
+
+      <p>在 sage 里，<strong>一切关键操作都是机械化的</strong>：</p>
+
+      <ul>
+        <li>任务状态？是 <em>runner</em> 写入 <code>queued → running → done</code>。不是 LLM。</li>
+        <li>父子关系追踪？是<em>引擎</em>通过 <code>SAGE_AGENT_NAME</code> 环境变量记录的。不是 Agent。</li>
+        <li>结果？是 <em>runner</em> 捕获输出并写入结果文件。不是靠提示词指令。</li>
+        <li>追踪日志？是 runner 代码写入的 append-only JSONL。不是 Agent 自我汇报。</li>
+      </ul>
+
+      <p>LLM 只做它擅长的事：推理和写代码。其余一切由引擎处理。</p>
+
+      <h2>实时流式输出（最难的部分）</h2>
+
+      <p>工程上最头疼的问题是获取实时输出。<code>claude -p</code>（print 模式）在执行过程中会抑制所有终端输出。无论 stdout 是 TTY、管道，还是用 <code>script(1)</code> 包裹都一样。Print 模式会收集所有内容，最后一次性输出。</p>
+
+      <p>我什么都试过：<code>tee</code>、<code>tail -f</code>、<code>script --flush</code>、进程替换、<code>tmux pipe-pane</code>。全是死路，因为 CLI 在工具调用期间根本不向 stdout 写入任何内容。</p>
+
+      <p>最终方案：<code>--output-format stream-json --verbose</code>。Claude 会实时发出 JSONL 事件——每次工具调用一个，每次文本响应一个。一个 <code>while read</code> 循环解析每个事件并输出到终端：</p>
+
+<pre><code>cat "$prompt" | claude -p --output-format stream-json --verbose \
+  --allowedTools "Bash(*)" "Write(*)" "Read(*)" "Edit(*)" \
+  | while IFS= read -r line; do
+    # parse JSON event, print tool calls + text
+  done</code></pre>
+
+      <p>Cline 用 <code>--json</code> 也是同样的思路。每个 CLI 有自己的事件格式，但模式完全一样：结构化事件通过解析器管道输出到终端。</p>
+
+      <h2>我学到了什么</h2>
+
+      <p><strong>约束即特性。</strong>"只用 bash、jq 和 tmux"听起来很受限，实际上是一种解放。没有依赖地狱，没有版本冲突，没有构建步骤。整个工具就是一个文件，你可以读懂、理解、修改。</p>
+
+      <p><strong>文件是万能 API。</strong>所有工具都能读写文件。目录里的 JSON 是最低公分母的消息总线。它能扛住重启，用 <code>cat</code> 就能查看，用 <code>ls -la</code> 就能调试，不需要任何基础设施。</p>
+
+      <p><strong>可观测性不是可选项。</strong>第一版没有 <code>peek</code>、没有 <code>trace</code>、没有流式输出。就像蒙着眼睛开车。你提交一个任务然后等。也许 30 秒就好了，也许卡了 5 分钟。加上实时输出后，整个体验彻底改变——从"提交后祈祷"变成了"提交后围观"。</p>
+
+      <p><strong>LLM 是系统中最不可靠的部分。</strong>不是因为它不行——它的代码生成能力令人惊叹。但它在遵守协议方面极不靠谱。每次我试图让 Agent "记住"该做的事（汇报结果、清理、通信），它们都会忘。把这些事情从行为化变成机械化，是可靠性提升最大的一步。</p>
+
+      <h2>试试看</h2>
+
+<pre><code># Install (pick one)
+brew tap youwangd/sage && brew install sage
+npm install -g @youwangd/sage
+curl -fsSL https://raw.githubusercontent.com/youwangd/SageCLI/main/install.sh | bash
+
+# Use it
+sage init
+sage create worker --runtime claude-code
+sage send worker "Build something cool"
+sage peek worker</code></pre>
+
+      <p>完全开源：<a href="https://github.com/youwangd/SageCLI" target="_blank">github.com/youwangd/SageCLI</a></p>
+
+      <p>约 1500 行 bash。MIT 协议。一个下午读完，一个晚上改完。</p>
+
+      <p>因为最好的 Agent 框架，是你真正能读懂的那个。</p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <span class="footer-text">© 2026 Youwang Deng</span>
+      <div class="footer-links">
+        <a href="https://github.com/youwangd" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang.js"></script>
+</body>
+</html>

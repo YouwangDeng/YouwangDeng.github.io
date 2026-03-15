@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACP 是 AI 编程代理缺失的那块协议拼图 — Youwang Deng</title>
+<meta name="description" content="Agent Client Protocol 将 N×M 的代理-编辑器集成简化为 N+M。本文解析它的意义、工作原理，以及我用纯 bash 实现它的过程中学到了什么。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/zh/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/zh/" class="nav-link">博客</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/zh/" class="back-link">← 返回所有文章</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-14</time>
+        <span class="post-tag">protocols</span>
+        <span class="post-tag">agents</span>
+        <span class="post-tag">open-source</span>
+      </div>
+      <h1 class="post-title">ACP 是 AI 编程代理缺失的那块协议拼图</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">每个 AI 编程代理都在说自己的语言。Claude Code 用 <code>-p --output-format stream-json</code>，Cline 用 <code>--act --json</code>，Goose、Kiro、Gemini 各有各的 CLI 参数和输出格式。<strong>Agent Client Protocol</strong> 让它们统一说同一种语言。</p>
+
+      <h2>N×M 问题</h2>
+
+      <p>目前，如果你想把 M 个代理集成到 N 个编辑器（或工具）中，就需要 N×M 个定制集成。JetBrains 需要 Cline 插件、Claude 插件、Goose 插件；VS Code 也需要同样的一套；Zed 也是。每种组合都是一次独立的工程投入。</p>
+
+      <p>这个故事我们并不陌生。在 LSP 出现之前，每个编辑器都要为每种编程语言做专门的语言支持。TypeScript 在 VS Code 里好用，在 Vim 里凑合能用，在 Emacs 里几乎不能用。<strong>LSP 把 N×M 变成了 N+M</strong>——每个编辑器实现一次协议，每种语言实现一次，一切就通了。</p>
+
+      <p>ACP 就是 AI 编程代理的 LSP。</p>
+
+      <div class="post-image-pair">
+        <img src="/images/acp-nxm-problem.png" alt="没有 ACP：N×M 集成——4 个编辑器与 4 个代理之间用 16 条线杂乱连接" loading="lazy">
+        <img src="/images/acp-npm-solution.png" alt="有了 ACP：N+M 集成——所有编辑器和代理通过一个 ACP 中心连接" loading="lazy">
+      </div>
+
+      <h2>它到底是什么</h2>
+
+      <p>基于 stdio 的 JSON-RPC 2.0，就这么简单。一个代理就是一个进程，从 stdin 读取 JSON，向 stdout 写入 JSON。协议定义了几个核心方法：</p>
+
+<pre><code><span class="code-comment"># 1. 客户端打招呼</span>
+→ initialize {clientInfo, capabilities}
+← {agentInfo, capabilities}
+
+<span class="code-comment"># 2. 创建工作区会话</span>
+→ session/new {workspaceRoots, cwd}
+← {sessionId}
+
+<span class="code-comment"># 3. 发送提示</span>
+→ session/prompt {sessionId, prompt: [{type: "text", text: "..."}]}
+
+<span class="code-comment"># 4. 代理流式返回更新</span>
+← session/update {agent_message_chunk}  <span class="code-comment"># 文本</span>
+← session/update {tool_call}            <span class="code-comment"># 代理调用工具</span>
+← session/update {plan}                 <span class="code-comment"># 执行计划</span>
+
+<span class="code-comment"># 5. 完成</span>
+← session/prompt response {stopReason: "end_turn"}</code></pre>
+
+      <p><strong>会话（session）</strong>是核心概念。不同于一次性的 CLI 调用，ACP 会话是持久的。你发送第一个提示，代理开始工作；你发送第二个提示，代理拥有完整的对话上下文——它记得自己创建了哪些文件、做了哪些决定、你之前问过什么。</p>
+
+      <h2>为什么它的意义不止于编辑器</h2>
+
+      <p>最直接的应用场景是编辑器：JetBrains、Zed、Neovim 获得通用的代理支持。但 ACP 的价值远不止于此。</p>
+
+      <p><strong>任何程序都可以成为 ACP 客户端。</strong>不只是 IDE。我用 bash 实现了一个 ACP 客户端——220 行代码，用 named pipe 和 jq 就搞定了。它运行在 <a href="https://github.com/youwangd/SageCLI">sage</a>（我的终端代理编排器）中，能与任何兼容 ACP 的代理通信：</p>
+
+<pre><code>sage create worker --agent cline
+sage create reviewer --agent goose
+sage create planner --agent kiro
+
+sage send worker "Build the REST API"
+sage send worker "Now add authentication"  <span class="code-comment"># 同一会话，完整上下文</span>
+sage send worker "Switch to PostgreSQL" --force  <span class="code-comment"># 中途取消任务</span></code></pre>
+
+      <p>一套通用运行时对接所有代理。不需要定制解析器，不需要处理各家不同的输出格式，只需要遵循协议。</p>
+
+      <h2>实现过程中我学到了什么</h2>
+
+      <p>我把 ACP 支持加到了 sage 里作为实验。以下是让我意外的几点：</p>
+
+      <h3>1. 交互式 TUI 模式是死胡同</h3>
+
+      <p>在 tmux 里以交互模式运行代理，然后通过 <code>tmux send-keys</code> 发送按键——这条路走不通。Claude Code 和 Cline 都用了完整的终端 UI 框架，有主题选择器、安全提示和权限选择器，对原始按键注入的响应并不可靠。ACP 绕过了这一切——没有 TUI，只有 stdio JSON-RPC。</p>
+
+      <h3>2. 持久会话改变了一切</h3>
+
+      <p>使用一次性 CLI 模式（<code>claude -p</code>、<code>cline --act</code>）时，每个任务都是一个全新的进程。代理对之前的工作毫无记忆。如果你想迭代——"给你刚才写的代码加上错误处理"——就得把整个上下文重新解释一遍。</p>
+
+      <p>有了 ACP 会话，后续提示只需向同一个会话发送 <code>session/prompt</code>，代理什么都记得。这就像是从给外包发邮件，变成了和队友面对面聊天。</p>
+
+      <h3>3. 不同代理的权限模型各不相同</h3>
+
+      <p>Cline 在内部处理工具权限——很少向客户端请求。Claude Code 的 ACP 适配器会发送 <code>session/request_permission</code>，附带特定的选项 ID，响应格式需要一个嵌套的 <code>outcome</code> 对象，而不是简单的布尔值。两者还都要求在 <code>session/new</code> 参数中传入 <code>cwd</code> 和 <code>mcpServers</code>，这些并不在基础规范中。做好准备：每个代理都需要几行针对性的处理代码，而不是零。</p>
+
+      <h3>4. JSON-RPC 不需要 Node.js</h3>
+
+      <p>基于 stdio 的双向 JSON-RPC 听起来得用一个正经的运行时。其实不需要。在 bash 中，named pipe 和文件描述符就能干净利落地搞定：</p>
+
+<pre><code>mkfifo "$fifo_in" "$fifo_out"
+agent --acp < "$fifo_in" > "$fifo_out" &
+exec 7>"$fifo_in"   <span class="code-comment"># 写入代理</span>
+exec 8<"$fifo_out"   <span class="code-comment"># 从代理读取</span>
+
+echo '{"jsonrpc":"2.0",...}' >&7  <span class="code-comment"># 发送</span>
+read -r response <&8              <span class="code-comment"># 接收</span></code></pre>
+
+      <p>一个完整的 ACP 客户端——初始化、会话管理、事件流、权限处理、取消支持——只需约 220 行 bash 代码，除了 jq 之外零依赖。</p>
+
+      <h2>当前的生态</h2>
+
+      <p>截至 2026 年 3 月，已有 25+ 个代理实现了 ACP：</p>
+
+      <p><strong>已验证可用：</strong>Cline、Claude Code（通过适配器）、Goose、Kiro、Gemini CLI、Copilot CLI（预览版）</p>
+
+      <p><strong>其他已列入：</strong>Augment Code、Cursor、OpenCode、Qwen Code、Mistral Vibe、OpenHands、Docker 的 cagent 等，详见 <a href="https://agentclientprotocol.com/get-started/agents">ACP Agent Registry</a>。</p>
+
+      <p>JetBrains 和 Zed 共同推进规范制定。协议目前是版本 1——简洁、稳定，恰如其分地完成了它该做的事。</p>
+
+      <h2>ACP vs MCP vs A2A</h2>
+
+      <p>三个协议，解决三个不同的问题：</p>
+
+      <ul>
+        <li><strong>MCP</strong>（Anthropic）——代理如何连接<strong>工具</strong>。数据库访问、网页搜索、文件系统。代理到工具。</li>
+        <li><strong>ACP</strong>（JetBrains/Zed）——<strong>客户端</strong>如何连接代理。编辑器、终端、编排器与编程代理对话。客户端到代理。</li>
+        <li><strong>A2A</strong>（Google）——代理之间如何<strong>相互</strong>通信。多代理协作与任务委托。代理到代理。</li>
+      </ul>
+
+      <p>它们是互补的，不是竞争关系。ACP 客户端向代理发送任务，代理通过 MCP 访问工具，还可能通过 A2A 将子任务委托给其他代理。是同一技术栈的不同层。</p>
+
+      <img src="/images/acp-protocol-stack.png" alt="协议栈：A2A 在顶层，ACP 在中间，MCP 在底层" class="post-image" loading="lazy">
+
+      <h2>不得不说的缺点</h2>
+
+      <p>ACP 并非全是优点。以下是让我犹豫的地方：</p>
+
+      <p><strong>你失去了直接控制权。</strong>用 <code>claude -p</code> 时，我能精确控制传哪些参数、允许哪些工具、使用哪个模型。用 ACP 时，这些由代理决定。协议没有标准方式来指定"用这个模型"或"不要用 bash"。你只能信任代理的默认设置，而每个代理的默认设置都不一样。</p>
+
+      <p><strong>规范很薄——实现来填坑。</strong>ACP v1 有意保持了极简。这意味着各个代理的理解不尽相同。Cline 要求在 session/new 中传入 <code>mcpServers</code>；Claude 的适配器权限响应需要嵌套的 <code>outcome</code> 对象。这些不是 bug——而是年轻规范中各实现者独立决策的代价。最终你还是会写出针对每个代理的兼容代码。</p>
+
+      <p><strong>会话状态是黑箱。</strong>一旦启动了 ACP 会话，你就无法窥探其内部。没有"给我看对话历史"或"你动了哪些文件"的接口。代理在内部管理这些状态。如果代理进程挂了，你的会话上下文就没了。用一次性 CLI 时，状态至少是显式的——就是磁盘上的那些文件。</p>
+
+      <p><strong>调试更困难。</strong>当 <code>cline --act --json</code> 出问题时，我直接看 JSON 输出。当 ACP 出问题时，我得盯着 named pipe 上的双向 JSON-RPC 流，试图搞清楚是哪一端丢了消息。这层间接抽象带来了以前不存在的调试复杂度。</p>
+
+      <p><strong>又多了一个需要维护的协议。</strong>现在我们有了 MCP 管工具、ACP 管代理、A2A 管代理间通信。每个都有 SDK、版本和破坏性变更。如果你是个小团队在做编程工具，那就是三份规范要跟进。"直接解析 CLI 输出"的方式虽然丑陋，但零规范依赖。</p>
+
+      <h2>总结</h2>
+
+      <p>ACP 用一个简单的协议解决了一个真实的问题。如果你在构建任何需要与 AI 编程代理通信的东西——编辑器插件、CI 流水线、终端工具、编排器——你应该用 ACP，而不是解析各家自定义的 CLI 输出格式。</p>
+
+      <p>这个协议小到一个周末就能实现，生态又大到你的实现立刻就能对接 25+ 个代理。而会话机制给了你一样光靠解析 CLI 参数永远得不到的东西：与你的代理进行真正的对话。</p>
+
+      <p>只是要睁大眼睛。规范还年轻，各家实现有分歧，你仍然需要针对每个代理做边界情况处理。但方向是对的——而且比维护 N 个自定义解析器强太多了。</p>
+
+      <p><strong>相关链接：</strong> <a href="https://agentclientprotocol.com">ACP 规范</a> · <a href="https://github.com/youwangd/SageCLI">sage（我的 ACP 实现）</a> · <a href="https://agentclientprotocol.com/get-started/agents">Agent Registry</a></p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng。由 HTML、CSS 和个人观点构建。</p>
+  </div>
+</footer>
+
+<script src="/js/lang.js"></script>
+</body>
+</html>

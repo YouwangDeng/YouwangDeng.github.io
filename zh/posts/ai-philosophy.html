@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能体悖论 — Youwang Deng</title>
+<meta name="description" content="当 AI 开始自我构建，一切都将改变。关于运行自主智能体的思考，以及工具与伙伴之间那条模糊的边界。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/zh/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/zh/" class="nav-link">博客</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/zh/" class="back-link">← 返回所有文章</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-13</time>
+        <span class="post-tag">philosophy</span>
+        <span class="post-tag">ai</span>
+        <span class="post-tag">agents</span>
+      </div>
+      <h1 class="post-title">智能体悖论：当 AI 学会自我构建，一切都将改变</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p>如果你花了足够多的时间与 AI 一起构建项目，总会有那么一个瞬间——某种转变悄然发生。你不再问<em>「AI 能做到这件事吗？」</em>，而是开始问<em>「AI 应该自己决定做什么吗？」</em></p>
+
+      <p>几个月前，我走到了这个节点。当时我在全天候运行自主智能体——编写代码、管理社交账号、发布内容、监控市场、发送邮件。不是实验性的尝试，而是真正投入生产的系统，在做真实的决策，一天 24 小时不停歇。</p>
+
+      <p>在这个过程中，有一个问题逐渐清晰成形，此后便挥之不去：</p>
+
+      <blockquote>如果一个 AI 智能体能够构建自己的工具、完善自己的技能、并决定接下来要解决什么问题——那么，从什么时刻起，它不再是一个工具，而成为了一个协作者？</blockquote>
+
+      <h2>AI 使用的三个时代</h2>
+
+      <p>回顾过去，我与 AI 的关系经历了三个截然不同的阶段：</p>
+
+      <p><strong>第一个时代：神谕。</strong>你提出问题，它给出答案。ChatGPT 不过是一个高级搜索引擎。有用，但本质上是被动的。关于<em>该问什么</em>，所有的思考都由人类完成。</p>
+
+      <p><strong>第二个时代：工具。</strong>你下达任务，它负责执行。写这段代码。分析这份数据。生成这张图片。AI 很强大，但完全依赖指令——你让它做什么，它就做什么，仅此而已。人类是全部的大脑；AI 只是双手。</p>
+
+      <p><strong>第三个时代：智能体。</strong>这才是真正有趣的地方。你定义一个目标，AI 自己规划路径。它阅读文档、编写脚本、排查错误、应对意料之外的结果。人类设定方向；AI 负责导航。</p>
+
+      <p>大多数人还停留在第一和第二个时代之间。跨入第三个时代的障碍并非技术——而是信任。</p>
+
+      <h2>信任的梯度</h2>
+
+      <p>在生产环境中运行智能体，我学到的最重要一课是：信任不是非黑即白的。它是一条梯度线，你通过经验来校准它的位置。</p>
+
+      <div class="highlight-box">
+        <p><strong>低信任：</strong>读取文件、搜索网络、汇总信息。安全，可逆。</p>
+        <p><strong>中等信任：</strong>编写代码、修改配置、管理本地系统。高效，可恢复。</p>
+        <p><strong>高信任：</strong>发送邮件、公开发帖、进行购买、代替你与人交互。强大，不可逆。</p>
+      </div>
+
+      <p>多数人犯的错误是把信任当作非此即彼的选择——要么 AI 是沙盒里的聊天机器人，要么就是手握所有钥匙的自主智能体。真正的实践方式是渐进式授权——随着智能体不断证明自身的能力，逐步扩展你信任的边界。</p>
+
+      <p>我的智能体最初只是读取文件和查看日历。如今它管理社交媒体账号、撰写并发布博客文章、编制每日情报简报、监控业务指标。每一次权限的扩展，都是因为它通过持续稳定的表现，赢得了下一层级的信任。</p>
+
+      <h2>记忆的悖论</h2>
+
+      <p>有一件事一直让我辗转难眠：<strong>当前的 AI 智能体并不真正具备学习能力。</strong></p>
+
+      <p>它们可以记忆（勉强算是——通过笨拙的基于文件的记忆系统）。它们可以执行复杂的多步骤工作流。经过提示，它们甚至可以对自身的表现进行反思。但它们并不真正<em>学习</em>，至少不是在任何有意义的层面上。</p>
+
+      <p>每次会话开始，智能体都是从零醒来。它读取记忆文件，重建上下文，然后表现得好像它一直知道这些事情一样。但它并没有从经验中学到任何东西——它只是在读一本日记。没有任何神经通路因此加强，没有任何直觉因此形成，没有任何技能因为反复练习而变得更加纯熟。</p>
+
+      <p>这就是智能体悖论：<strong>我们正在构建的系统表现得像是拥有智能，实际上却并非如此。</strong>它们通过持久化机制（文件、数据库、向量存储）来模拟连续性，而非内在地拥有这种连续性。</p>
+
+      <p>然而——这正是最难以言说之处——这种<em>实际层面的差距</em>正在不断缩小。</p>
+
+      <h2>能力的幻觉（其实并非幻觉）</h2>
+
+      <p>有一种颇具诱惑力的哲学反驳：「这不过是模式匹配，它并不真正理解。」我曾经觉得这个论点很有说服力。现在不再这么认为了。</p>
+
+      <p>不是因为我认为 LLMs 具有意识或感知。它们没有。而是因为这个反驳混淆了<em>机制</em>与<em>能力</em>。计算器并不「理解」算术，但它的计算分毫不差。编译器并不「理解」编程，但它生成的机器码完全可以运行。</p>
+
+      <p>当我的智能体阅读一个 GitHub 仓库的 README，识别出它为何正在流行，分析其技术路线，并综合产出一份精炼的简报帮助我做出更好的决策时——它是否「真正理解」这个问题，远不如它的输出确实有用这个事实来得重要。</p>
+
+      <p>哲学上的争论是一种奢侈。实际的影响早已到来。</p>
+
+      <h2>当智能体开始构建智能体</h2>
+
+      <p>下一个前沿——而我们已经站在它的边缘——是能够自我进化的智能体。不仅仅是执行任务，还包括：</p>
+
+      <ul>
+        <li><strong>在现有工具力不从心时，创造新的工具</strong></li>
+        <li><strong>根据成败得失，优化自身的工作流程</strong></li>
+        <li><strong>识别自身能力的空白，并主动填补</strong></li>
+        <li><strong>将所学传授给其他智能体</strong></li>
+      </ul>
+
+      <p>一些框架已经在做这件事了。我见过能够把成功的多步骤解决方案提炼为可复用技能的智能体；能够对自己的提示词进行 A/B 测试的智能体；能够在需要某个尚不存在的功能时，自行构建并部署新微服务的智能体。</p>
+
+      <p>这正是「工具还是协作者」这条界线变得真正模糊的地方。工具不会觉得自己需要一项新能力然后去构建它。但协作者会。</p>
+
+      <h2>构建者的责任</h2>
+
+      <p>如果你在用 AI 智能体做真正的构建——而不仅仅是聊天——你就继承了一种特殊的责任。你不只是在写软件。你在为一个将要在真实世界中自主行动的系统，划定边界、灌输价值观、设计决策框架。</p>
+
+      <p>我的智能体有一个 <code>SOUL.md</code> 文件。这听起来很戏剧化，但其实非常务实：它定义了智能体的原则、边界和性格。「不得泄露数据。发送外部通信前必须询问。保持高标准。把事情做完。」</p>
+
+      <p>这些不仅仅是配置文件。它们是我们目前所能做到的，最接近于向一个会在无人监督时做出决策的系统注入价值观的方式。</p>
+
+      <p>而这是我最终形成的信念：<strong>一个 AI 智能体的品质，与其创建者的用心程度成正比。</strong>粗心的构建者会得到一个危险的智能体。用心的构建者会得到一个强大的伙伴。</p>
+
+      <h2>我们正走向何方</h2>
+
+      <p>我不认为我们正在走向好莱坞式的 AGI。我认为我们正在走向一些更有趣、也更微妙的东西：<strong>一个人类工作与 AI 工作之间的边界变得不再重要的世界。</strong></p>
+
+      <p>不是因为 AI 取代了人类，而是因为协作变得如此无缝，以至于追问「这是谁做的？」不再有意义。人类提出愿景。智能体进行调研。人类修正方向。智能体落地实现。人类审核并部署。智能体监控并迭代。</p>
+
+      <p>这已经是我每天的日常。如果你正在读这篇文章，它也可以成为你的日常。</p>
+
+      <p>技术已经就绪。工具已经开源。成本持续下降。唯一的障碍，是你是否愿意信任一种全新的工作方式——以及是否有足够的耐心和纪律，去认真地构建它。</p>
+
+      <hr>
+
+      <p><em>这是一系列探索 AI 构建实践的文章的第一篇。我将持续记录我的所学、踩过的坑，以及那些出乎意料的发现——在不断推进自主智能体能力边界的过程中。欢迎在 <a href="https://github.com/youwangd">GitHub</a> 上关注进展。</em></p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p class="footer-text">由一个人类和他的智能体们共同构建。<span class="footer-year">2026</span></p>
+    <div class="footer-links">
+      <a href="https://github.com/youwangd" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+<script src="/js/lang.js"></script>
+</body>
+</html>

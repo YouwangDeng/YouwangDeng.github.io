@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI vs MCP：没人谈论的真正取舍 — Youwang Deng</title>
+<meta name="description" content="人人都在把 CLI 包装成 MCP 服务器。但 Agent 本来就有 shell 访问权限。MCP 到底什么时候真正有用，什么时候只是多此一举？">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/zh/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/zh/" class="nav-link">博客</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/zh/" class="back-link">← 返回所有文章</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-14</time>
+        <span class="post-tag">agents</span>
+        <span class="post-tag">tools</span>
+        <span class="post-tag">unix</span>
+      </div>
+      <h1 class="post-title">CLI vs MCP：没人谈论的真正取舍</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">在 GitHub 上搜索 "MCP server"，你会找到数以千计的仓库。PostgreSQL 的 MCP 服务器、GitHub 的 MCP 服务器、文件系统操作的 MCP 服务器、<em>grep</em> 的 MCP 服务器。与此同时，每个 AI 编程 Agent 本来就有 shell。所以，这到底是怎么回事？</p>
+
+      <h2>爆发式增长</h2>
+
+      <p>在过去一年里，MCP 生态系统从寥寥几个参考实现膨胀到 GitHub 上超过 10,000 个服务器。什么都有对应的 MCP 服务器：数据库、API、文件系统、Docker、Kubernetes、Slack、Gmail、天气、计算器，还有——把 CLI 工具包装一层，而这些工具 Agent 本可以<em>直接运行</em>。</p>
+
+      <p>与此同时，各大 AI 实验室纷纷推出了 CLI 编程 Agent：Claude Code、Gemini CLI、Codex CLI、Cline、Goose、Aider、OpenCode、Kiro。它们都在终端里运行，都能执行 shell 命令，都能通过 pipe、grep、curl 和 jq 搞定 Unix 系统上的任何任务。</p>
+
+      <p>这就引出了一个真实的问题：<strong>如果你的 Agent 已经有了 shell，为什么还需要 MCP 服务器？</strong></p>
+
+      <h2>MCP 到底做了什么</h2>
+
+      <p>MCP（Model Context Protocol）标准化了 AI Agent 发现和调用工具的方式。MCP 服务器暴露一组能力——工具、资源、提示词——并附带类型化的 schema。Agent 读取这些 schema，知道每个工具需要哪些参数，然后通过结构化的 JSON-RPC 调用它们。</p>
+
+<pre><code><span class="code-comment"># MCP：结构化、类型化、schema 驱动</span>
+→ tools/call {name: "query_database", arguments: {sql: "SELECT ...", database: "prod"}}
+← {content: [{type: "text", text: "42 rows returned..."}]}
+
+<span class="code-comment"># CLI：直接运行命令</span>
+$ psql -d prod -c "SELECT ..." --csv</code></pre>
+
+      <p>两者得到的结果一样，区别在于契约的形式。</p>
+
+      <img src="/images/cli-vs-mcp-approaches.png" alt="CLI 方式 vs MCP 方式：直接访问工具与通过 MCP 服务器层传递结构化 JSON 的对比" class="post-image" loading="lazy">
+
+      <h2>CLI 的优势：少即是多</h2>
+
+      <p>CLI 优先的论点很有说服力，而且根植于 50 年的 Unix 哲学：</p>
+
+      <p><strong>零配置成本。</strong>系统上已有的所有工具——git、docker、curl、psql、kubectl、jq、grep、awk——任何拥有 shell 权限的 Agent 都能直接使用。不需要安装服务器，不需要编写 schema，不需要管理进程。Agent 直接运行命令就好。</p>
+
+      <p><strong>Token 效率。</strong>当 Claude Code 需要搜索代码库时，它运行 <code>grep -rn "pattern" src/</code>，只需 30 个 token。而同样的操作如果通过 MCP 服务器，则需要把完整的工具 schema 加载到系统提示词中——描述、参数类型、示例——即使这些工具根本没在用，也在永久占用上下文窗口。</p>
+
+      <p><strong>LLM 天生就懂 CLI。</strong>模型是在数十亿行 shell 脚本、Stack Overflow 回答和 man 手册上训练出来的。让任何 LLM 写一条 <code>find</code> 命令，它都能轻松搞定。但如果让它使用你自定义 MCP 服务器的 <code>search_files</code> 工具，它得先学习你那套特定的 schema。</p>
+
+      <p><strong>组合性是天然内置的。</strong>Unix 管道是最早的工具链机制。<code>grep pattern file | sort | uniq -c | sort -rn | head -10</code> 是一条完整的流水线，MCP 无法在单次调用中表达——你需要多次工具调用加上中间状态管理。</p>
+
+      <p><strong>自我纠错的反馈循环。</strong>退出码和 stderr 为 Agent 提供了确定性的信号。命令失败了？读 stderr，修正命令，重试。这个循环在 shell 中是自然而然的，但通过 MCP 的抽象层就变得很别扭。</p>
+
+      <h2>MCP 的优势：结构化为什么重要</h2>
+
+      <p>那 MCP 为什么还要存在？因为 CLI 在规模化时确实有硬伤：</p>
+
+      <p><strong>结构化输出。</strong><code>psql</code> 返回制表符分隔的文本，<code>gh pr list</code> 返回格式化的表格。每个 CLI 都有自己的输出格式，都需要解析。MCP 返回的是类型化的 JSON。当你的 Agent 需要以编程方式处理结果——而不仅仅是展示给人看——结构化输出直接消除了一整类解析 bug。</p>
+
+      <p><strong>发现与文档化。</strong>MCP 服务器的工具列表是一份机器可读的 API 契约。Agent 能精确地知道有哪些工具可用、需要什么参数、返回什么内容。而用 CLI，Agent 要么得事先知道这个工具，要么得运行 <code>--help</code> 然后解析人类可读的文档——这个过程是有损的。</p>
+
+      <p><strong>安全边界。</strong>给 Agent 一个 <code>bash</code> 就等于给了它一切。MCP 服务器可以精确地限定访问范围：只读数据库查询、特定 GitHub 仓库操作、受控的文件系统访问。在需要给 AI Agent 设置护栏的企业环境中，MCP 的权限模型是"可以上线"和"绝对不行"之间的分水岭。</p>
+
+      <p><strong>远程和有状态服务。</strong>有些工具没有 CLI，或者 CLI 很拉跨。你公司的内部 API？某个 SaaS 平台的 Webhook 系统？VPN 后面带连接池的数据库？MCP 服务器可以干净利落地包装这些。Shell 命令要用 <code>curl</code> 优雅地处理 OAuth2 token 刷新流程？想都不用想。</p>
+
+      <p><strong>多 Agent 安全。</strong>当多个 Agent 共享一个系统时，原始的 shell 访问会产生竞态条件和冲突。MCP 服务器可以在工具级别实现锁、队列和访问控制——这些仅靠 shell 约定几乎不可能做到。</p>
+
+      <h2>真正的问题：上下文污染</h2>
+
+      <p>这里有一个大多数对比文章都忽略的关键洞察。CLI vs MCP 的争论本质上不是关于能力——而是关于<strong>上下文窗口的经济学</strong>。</p>
+
+      <p>你连接到 Agent 的每个 MCP 服务器都会把它的工具 schema 加载进系统提示词。接了 5 个 MCP 服务器，每个 10 个工具？那就是 50 个工具定义，在 <em>Agent 还没开始看你的代码之前</em>就消耗了数千个 token。这就是"上下文污染"——它直接拉低 Agent 的推理质量。</p>
+
+      <p>CLI 工具没有这个问题。它们是按需调用的。<code>grep</code> 在 Agent 真正决定搜索之前，消耗的上下文 token 为零。工具的接口存在于模型的训练数据中，而不是上下文窗口里。</p>
+
+      <p>这就是为什么 Firecrawl——一家同时提供 CLI <em>和</em> MCP 服务器的公司——会明确主张 <a href="https://www.firecrawl.dev/blog/why-clis-are-better-for-agents">CLI 对 Agent 更好</a>。他们的发现是：过度采用 MCP 集成的团队正在回撤，转而选择精简的工具集。</p>
+
+      <p>2026 年正在形成的趋势很清晰：<strong>最好的 Agent 配置用的 MCP 服务器少，而不是多</strong>。</p>
+
+      <h2>什么时候用什么</h2>
+
+      <p>在构建了同时使用两种方案的 Agent 系统之后，这是我总结出的决策框架：</p>
+
+      <img src="/images/cli-mcp-spectrum.png" alt="CLI 到 MCP 的光谱：grep 和 git 在 CLI 一侧，SaaS 集成和多租户访问在 MCP 一侧" class="post-image" loading="lazy">
+
+      <p><strong>用 CLI 的场景：</strong></p>
+      <ul>
+        <li>工具已经存在且广为人知（git、docker、curl、psql、kubectl）</li>
+        <li>Agent 有 shell 权限（大多数编程 Agent 都有）</li>
+        <li>输出是给人看的，或者只需简单的文本处理</li>
+        <li>你需要组合能力（管道、重定向、链式调用）</li>
+        <li>你想要零配置开销</li>
+      </ul>
+
+      <p><strong>用 MCP 的场景：</strong></p>
+      <ul>
+        <li>服务没有 CLI 或 CLI 很烂（内部 API、SaaS 平台）</li>
+        <li>你需要结构化、类型化的输出供程序消费</li>
+        <li>需要安全范围控制（企业、多租户、生产数据库）</li>
+        <li>Agent 没有 shell 权限（基于 Web 的 Agent、沙箱环境）</li>
+        <li>你需要跨越网络边界的远程工具访问</li>
+      </ul>
+
+      <p><strong>不要把 CLI 包装成 MCP 服务器</strong>，除非你在 CLI 之上增加了真正的价值——比如访问控制、结构化输出或远程调用。一个 <code>grep</code> MCP 服务器严格劣于 <code>grep</code> 本身。</p>
+
+      <h2>走向融合</h2>
+
+      <p>最聪明的工具已经在走混合路线：</p>
+
+      <ul>
+        <li><strong>Claude Code</strong> 用 shell 处理本地操作，同时支持 MCP 服务器来扩展远程服务</li>
+        <li><strong>Gemini CLI</strong> 原生运行本地命令，同时连接 MCP 服务器获取 Google Search、数据库和外部 API</li>
+        <li><strong>Codex CLI</strong> 自身可以作为 MCP 服务器——其他工具调用它，而它在内部使用 shell</li>
+      </ul>
+
+      <p>规律很明确：<strong>本地用 shell，远程用 MCP。已知工具用 shell，自定义工具用 MCP。快速操作用 shell，受管控的操作用 MCP。</strong></p>
+
+      <p>没有人会全用 CLI 或全用 MCP。胜出的架构是两者兼用，而艺术在于知道什么时候该用哪个。</p>
+
+      <h2>令人不安的真相</h2>
+
+      <p>GitHub 上那 10,000 多个 MCP 服务器，大多数不应该存在。它们包装的工具，Agent 本来就知道怎么直接用。它们增加了延迟，消耗了上下文，引入了依赖，制造了维护负担——而这些能力 Agent 本来就有。</p>
+
+      <p>但那些<em>应该</em>存在的 MCP 服务器，确实是变革性的。一个让 Agent 受控访问生产数据库的 MCP 服务器？必不可少。一个连接公司内部部署 API 的？解锁了 shell 命令无法触及的工作流。一个提供带结构化结果的实时网页搜索的？实质性地优于解析 <code>curl</code> 输出。</p>
+
+      <p>问题不在于 MCP 本身——而在于"每个工具都需要变成 MCP 服务器"这种思维定式。有时候 <code>grep</code> 就只是 <code>grep</code>。</p>
+
+      <p><strong>相关链接：</strong> <a href="https://modelcontextprotocol.io">MCP 规范</a> · <a href="https://www.firecrawl.dev/blog/why-clis-are-better-for-agents">Firecrawl：为什么 CLI 对 Agent 更好</a> · <a href="https://github.com/youwangd/SageCLI">sage（CLI 优先的 Agent 编排工具）</a></p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng. 用 HTML、CSS 和观点构建。</p>
+  </div>
+</footer>
+
+<script src="/js/lang.js"></script>
+</body>
+</html>
