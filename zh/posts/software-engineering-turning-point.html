@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>程序员的转折点 — Youwang Deng</title>
+<meta name="description" content="AI 没有杀死软件工程，但把它劈成了两半。一条路越走越宽，另一条正在变成流水线。你站在哪边？">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/zh/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/zh/" class="nav-link">博客</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/zh/" class="back-link">← 返回所有文章</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-14</time>
+        <span class="post-tag">career</span>
+        <span class="post-tag">ai</span>
+        <span class="post-tag">engineering</span>
+      </div>
+      <h1 class="post-title">程序员的转折点</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">Karpathy 给软件工程师的 AI 冲击指数打了 8-9 分（满分 10）。他没说错。但「高冲击」不等于「要完」。真正发生的事情是：这个职业正在一分为二。</p>
+
+      <h2>分化</h2>
+
+      <p>一年前 Karpathy 发明了「vibe coding」——随便写写 prompt，让 AI 出活，适合周末小项目。一年后他自己宣布这个概念过时了，新词叫「agentic engineering」：你不写代码，你指挥智能体写。</p>
+
+      <p>这不是预测，是现状。我自己一个下午干了这些事：搭了一套 ACP 协议运行时、实现了任务中断机制、写了两篇技术博客配 AI 生成的图表、做了一个中英双语网站带语言切换——全程在终端里调度 AI 智能体完成。这个工作量，放以前是一个小团队一周的活。</p>
+
+      <p>程序员正在分成两条路：</p>
+
+      <p><strong>第一条：指挥官。</strong>你拆解问题、分发任务、审查产出、纠正方向。核心能力是知道<em>该造什么</em>和<em>造得对不对</em>。你是架构师加质量关卡，智能体是干活的。</p>
+
+      <p><strong>第二条：流水线。</strong>写 CRUD 接口、拼配置模板、做标准集成。AI 能用 1% 的成本做到 80% 的质量。不完美，但够用够快——花 15 万美元年薪请人干这个，经济上越来越说不过去了。</p>
+
+      <h2>数据怎么说</h2>
+
+      <p>Karpathy 的<a href="https://github.com/karpathy/jobs">项目</a>把美国 342 个职业的 BLS 描述喂给 Gemini Flash 打分。评分标准里有一条杀手级判据：<strong>如果这份工作完全可以在家、对着电脑干完，AI 冲击天然就高。</strong></p>
+
+      <p>软件工程师：8-9 分。不是因为 AI 写的代码多完美，而是因为产出完全是数字化的、反馈循环极短（跑一下就知道对不对）、结果可以被机器验证（测试过了就是过了）。</p>
+
+      <p>对比一下电工：2-3 分。要到现场、要动手、要对着实物做判断。AI 拉不了线、穿不了管。但写个 API handler，30 秒搞定。</p>
+
+      <h2>AI 还搞不定什么</h2>
+
+      <p>冲击高不等于全面替代。说几个智能体现在还做不好的：</p>
+
+      <p><strong>品味。</strong>你让它造什么它就造什么。它不会告诉你——你要造的东西本身就是错的。产品感、判断哪些抽象经得起推敲、哪些捷径会埋雷，这些还是纯人类领地。</p>
+
+      <p><strong>诡异的 bug。</strong>一个 ACP 事件循环死活取消不掉，因为 <code>read -t 1</code> 在高频事件流里每次都能成功读到数据——这种问题需要你真正理解系统在干什么，光写 prompt 没用。智能体擅长生成代码，但面对跨系统边界的突发行为，基本抓瞎。</p>
+
+      <p><strong>取舍。</strong>杀掉进程重新来，还是尝试优雅地排空队列？这是工程判断，取决于只有盯了系统好几个小时的人才有的上下文。</p>
+
+      <p><strong>文化语境。</strong>AI 把「Oracle」翻译成「神谕」。字面上没错，放在技术博客里离谱。母语读者一秒看出问题，模型连自己翻错了都不知道。</p>
+
+      <h2>不太舒服的真相</h2>
+
+      <p>Karpathy 自己承认：手写代码的能力正在退化。这话很诚实，而且正在发生在我们每个人身上。不练就生疏，这是肌肉记忆的基本规律。</p>
+
+      <p>他还预言了「slopacolypse」——AI 生成的「差不多对但又没全对」的代码将像洪水一样涌入 GitHub。事实上已经在发生了。有人得能分清「跑得通」和「跑得对」的区别。</p>
+
+      <p>真正不舒服的地方在这里：<strong>底线在抬高。</strong>一个人加一群智能体，能交付以前一个团队的产出。如果你是那一个人，这是好消息。如果你是那个团队里的五分之一，这就是生存问题了。</p>
+
+      <p>初级岗位冲击最大。不是因为初级工程师没价值，而是因为「按 spec 写这个函数」恰恰是智能体最擅长的事。入行的坡变陡了，目前没人有好的解法。</p>
+
+      <h2>怎么站到对的那边</h2>
+
+      <p>能活下来的工程师，都是往抽象层上走的人：</p>
+
+      <ul>
+        <li><strong>学会指挥，而不只是实现。</strong>会拆项目、会把任务分到智能体粒度、会审查产出、会在跑偏时纠正。</li>
+        <li><strong>往系统深处扎。</strong>智能体写应用层代码很溜，但分布式、性能调优、跨边界调试——这些是你的护城河。</li>
+        <li><strong>练品味。</strong>最难自动化的能力是知道什么值得造。跟用户聊、理解业务、做产品决策。</li>
+        <li><strong>自己造工具。</strong>造智能体框架、造协议、造开发者基础设施的人，是在创造杠杆，不是在消耗杠杆。</li>
+      </ul>
+
+      <p>Karpathy 的 <a href="https://github.com/karpathy/autoresearch">autoresearch</a> 是风向标。一个 630 行的 Python 脚本跑了两天、做了 700 次实验，找到了一个 20 年老手漏掉的优化。智能体不是来抢你饭碗的——它们来抢的是你饭碗里那些你以为只有自己能干的部分。</p>
+
+      <p>转折点不是软件工程能不能活下来。它能。转折点是<em>你</em>能不能适应它正在变成的样子。</p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng. 用 HTML、CSS 和一点个人偏见搭建。</p>
+  </div>
+</footer>
+
+<script src="/js/lang.js"></script>
+</body>
+</html>

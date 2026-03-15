@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Engineering's Turning Point — Youwang Deng</title>
+<meta name="description" content="AI didn't kill software engineering. It split it in two. One track thrives. The other becomes a commodity. Here's how to tell which side you're on.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Blog</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/" class="back-link">← Back to all posts</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-14</time>
+        <span class="post-tag">career</span>
+        <span class="post-tag">ai</span>
+        <span class="post-tag">engineering</span>
+      </div>
+      <h1 class="post-title">Software Engineering's Turning Point</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">Karpathy scored software developers 8-9 out of 10 on his <a href="https://karpathy.ai/jobs/">AI exposure index</a>. He's not wrong. But "exposed" doesn't mean "dead." It means the job is splitting in two — and the split is already happening.</p>
+
+      <h2>The Split</h2>
+
+      <p>One year ago, Karpathy coined "vibe coding" — casual, prompt-driven, good for throwaway projects. By February 2026 he declared it passé and introduced "agentic engineering": you don't write code, you direct agents that do.</p>
+
+      <p>That's not a prediction. It's a description of what's already real. In one afternoon I built an ACP protocol runtime, a mid-task cancel mechanism, two technical blog posts with AI-generated diagrams, and a full bilingual website with language toggle — all by orchestrating AI agents from a terminal. That workload used to be a team-week.</p>
+
+      <p>The job is splitting into two tracks:</p>
+
+      <p><strong>Track 1: The Orchestrator.</strong> You decompose problems, dispatch agents, review output, steer direction. The skill is knowing <em>what to build</em> and <em>whether it's right</em>. You're the architect and the quality gate. The agents are the workforce.</p>
+
+      <p><strong>Track 2: The Commodity.</strong> Writing CRUD endpoints, boilerplate configs, standard integrations. AI does this at 80% quality for 1% of the cost. Not perfect, but good enough fast enough that paying a human $150K for it stops making economic sense.</p>
+
+      <h2>What the Numbers Say</h2>
+
+      <p>Karpathy's <a href="https://github.com/karpathy/jobs">analysis</a> scored 342 US occupations by feeding BLS job descriptions into Gemini Flash. The scoring rubric has one killer heuristic: <strong>if the job can be done entirely from a home office on a computer, AI exposure is inherently high.</strong></p>
+
+      <p>Software developers scored 8-9/10. Not because AI writes perfect code — it doesn't. But because the work product is purely digital, the feedback loop is tight (run it, see if it works), and the output is verifiable by machines (tests pass or they don't).</p>
+
+      <p>Compare that to an electrician (2-3/10). The work requires physical presence, manual dexterity, real-time judgment about physical systems. AI can't pull wire through conduit. It can, however, write your API handler in 30 seconds.</p>
+
+      <h2>What AI Still Can't Do</h2>
+
+      <p>High exposure doesn't mean full replacement. Here's what the agents still get wrong:</p>
+
+      <p><strong>Taste.</strong> An agent will build exactly what you ask for. It won't tell you that what you're asking for is the wrong thing to build. Product sense — knowing which features matter, which abstractions will hold, which shortcuts will haunt you — that's still entirely human.</p>
+
+      <p><strong>The weird bugs.</strong> When an ACP event loop won't cancel because <code>read -t 1</code> keeps succeeding on a fast event stream — that requires understanding the actual system, not just prompting harder. Agents are great at generating code. They're terrible at debugging emergent behavior across system boundaries.</p>
+
+      <p><strong>Judgment calls.</strong> Kill the process and restart fresh, or try to gracefully drain the event queue? That's an engineering decision that depends on context the agent doesn't have. The human who's been staring at the system for hours makes that call.</p>
+
+      <p><strong>Cultural context.</strong> An AI translated "Oracle" as "神谕" (divine oracle) in a tech blog. Technically correct. Culturally tone-deaf. A native reader catches that instantly. The model doesn't even know it's wrong.</p>
+
+      <h2>The Uncomfortable Part</h2>
+
+      <p>Karpathy admits his ability to write code manually is atrophying. That's honest, and it's happening to all of us. The muscle memory fades when you stop exercising it.</p>
+
+      <p>He also predicts a "slopacolypse" — a flood of AI-generated code that's <em>almost right but not quite</em>. GitHub is already full of it. Someone still needs to know the difference between code that works and code that works <em>correctly</em>.</p>
+
+      <p>Here's the uncomfortable truth: <strong>the floor is rising.</strong> A single developer with agents can ship what used to take a team. That's great if you're the one developer. It's existential if you're one of the five who used to be on that team.</p>
+
+      <p>Junior roles are the most exposed. Not because juniors aren't valuable, but because "write this function given this spec" is exactly what agents do best. The entry ramp into the profession is getting steeper, and nobody has a good answer for that yet.</p>
+
+      <h2>How to Be on the Right Side</h2>
+
+      <p>The engineers who thrive will be the ones who move up the abstraction stack:</p>
+
+      <ul>
+        <li><strong>Learn to orchestrate, not just implement.</strong> Know how to break a project into agent-sized tasks, review what comes back, and steer when it drifts.</li>
+        <li><strong>Go deeper on systems.</strong> Agents write application code well. They're weak on distributed systems, performance tuning, and debugging across boundaries. That gap is your moat.</li>
+        <li><strong>Build taste.</strong> The hardest skill to automate is knowing what's worth building. Talk to users. Understand the business. Make product decisions.</li>
+        <li><strong>Own the tools.</strong> The people building the orchestration layer — agent frameworks, protocols, developer infrastructure — are creating leverage, not consuming it.</li>
+      </ul>
+
+      <p>Karpathy's <a href="https://github.com/karpathy/autoresearch">autoresearch</a> is the leading indicator. A 630-line Python script ran 700 autonomous experiments in two days and found improvements a 20-year veteran missed. The agents aren't coming for your job. They're coming for the parts of your job you thought only you could do.</p>
+
+      <p>The turning point isn't whether software engineering survives. It will. The turning point is whether <em>you</em> adapt to what it's becoming.</p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng. Built with HTML, CSS, and opinions.</p>
+  </div>
+</footer>
+
+<script src="/js/lang.js"></script>
+</body>
+</html>
