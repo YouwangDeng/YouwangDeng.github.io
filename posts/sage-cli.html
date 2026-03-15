@@ -46,156 +46,84 @@
 
       <h2>The Problem</h2>
 
-      <p>I was building with AI coding agents — Claude Code, Cline — and kept running into the same friction. I'd have one agent building a frontend, another on the backend, and I'd be the human bottleneck switching between terminals, copy-pasting results, losing track of what was where.</p>
+      <p>I had one agent building a frontend, another on the backend, and I was the bottleneck — switching terminals, copy-pasting results, losing track of what was where.</p>
 
-      <p>I looked at what existed. Every "agent framework" I found wanted me to:</p>
+      <p>Every "agent framework" I found wanted Python + pip + virtualenv + a dozen packages, a custom DSL, a daemon, a database. I didn't need any of that. I needed to dispatch tasks to CLI agents and watch them work.</p>
 
-      <ul>
-        <li>Install Python + pip + virtualenv + a dozen packages</li>
-        <li>Learn a custom DSL for defining agent workflows</li>
-        <li>Run a daemon or server process</li>
-        <li>Store state in a database</li>
-        <li>Buy into an opinionated architecture I'd fight in two weeks</li>
-      </ul>
+      <h2>The Insight: Unix Already Solved This</h2>
 
-      <p>I didn't need any of that. I needed to <em>dispatch tasks to CLI agents and watch them work</em>. That's it.</p>
-
-      <h2>The Insight</h2>
-
-      <p>Unix already solved process orchestration fifty years ago. Processes communicate through files. You manage them with signals. You observe them through terminals.</p>
-
-      <p>So what if an "agent framework" was just... Unix primitives?</p>
+      <p>Processes communicate through files. You manage them with signals. You observe them through terminals. What if an "agent framework" was just Unix primitives?</p>
 
       <ul>
-        <li><strong>Agents</strong> = processes running in tmux windows</li>
-        <li><strong>Messages</strong> = JSON files dropped in inbox directories</li>
-        <li><strong>Tasks</strong> = tracked with IDs, status files, and result files</li>
-        <li><strong>Orchestration</strong> = agents creating other agents</li>
+        <li><strong>Agents</strong> = processes in tmux windows</li>
+        <li><strong>Messages</strong> = JSON files in inbox directories</li>
+        <li><strong>Tasks</strong> = status files + result files</li>
         <li><strong>Observability</strong> = <code>tmux capture-pane</code></li>
       </ul>
 
       <p>No daemon. No database. No Docker. No npm. Everything is a file you can <code>cat</code>.</p>
 
-      <h2>What sage Looks Like</h2>
-
-      <p>Create an agent. Give it work. Watch it go:</p>
+      <h2>What It Looks Like</h2>
 
 <pre><code>sage create worker --runtime claude-code
 sage send worker "Build a REST API with auth, tests, and docs"
-sage peek worker   # watch it work in real-time</code></pre>
+sage peek worker   <span class="code-comment"># watch it work in real-time</span></code></pre>
 
-      <p>That's three commands. Your agent is running in a tmux pane, writing code, calling tools. <code>sage peek</code> shows you exactly what's happening — live tool calls streaming as they happen:</p>
+      <p>Three commands. Your agent runs in a tmux pane, writing code, calling tools. <code>sage peek</code> streams live output — tool calls as they happen, files as they're created.</p>
 
-<pre><code>⚡ peek: worker
-
-Runner log:
-  [22:15:28] worker: invoking claude-code...
-  I'll create a professional REST API for you...
-    → ToolSearch
-    → TodoWrite
-    → Write
-    → TodoWrite
-    → Write
-
-Workspace: 4 file(s)
-  22:17  19889  routes.py
-  22:16  23212  app.py</code></pre>
-
-      <p>Need multiple agents? Orchestrate them:</p>
+      <p>Multiple agents? They orchestrate themselves:</p>
 
 <pre><code>sage create orch --runtime claude-code
 sage send orch "Build a full-stack app. Delegate to sub-agents."
 
 sage status
-#  orch         claude-code  running   45s
-#    └─ frontend claude-code  running   30s
-#    └─ backend  claude-code  running   28s</code></pre>
+<span class="code-comment">#  orch         running   45s</span>
+<span class="code-comment">#    └─ frontend running   30s</span>
+<span class="code-comment">#    └─ backend  running   28s</span></code></pre>
 
-      <p>Agent going the wrong direction? Course-correct without starting over:</p>
+      <p>Agent going the wrong direction? Steer it:</p>
 
-<pre><code># Soft steer — guidance for next task
-sage steer orch "Use PostgreSQL instead of SQLite"
+<pre><code>sage steer orch "Use PostgreSQL instead of SQLite"
+sage send worker "Actually, use React" --force  <span class="code-comment"># cancel + redirect</span></code></pre>
 
-# Hard steer — nuclear option: stop everything, restart with context
-sage steer orch "Switch to Go" --restart</code></pre>
-
-      <p>The <code>--restart</code> cascades. It stops all child agents, stops the orchestrator, writes the steering context, re-queues the in-flight task, and restarts. The orchestrator re-creates sub-agents as needed. One command.</p>
-
-      <h2>The Architecture (It's Embarrassingly Simple)</h2>
+      <h2>The Architecture</h2>
 
 <pre><code>~/.sage/
 ├── agents/worker/
-│   ├── inbox/          # drop a JSON file = send a message
-│   ├── workspace/      # agent writes files here
-│   ├── results/        # task status + output (mechanical)
-│   └── steer.md        # steering context (injected into prompts)
-├── runtimes/           # bash, cline, claude-code
-├── trace.jsonl         # append-only event log
-└── runner.sh           # 300ms polling loop, that's the whole engine</code></pre>
+│   ├── inbox/          <span class="code-comment"># drop a JSON file = send a message</span>
+│   ├── workspace/      <span class="code-comment"># agent writes files here</span>
+│   ├── results/        <span class="code-comment"># task status + output</span>
+│   └── steer.md        <span class="code-comment"># steering context</span>
+├── runtimes/           <span class="code-comment"># bash, cline, claude-code, acp</span>
+├── trace.jsonl         <span class="code-comment"># append-only event log</span>
+└── runner.sh           <span class="code-comment"># the whole engine</span></code></pre>
 
-      <p>The runner is a bash loop. Every 300ms, it checks the inbox. If there's a message, it sources the runtime (claude-code, cline, or bash) and calls <code>runtime_inject()</code>. That's the entire architecture.</p>
+      <p>The runner is a bash loop. Every 300ms it checks the inbox. Message found → source the runtime → call <code>runtime_inject()</code>. That's it.</p>
 
-      <p>Adding a new runtime — say, Gemini CLI or Aider — is one file with two functions: <code>runtime_start()</code> and <code>runtime_inject()</code>. You can read the whole thing in an afternoon.</p>
+      <p>Adding a new runtime is one file with two functions: <code>runtime_start()</code> and <code>runtime_inject()</code>.</p>
 
-      <h2>Mechanical > Behavioral</h2>
+      <h2>The Key Design Decision</h2>
 
-      <p>This is the design principle I keep coming back to. Every agent framework I've seen makes the same mistake: they ask the LLM to manage state. "Remember to report your results." "Track your progress." "Communicate with the orchestrator when done."</p>
+      <p>Every agent framework I've seen makes the same mistake: they ask the LLM to manage state. "Remember to report your results." "Track your progress." LLMs forget. They hallucinate protocols. They skip steps.</p>
 
-      <p>LLMs forget. They hallucinate protocols. They skip steps. You can't build reliable systems on behavioral contracts with a stochastic model.</p>
+      <p>In sage, <strong>everything that matters is mechanical</strong>. The <em>runner</em> writes task status, not the LLM. The <em>engine</em> tracks parent-child relationships. The <em>runner</em> captures results. Tracing is append-only JSONL written by runner code, not agent self-reporting.</p>
 
-      <p>In sage, <strong>everything that matters is mechanical</strong>:</p>
-
-      <ul>
-        <li>Task status? The <em>runner</em> writes <code>queued → running → done</code>. Not the LLM.</li>
-        <li>Parent-child tracking? The <em>engine</em> records it via <code>SAGE_AGENT_NAME</code> env var. Not the agent.</li>
-        <li>Results? The <em>runner</em> captures output and writes result files. Not a prompt instruction.</li>
-        <li>Tracing? Append-only JSONL written by runner code. Not agent self-reporting.</li>
-      </ul>
-
-      <p>The LLM does what it's good at: reasoning and writing code. The engine handles everything else.</p>
-
-      <h2>Live Streaming (The Hardest Part)</h2>
-
-      <p>The most annoying engineering problem was getting live output. <code>claude -p</code> (print mode) suppresses ALL terminal output during execution. Doesn't matter if stdout is a TTY, a pipe, or wrapped in <code>script(1)</code>. Print mode collects everything and outputs once at the end.</p>
-
-      <p>I tried everything: <code>tee</code>, <code>tail -f</code>, <code>script --flush</code>, process substitution, <code>tmux pipe-pane</code>. All dead ends because the CLI simply doesn't write to stdout during tool use.</p>
-
-      <p>The solution: <code>--output-format stream-json --verbose</code>. Claude emits JSONL events in real-time — one per tool call, one per text response. A <code>while read</code> loop parses each event and prints to the terminal:</p>
-
-<pre><code>cat "$prompt" | claude -p --output-format stream-json --verbose \
-  --allowedTools "Bash(*)" "Write(*)" "Read(*)" "Edit(*)" \
-  | while IFS= read -r line; do
-    # parse JSON event, print tool calls + text
-  done</code></pre>
-
-      <p>Same approach for Cline with <code>--json</code>. Each CLI has its own event format, but the pattern is identical: structured events piped through a parser to the terminal.</p>
-
-      <h2>What I Learned</h2>
-
-      <p><strong>Constraints are features.</strong> "Only bash, jq, and tmux" sounds limiting. It's actually liberating. No dependency hell. No version conflicts. No build step. The entire tool is one file you can read, understand, and modify.</p>
-
-      <p><strong>Files are the universal API.</strong> Every tool can read and write files. JSON in a directory is the lowest-common-denominator message bus. It survives restarts, is inspectable with <code>cat</code>, debuggable with <code>ls -la</code>, and needs zero infrastructure.</p>
-
-      <p><strong>Observability isn't optional.</strong> The first version had no <code>peek</code>, no <code>trace</code>, no streaming. It was like driving blind. You'd submit a task and wait. Maybe it works in 30 seconds. Maybe it's stuck for 5 minutes. Adding live output changed the entire experience — from "fire and pray" to "fire and watch."</p>
-
-      <p><strong>The LLM is the worst part of the system.</strong> Not because it's bad — it's incredible at code generation. But it's unreliable at following protocols. Every time I tried to make agents "remember" to do something (report results, clean up, communicate), they'd forget. Making those things mechanical instead of behavioral was the single biggest reliability improvement.</p>
+      <p>The LLM does what it's good at — reasoning and writing code. The engine handles everything else.</p>
 
       <h2>Try It</h2>
 
-<pre><code># Install (pick one)
+<pre><code><span class="code-comment"># Install (pick one)</span>
 brew tap youwangd/sage && brew install sage
 npm install -g @youwangd/sage
 curl -fsSL https://raw.githubusercontent.com/youwangd/SageCLI/main/install.sh | bash
 
-# Use it
+<span class="code-comment"># Use it</span>
 sage init
 sage create worker --runtime claude-code
 sage send worker "Build something cool"
 sage peek worker</code></pre>
 
-      <p>The entire thing is open source: <a href="https://github.com/youwangd/SageCLI" target="_blank">github.com/youwangd/SageCLI</a></p>
-
-      <p>~1500 lines of bash. MIT license. Read it in an afternoon. Modify it by evening.</p>
+      <p>Open source: <a href="https://github.com/youwangd/SageCLI" target="_blank">github.com/youwangd/SageCLI</a>. ~1500 lines of bash. MIT license. Read it in an afternoon.</p>
 
       <p>Because the best agent framework is the one you can actually understand.</p>
 
