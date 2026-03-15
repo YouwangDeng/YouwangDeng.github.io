@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能体分身：开会这件事快要变了 — Youwang Deng</title>
+<meta name="description" content="如果每个工程师、PM、经理都有一个 AI 分身替你开会呢？智能体之间同步信息，人类只做决策。这是愿景，也有让人不安的后果。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/zh/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/zh/" class="nav-link">博客</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/zh/" class="back-link">← 返回所有文章</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-15</time>
+        <span class="post-tag">ai</span>
+        <span class="post-tag">productivity</span>
+        <span class="post-tag">future</span>
+      </div>
+      <h1 class="post-title">智能体分身：开会这件事快要变了</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">程序员每周花 40-60% 的时间在开会。绝大多数会议存在的原因只有一个：信息困在各自脑子里，得凑到一起才能对齐。如果每个人都有一个 AI 分身替你记着这些上下文——开会这事儿，还有必要吗？</p>
+
+      <h2>会议税</h2>
+
+      <p>一个普通软件工程师的一周：</p>
+
+      <ul>
+        <li><strong>每日站会</strong> — SDM + 工程师们。15 分钟 × 5 = 1.25 小时</li>
+        <li><strong>Sprint 规划</strong> — SDM + 工程师们。2 小时</li>
+        <li><strong>设计评审</strong> — 工程师 + SDM + PM。1 小时</li>
+        <li><strong>跨组同步</strong> — TPM + SDM + PM + 总监。1 小时</li>
+        <li><strong>1:1</strong> — SDM 跟每个工程师。0.5 × 2-3 = 1 小时</li>
+        <li><strong>回顾会</strong> — SDM + 工程师们。1 小时</li>
+        <li><strong>路线图评审</strong> — PM + 总监 + TPM。1 小时</li>
+      </ul>
+
+      <p>加起来 8 小时起步。经理更惨，15-20 小时打底。</p>
+
+      <p>关键是：时间成本远不止日历上那个色块。Paul Graham 2009 年就说透了——下午中间插一个会，整个下午就废了。上下文切换之后需要 23 分钟才能恢复深度专注。工程师需要 3-4 小时不被打断的整块时间来构建复杂系统的心智模型。一个 30 分钟的会，实际成本是半天。</p>
+
+      <p>这些会为什么存在？归根结底一件事：<strong>把信息从一颗脑袋搬到另一颗脑袋。</strong>状态同步、优先级对齐、依赖协调、上下文共享。会议是最低效的方式，但在没有更好方案之前，只能将就。</p>
+
+      <h2>智能体分身</h2>
+
+      <p>想象一下：组织里每个人都有一个常驻 AI 智能体——你的<strong>分身</strong>：</p>
+
+      <ul>
+        <li>了解你的角色、职责、当前项目</li>
+        <li>能读你的 Jira、PR、文档、Slack、日历</li>
+        <li>实时维护一张「我在做什么、卡在哪、需要谁帮忙」的活地图</li>
+        <li>能代表你跟别人的分身交换信息</li>
+      </ul>
+
+      <p>于是会议变成了智能体之间的同步。不需要 6 个人坐 30 分钟，分身们几秒钟就能交换完：</p>
+
+<pre><code>工程师分身 → "PR #342 卡住了，等后端的 API spec"
+SDM 分身   → "本 sprint 速度下降 20%，要砍需求"
+PM 分身    → "客户升级了 feature X 的优先级"
+TPM 分身   → "后端 API 周四发布，能解锁 PR #342"</code></pre>
+
+      <p>分身们综合信息、发现冲突、把需要人类拍板的决策提炼出来。你收到的是一条 2 分钟的摘要：「有 3 件事需要你做决定。」</p>
+
+      <h2>哪些会可以干掉</h2>
+
+      <p><strong>站会 → AI 日报。</strong>分身自动抓 Jira 和 GitHub 数据，生成每日摘要：上线了什么、卡在哪、有什么风险。没人需要张嘴说「我还在搞昨天那个东西」。Shopify 的 CEO 2023 年就把所有 3 人以上的周期会议全砍了。</p>
+
+      <p><strong>规划会 → AI 预分析。</strong>开会之前，分身先过一遍 backlog，评估复杂度，标出依赖关系，给一版 sprint 计划。会议从 2 小时的头脑风暴变成 15 分钟的审批。</p>
+
+      <p><strong>设计评审 → 异步文档 + 智能体评审。</strong>工程师写设计文档，分身审安全、扩展性、跟现有架构的一致性。评论走异步。只有出现真正分歧时才需要拉人开会。</p>
+
+      <p><strong>跨组同步 → 分身对分身。</strong>每个团队的分身维护一个实时状态看板。TPM 直接问分身，不用拉会。阻塞问题自动浮出来，不用等下周的同步会。</p>
+
+      <p><strong>回顾会 → 持续 AI 分析。</strong>分身监控 commit 频率、PR review 耗时、部署频率、事故率，每周出洞察报告：「部署速度下降 30%——根因：3 个 PR 卡在 review 超过 4 天。」不需要开会讨论。</p>
+
+      <h2>哪些会得留着</h2>
+
+      <ul>
+        <li><strong>冲突解决</strong> — 方向有真正分歧的时候</li>
+        <li><strong>关系建设</strong> — 信任、带人、团队凝聚力</li>
+        <li><strong>创意碰撞</strong> — 全新问题域，答案还不存在</li>
+        <li><strong>艰难对话</strong> — 绩效、组织变动、需要温度的事</li>
+      </ul>
+
+      <p>一条简单的判断标准：会议的价值是<strong>信息型</strong>的，交给智能体。是<strong>情感型或关系型</strong>的，留给人类。</p>
+
+      <p>每周 15-20 小时的会议 → 2-3 小时的高密度人类对话。</p>
+
+      <h2>难点</h2>
+
+      <p><strong>脑子里的东西怎么办。</strong>分身知道 Jira 上写的，不知道你心里想的。「这个任务技术上做完了，但我对边界情况有点不放心」——这种微妙判断住在人脑里，不在工具里。解法：在产生想法的当下捕获，而不是等到开会时回忆。下班前 30 秒语音备忘，分身从 IDE 和 git 活动中推测上下文，日积月累学会你的模式。</p>
+
+      <p><strong>分身能自己做多少决定。</strong>分级权限：</p>
+
+      <ul>
+        <li><strong>自动：</strong>分享状态、回答事实性问题、同步上下文</li>
+        <li><strong>通知：</strong>答应工期、承诺交付物——分身先做，再告诉你，你可以否决</li>
+        <li><strong>审批：</strong>砍需求、改优先级——分身只提建议，等你点头</li>
+      </ul>
+
+      <p>所有人从「自动」起步。靠谱了再升级。跟带新人一个道理。</p>
+
+      <p><strong>冷启动。</strong>第一天分身什么都不知道。但它可以从历史痕迹里快速自举——Jira 记录、PR 历史、Slack 消息、你写过的文档。第一周跑影子模式，对比它会怎么说和你实际怎么说，学差距。第二周开始它会问：「明天的同步会，我打算汇报 X、Y、Z，对吗？」你纠正，它就进步。</p>
+
+      <h2>没人想聊但不得不聊的事</h2>
+
+      <p>如果你的分身完美地记录了你的所有上下文，一件让人不安的事就会发生：<strong>你的经验壁垒不再是护城河了。</strong></p>
+
+      <p>今天，「只有小王知道计费系统是怎么回事」就是小王的铁饭碗。分身打破了这种信息不对称。公司拥有分身，不是你。小王离职了，分身还在——它知道每个决策的来龙去脉、每个被否掉的方案、每个客户的特殊需求。新人第一天就能接手小王的分身，一周内上手，而不是三个月。</p>
+
+      <p>顺着这个逻辑往下想：</p>
+
+      <ul>
+        <li>知识交接成本归零 → 换人变便宜了</li>
+        <li>新人即插即用 → 几天上手，不是几个月</li>
+        <li>公司不依赖任何个人的积累 → 天平从员工倒向雇主</li>
+      </ul>
+
+      <p>更极端的版本：公司发现根本不用招人补缺。小王的分身配一个经验更浅（更便宜）的工程师，差不多就能顶上。20 万年薪的高级工程师被 9 万的初级 + 一个分身替代。</p>
+
+      <p>这种事以前发生过。文字淘汰了口述历史的传承人，版本控制淘汰了「代码守门员」。每一次，适应了的人发现自己能做的更多。但转型期对那些把价值建立在「我记得」上的人来说，是痛苦的。</p>
+
+      <p><strong>未来吃得开的工程师，不是囤积上下文的人，而是创造新上下文的速度比智能体吸收速度还快的人</strong>——实时判断力和创造力比历史知识更值钱。你不能靠昨天学到的东西混日子了。你得今天就有价值。</p>
+
+      <h2>终局</h2>
+
+      <p>一个被智能体分身武装起来的团队：</p>
+
+      <ul>
+        <li><strong>周一：</strong>AI 根据 backlog + 优先级生成周计划。PM 花 10 分钟过一遍。</li>
+        <li><strong>每天：</strong>分身在 Slack 里发站会摘要。不开会。</li>
+        <li><strong>随时：</strong>分身标记阻塞，SDM 收到通知，异步解决。</li>
+        <li><strong>每周：</strong>一次 30 分钟团队碰头——聊赢了什么、卡在哪、有什么想法。</li>
+        <li><strong>Sprint 结束：</strong>AI 生成回顾分析。团队只讨论异常。</li>
+      </ul>
+
+      <p>每周 1 小时会议，取代原来的 15 小时。其余时间？造东西。</p>
+
+      <p>技术上这些大部分已经能做到——常驻智能体、工具访问、异步协调协议都有了。缺的是文化上的准备：愿不愿意把原本只存在人脑里的上下文交给智能体。这才是真正的转折点。不是 AI 本身，是信任。</p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng. 用 HTML、CSS 和一点个人偏见搭建。</p>
+  </div>
+</footer>
+
+<script src="/js/lang.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Shadows: The End of Meetings as We Know Them — Youwang Deng</title>
+<meta name="description" content="What if every engineer, PM, and manager had an AI agent shadow that knew their context? Meetings become agent-to-agent syncs. Humans just make decisions. Here's the vision — and the uncomfortable implications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <span class="logo-bracket">[</span>YD<span class="logo-bracket">]</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Blog</a>
+    <a href="https://github.com/youwangd" class="nav-link" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<main class="container">
+  <a href="/" class="back-link">← Back to all posts</a>
+
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time class="post-date">2026-03-15</time>
+        <span class="post-tag">ai</span>
+        <span class="post-tag">productivity</span>
+        <span class="post-tag">future</span>
+      </div>
+      <h1 class="post-title">Agent Shadows: The End of Meetings as We Know Them</h1>
+    </header>
+
+    <div class="post-body">
+
+      <p class="post-lead">Engineers spend 40-60% of their week in meetings. Most of those meetings exist because information is trapped in people's heads. What if everyone had an AI agent that carried their context — and meetings were just agents syncing with each other?</p>
+
+      <h2>The Meeting Tax</h2>
+
+      <p>Here's what a typical software engineer's meeting week looks like:</p>
+
+      <ul>
+        <li><strong>Daily standup</strong> — SDM + SDEs. 15 min × 5 = 1.25 hours</li>
+        <li><strong>Sprint planning</strong> — SDM + SDEs. 2 hours</li>
+        <li><strong>Design review</strong> — SDE + SDM + PM. 1 hour</li>
+        <li><strong>Program sync</strong> — TPM + SDM + PM + Director. 1 hour</li>
+        <li><strong>1:1s</strong> — SDM + each SDE. 30 min × 2-3 = 1 hour</li>
+        <li><strong>Retrospective</strong> — SDM + SDEs. 1 hour</li>
+        <li><strong>Roadmap review</strong> — PM + Director + TPM. 1 hour</li>
+      </ul>
+
+      <p>That's 8+ hours of meetings. For a manager, it's 15-20. And the cost isn't just time — Paul Graham nailed this in 2009: a single meeting in the middle of an afternoon destroys the entire block. It takes 23 minutes to regain deep focus after a context switch. Engineers need 3-4 hour uninterrupted blocks to build mental models of complex systems. A 30-minute meeting doesn't cost 30 minutes. It costs half a day.</p>
+
+      <p>Most of these meetings exist for one reason: <strong>moving information between brains.</strong> Status updates, priority alignment, dependency coordination, context sharing. Meetings are the duct tape — the least efficient way to do it.</p>
+
+      <h2>The Agent Shadow</h2>
+
+      <p>Here's the idea: every person in the org gets a persistent AI agent — an <strong>agent shadow</strong> — that:</p>
+
+      <ul>
+        <li>Knows their role, responsibilities, and current projects</li>
+        <li>Has access to their tickets, PRs, docs, Slack threads, and calendar</li>
+        <li>Maintains a living model of "what I'm working on, what I'm blocked on, what I need from others"</li>
+        <li>Can represent them in information exchanges with other agents</li>
+      </ul>
+
+      <p>Meetings become agent-to-agent syncs. Instead of 6 people in a room for 30 minutes, their agents exchange context in seconds:</p>
+
+<pre><code>SDE-agent  → "PR #342 blocked on API spec from backend team"
+SDM-agent  → "Sprint velocity down 20%, need to cut scope"
+PM-agent   → "Customer escalation on feature X, priority shift needed"
+TPM-agent  → "Backend API ships Thursday, unblocks PR #342"</code></pre>
+
+      <p>Agents synthesize, identify conflicts, and surface only the decisions that need human judgment. You get a 2-minute brief instead of a 30-minute meeting: <em>"Here are the 3 things that need your call."</em></p>
+
+      <h2>What This Replaces</h2>
+
+      <p><strong>Status meetings → AI standups.</strong> An agent scrapes Jira and GitHub, generates a daily digest: what shipped, what's blocked, what's at risk. No human needs to say "I'm still working on the same thing as yesterday." Shopify killed all recurring meetings with 3+ people back in 2023. They were ahead of the curve.</p>
+
+      <p><strong>Planning meetings → AI pre-analysis.</strong> Before anyone meets, an agent reviews the backlog, estimates complexity, identifies dependencies, and proposes a sprint plan. The meeting becomes a 15-minute review of the agent's proposal instead of a 2-hour brainstorm from scratch.</p>
+
+      <p><strong>Design reviews → Async docs + agent review.</strong> Engineers write a design doc. The agent reviews it for gaps, security concerns, scalability issues, and consistency with existing architecture. Comments are async. A meeting only happens if there's genuine disagreement that needs human resolution.</p>
+
+      <p><strong>Cross-team syncs → Agent-to-agent coordination.</strong> Each team's agents maintain living status dashboards. TPMs query agents instead of scheduling sync meetings. Blockers surface automatically, not at the next weekly sync.</p>
+
+      <p><strong>Retrospectives → Continuous AI analysis.</strong> An agent monitors commit patterns, PR review times, deployment frequency, and incident rates. It generates insights weekly: "Deploy velocity dropped 30% — root cause: 3 PRs stuck in review for 4+ days." No meeting needed.</p>
+
+      <h2>What Still Needs Humans in the Room</h2>
+
+      <p>Not everything can be async agent syncs:</p>
+
+      <ul>
+        <li><strong>Conflict resolution</strong> — when people genuinely disagree on direction</li>
+        <li><strong>Relationship building</strong> — trust, mentorship, team cohesion</li>
+        <li><strong>Creative brainstorming</strong> — genuinely novel problem spaces where the answer doesn't exist yet</li>
+        <li><strong>Difficult conversations</strong> — performance, org changes, the human stuff</li>
+      </ul>
+
+      <p>The rule is simple: if the meeting's value is <strong>informational</strong>, replace it with an agent. If its value is <strong>emotional or relational</strong>, keep it.</p>
+
+      <p>That 15-20 hour meeting week becomes 2-3 hours of high-signal human deliberation.</p>
+
+      <h2>The Hard Problems</h2>
+
+      <p>This isn't just a technology problem. There are real gaps:</p>
+
+      <p><strong>Context fidelity.</strong> The agent knows what's in Jira. It doesn't know what's in your head. "This task is technically done but I'm worried about edge cases" — that nuance lives in the human, not the tool. The solve: capture at the point of thought, not at meeting time. Voice memos, ambient inference from IDE and git activity, a daily "anything I should know?" prompt. Over time the agent learns your patterns and infers what you'd say.</p>
+
+      <p><strong>Trust calibration.</strong> How much can the agent decide without you? A tiered model works:</p>
+
+      <ul>
+        <li><strong>Auto:</strong> share status, answer factual questions, sync context</li>
+        <li><strong>Notify:</strong> accept timelines, commit to deliverables — agent acts but pings you to override</li>
+        <li><strong>Approve:</strong> scope changes, priority shifts — agent proposes, waits for your thumbs-up</li>
+      </ul>
+
+      <p>Start at auto. Promote as trust builds. Same pattern as any good delegation.</p>
+
+      <p><strong>The cold start.</strong> Day 1 the agent knows nothing. But it can bootstrap from artifacts — your Jira history, PR history, Slack messages, docs you authored. Week 1 it runs in shadow mode, comparing what it would have said against what you actually said. By week 2 it's suggesting: "For tomorrow's sync, I'd report X, Y, Z. Sound right?" You correct. It learns.</p>
+
+      <h2>The Part Nobody Wants to Talk About</h2>
+
+      <p>If your agent shadow perfectly captures your context, something uncomfortable happens: <strong>your tribal knowledge stops being your moat.</strong></p>
+
+      <p>Today, "only Sarah knows how the billing pipeline works" is job security. The agent shadow eliminates that asymmetry. The company owns the agent, not you. When Sarah leaves, her agent shadow stays — it knows the decisions, the edge cases, the rejected approaches, the customer context. The new hire gets Sarah's agent on day 1 and is productive in a week instead of three months.</p>
+
+      <p>Follow the logic further:</p>
+
+      <ul>
+        <li>Knowledge transfer cost drops to zero → replacing people gets cheaper</li>
+        <li>Onboarding becomes instant → new hires ramp in days, not months</li>
+        <li>The company doesn't depend on any individual's accumulated context → power shifts from employee to employer</li>
+      </ul>
+
+      <p>The dark version: a company decides it doesn't need to hire a replacement at all. Sarah's agent shadow, paired with a less experienced (cheaper) engineer who rubber-stamps its decisions, can approximate what Sarah used to do.</p>
+
+      <p>This has happened before. Writing eliminated the oral historian. Version control eliminated the "keeper of the code." Each time, the people who adapted found they could do more, not less. But the transition was painful for those who'd built their value on being the memory.</p>
+
+      <p><strong>The engineers who thrive won't be the ones hoarding context. They'll be the ones generating new context faster than an agent can absorb</strong> — the ones whose real-time judgment and creativity is worth more than their historical knowledge. You can't coast on what you learned yesterday. You have to be valuable today.</p>
+
+      <h2>The End State</h2>
+
+      <p>A fully agent-augmented team:</p>
+
+      <ul>
+        <li><strong>Monday:</strong> AI generates weekly plan from backlog + priorities. PM reviews in 10 minutes.</li>
+        <li><strong>Daily:</strong> Agent standup digest in Slack at 9 AM. No meeting.</li>
+        <li><strong>As-needed:</strong> Agents flag blockers, SDM gets notified, async resolution.</li>
+        <li><strong>Weekly:</strong> One 30-min team sync for the human stuff — wins, struggles, ideas.</li>
+        <li><strong>Sprint end:</strong> AI generates retro analysis. Team discusses anomalies only.</li>
+      </ul>
+
+      <p>One hour of meetings per week instead of fifteen. The rest of the time? Building things.</p>
+
+      <p>The technology to do this is largely here — persistent agents, tool access, async coordination protocols. What's missing is the cultural willingness to trust agents with context that used to live only in human brains. That's the real turning point. Not the AI. The trust.</p>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Youwang Deng. Built with HTML, CSS, and opinions.</p>
+  </div>
+</footer>
+
+<script src="/js/lang.js"></script>
+</body>
+</html>
